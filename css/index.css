@@ -11,12 +11,11 @@
 * {
     box-sizing: border-box;
 }
-
 body {
     margin: 0;
     padding: 0;
     font-family: 'Pretendard', -apple-system, sans-serif;
-    background-color: #f0f0f0; /* 외부 배경색 */
+    background-color: #313131; /* 외부 배경색 */
     color: var(--text-color);
     -webkit-font-smoothing: antialiased;
     display: flex;
@@ -37,60 +36,103 @@ body {
     width: 100%;
     position: relative;
 }
-
 section {
     padding: 40px 20px;
     text-align: center;
 }
 
-/* 1. 오디오 버튼 */
-.audio-control {
-    position: fixed;
-    top: 20px;
-    right: 20px;
+
+/* 1. 오디오 */
+#audio-section {
+    display: flex;
+}
+#audio-section > button {
+    position: relative;
+    top: 15px;
+    left: 15px;
     z-index: 100;
-}
-
-.audio-control button {
-    background: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
     border: none;
+    background-color: rgb(0,0,0, 0.25);
     cursor: pointer;
-    font-size: 24px;
+}
+#audio-section > button > img {
+    width: 90%;
+    height: 90%;
 }
 
-/* 3. 메인 비주얼 */
-#main-visual {
-    padding: 0;
-}
 
-.main-img-wrapper {
-    width: 100%;
-    height: 500px;
-    background: #ddd;
-    overflow: hidden;
+/* 2. 신랑 신부 이름 */
+#names h5 {
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 6px;
+    margin-bottom: 10px;
 }
-
-.main-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* 2 & 4. 텍스트 정보 */
 #names h2 {
-    font-weight: 300;
-    letter-spacing: 2px;
+    font-weight: 500;
+    font-size: 18px;
     margin: 0;
 }
-
 .name-divider {
     font-size: 0.8em;
     color: var(--accent-color);
     margin: 0 5px;
 }
 
-#main-info p {
-    font-size: 1.1em;
-    line-height: 1.6;
-    color: #666;
+
+/* 3. 신랑/신부 메인 사진 or 동영상 */
+#main-visual {
+    padding: 0;
 }
+#main-visual > div {
+    width: 100%;
+    height: 500px;
+    background: #ddd;
+    overflow: hidden;
+}
+#main-visual > div > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 4. 장소(텍스트) */
+#main-info {
+    padding-top: 20px;
+}
+#main-info p {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* 5. 웰컴 문구 스타일 */
+#welcome-message {
+    padding: 40px 20px; /* 위아래 여백을 충분히 주어 시선이 집중되게 함 */
+    background-color: #fff;
+}
+.welcome-flower {
+    font-size: 24px;
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+.welcome-title {
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 2px; /* SAVE THE DATE와 통일감 */
+    color: var(--text-color);
+    margin-bottom: 30px;
+}
+.welcome-text p {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 2.2;
+    margin: 0;
+    color: #444;
+    word-break: keep-all; /* 단어가 중간에 잘리지 않게 설정 */
+}
+
+/* 6. 양가부모님 성함 + 신랑 신부 이름 + 연락처 메세지 보내기 */
