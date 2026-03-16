@@ -1,0 +1,96 @@
+/* 변수 설정 */
+:root {
+    --main-color: #f4f1ea;   /* 따뜻한 느낌의 배경색 */
+    --text-color: #333;
+    --accent-color: #8d7b68; /* 포인트 컬러 (베이지/브라운) */
+    --bg-gray: #f8f9fa;
+    --shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+/* 기본 리셋 */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background-color: #f0f0f0; /* 외부 배경색 */
+    color: var(--text-color);
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+}
+
+/* 메인 컨테이너 */
+#root {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    min-height: 100vh;
+    box-shadow: var(--shadow);
+}
+
+/* 청첩장 내부 레이아웃 */
+#invitation-card {
+    width: 100%;
+    position: relative;
+}
+
+section {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+/* 1. 오디오 버튼 */
+.audio-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.audio-control button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+/* 3. 메인 비주얼 */
+#main-visual {
+    padding: 0;
+}
+
+.main-img-wrapper {
+    width: 100%;
+    height: 500px;
+    background: #ddd;
+    overflow: hidden;
+}
+
+.main-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 2 & 4. 텍스트 정보 */
+#names h2 {
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.name-divider {
+    font-size: 0.8em;
+    color: var(--accent-color);
+    margin: 0 5px;
+}
+
+#main-info p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #666;
+}

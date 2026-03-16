@@ -13,31 +13,45 @@
     <meta property="og:url" content="https://your-domain.com">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script type="text/javascript" src="js/index.js"></script>
 
-    <style>
-        /* 기본 리셋 및 모바일 대응 스타일 */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Pretendard', sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            -webkit-font-smoothing: antialiased;
-        }
-        #root {
-            max-width: 500px; /* 모바일 가로 너비 제한 */
-            margin: 0 auto;
-            background: #fff;
-            min-height: 100vh;
-        }
-    </style>
 </head>
-<body>
-    <div id="root">
-        <div style="display:flex; justify-content:center; align-items:center; height:100vh;">
-            <p>초대장을 불러오는 중입니다...</p>
-        </div>
-    </div>
+    <body>
+        <div id="root">
+            <div style="display:none; justify-content:center; align-items:center; height:100vh;">
+                <p>초대장을 불러오는 중입니다...</p>
+            </div>
 
+            <div id="invitation-card">
+                <div style="position: fixed; top: 20px; right: 20px; z-index: 100;">
+                    <button onclick="toggleAudio()" style="background: none; border: none; cursor: pointer; font-size: 24px;">
+                        🎵
+                    </button>
+                    <audio id="bgm" loop>
+                        <source src="your-music-file.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+                <section id="main-visual" style="padding: 0;">
+                    <div style="width: 100%; height: 500px; background: #ddd; overflow: hidden;">
+                        <img src="main-photo.jpg" alt="메인 사진" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                </section>
+
+                <section id="names" style="padding-top: 30px;">
+                    <h2 style="font-weight: 300; letter-spacing: 2px;">
+                        정연재 <span style="font-size: 0.8em; color: var(--accent-color);">|</span> 장선홍
+                    </h2>
+                </section>
+
+                <section id="main-info" style="padding-top: 0;">
+                    <p style="font-size: 1.1em; color: #666;">
+                        2026년 06월 27일 토요일 오후 06시 00분<br>
+                        더뉴컨벤션 웨딩홀 2층 더뉴홀
+                    </p>
+                </section>
+
+            </div>
+        </div>
     </body>
 </html>
