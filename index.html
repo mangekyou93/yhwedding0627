@@ -70,7 +70,7 @@
                 </section>
 
                 <!-- 5. 웰컴(결혼 청첩장) 문구 -->
-                <section id="welcome-message">
+                <section id="welcome-message-section">
                     <div class="welcome-flower">🌸</div>
                     <h5 class="welcome-title">INVITATION</h5>
                     <div class="welcome-text">
@@ -84,7 +84,89 @@
                 </section>
 
                 <!-- 6. 양가부모님 성함 + 신랑 신부 이름 + 연락처 메세지 보내기 -->
+                <section id="contact-section">
+                    <div class="contact-container">
+                        <div class="contact-group">
+                            <div class="contact-title">GROOM</div>
+                            <div class="person-row">
+                                <span class="name">정철화 · 이용순</span>
+                                <span class="relation">의 차남</span>
+                                <span class="main-name">연재</span>
+                                <div class="icon-wrap">
+                                    <a href="tel:01095554401">📞</a>
+                                    <a href="sms:01095554401">💬</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="contact-group">
+                            <div class="contact-title">BRIDE</div>
+                            <div class="person-row">
+                                <span class="name">장수호 · 김희정</span>
+                                <span class="relation">의 장녀</span>
+                                <span class="main-name">선홍</span>
+                                <div class="icon-wrap">
+                                    <a href="tel:01041010149">📞</a>
+                                    <a href="sms:01041010149">💬</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="parents-contact-btn" onclick="openModal()">
+                            혼주에게 연락하기
+                        </div>
+                        <div id="modal-overlay" class="modal-overlay" onclick="closeModal()">
+                            <div class="modal-content" onclick="event.stopPropagation()">
+                                <div class="modal-header">
+                                    <span>혼주에게 연락하기</span>
+                                    <button class="modal-close" onclick="closeModal()">✕</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="modal-group">
+                                        <p class="group-title">신랑측 혼주</p>
+                                        <div class="parent-item">
+                                            <span class="parent-name">부 정철화</span>
+                                            <div class="parent-icons">
+                                                <a href="tel:01064374401">📞</a>
+                                                <a href="sms:01064374401">💬</a>
+                                            </div>
+                                        </div>
+                                        <div class="parent-item">
+                                            <span class="parent-name">모 이용순</span>
+                                            <div class="parent-icons">
+                                                <a href="tel:01039934401">📞</a>
+                                                <a href="sms:01039934401">💬</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-divider"></div>
+                                    <div class="modal-group">
+                                        <p class="group-title">신부측 혼주</p>
+                                        <div class="parent-item">
+                                            <span class="parent-name">부 장수호</span>
+                                            <div class="parent-icons">
+                                                <a href="tel:01038580149">📞</a>
+                                                <a href="sms:01038580149">💬</a>
+                                            </div>
+                                        </div>
+                                        <div class="parent-item">
+                                            <span class="parent-name">모 김희정</span>
+                                            <div class="parent-icons">
+                                                <a href="tel:01073261996">📞</a>
+                                                <a href="sms:01073261996">💬</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 7. 달력 -->
                 
+                <!-- 8. 연재♥선홍 의 결혼식 103일 전 -->
+
+
             </div>
         </div>
     </body>
