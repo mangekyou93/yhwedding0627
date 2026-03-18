@@ -110,6 +110,10 @@ function initMap() {
 }
 
 function startNavigation() {
+    if (!Kakao.isInitialized()) {
+        Kakao.init('669f1c6f440657e143d516895413ef21');
+    }
+    
     const xpos = document.getElementById('wd_xpos').value;
     const ypos = document.getElementById('wd_ypos').value;
 
