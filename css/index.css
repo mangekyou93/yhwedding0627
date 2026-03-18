@@ -390,3 +390,45 @@ section {
 /* Swiper 네비게이션 컬러 커스텀 */
 .swiper-button-next, .swiper-button-prev { color: #fff !important; }
 .swiper-pagination-bullet-active { background: #fff !important; }
+
+
+/* 10. 결혼식장 장소(맵 API 활용) */
+#location-section { padding: 60px 20px; text-align: center; background-color: #fff; }
+.section-title { font-size: 14px; letter-spacing: 5px; color: var(--accent-color); margin-bottom: 20px; }
+.venue-name { font-size: 18px; font-weight: 600; color: #333; }
+.venue-address { font-size: 14px; color: #888; margin-top: 5px; }
+.venue-tel { font-size: 13px; color: #aaa; margin-top: 3px; }
+/* 카카오내비 버튼 스타일 */
+.navi-btn {
+    display: inline-flex;
+    align-items: center;
+    background: #FEE500;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.navi-btn img { width: 20px; margin-right: 5px; }
+.navi-btn span { color: #191919; margin-left: 2px; }
+.map-detail-link {
+    display: block;
+    font-size: 12px;
+    color: var(--accent-color);
+    text-decoration: none;
+    margin-top: 10px;
+    border-bottom: 1px solid var(--accent-color);
+    display: inline-block;
+}
+/* 교통 안내 스타일 */
+.way-guide { margin-top: 40px; text-align: left; }
+.guide-item { margin-bottom: 20px; }
+.guide-tit {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 5px;
+}
+.guide-txt { font-size: 14px; color: #666; line-height: 1.6; }

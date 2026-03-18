@@ -257,7 +257,39 @@
                 </section>
                 
                 <!-- 10. 결혼식장 장소(맵 API 활용) -->
+                <section id="location-section">
+                    <input type="hidden" id="wd_xpos" value="126.8368847974">
+                    <input type="hidden" id="wd_ypos" value="37.5562637915563">
 
+                    <div class="location-container">
+                        <p class="section-title">LOCATION</p>
+                        <p class="venue-name">더뉴컨벤션 웨딩홀 2층 더뉴홀</p>
+                        <p class="venue-address">서울 강서구 공항대로36길 57</p>
+                        <p class="venue-tel">1661-3303</p>
+                        <a id="start-navigation" href="javascript:startNavigation()">
+                            <img src="https://developers.kakao.com/assets/img/about/buttons/navi/kakaonavi_btn_medium.png" alt="길 안내 버튼" />
+                        </a>
+                        
+                        <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.7/kakao.min.js" integrity="sha384-tJkjbtDbvoxO+diRuDtwRO9JXR7pjWnfjfRn5ePUpl7e7RJCxKCwwnfqUAdXh53p" crossorigin="anonymous"></script>
+                        <script>Kakao.init('${669f1c6f440657e143d516895413ef21}');  // 사용하려는 앱의 JavaScript 키 입력</script>
+
+                        <div id="map" style="width:100%; height:280px; margin:20px 0; border-radius:10px; background:#f8f8f8;"></div>
+                        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=669f1c6f440657e143d516895413ef21&libraries=services&autoload=false"></script>
+                        <a href="https://map.kakao.com/link/map/더뉴컨벤션,37.5562637915563,126.8368847974" target="_blank" class="map-detail-link">
+                            지도를 자세히 보려면 여기를 눌러주세요
+                        </a>
+                        <div class="way-guide">
+                            <div class="guide-item">
+                                <span class="guide-tit">지하철</span>
+                                <span class="guide-txt">5호선 발산역 8번 출구 (도보 5분)</span>
+                            </div>
+                            <div class="guide-item">
+                                <span class="guide-tit">버스</span>
+                                <span class="guide-txt">발산역, 가양동 방면 버스 이용</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
             </div>
         </div>

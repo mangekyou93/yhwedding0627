@@ -1,3 +1,10 @@
+// 페이지 로드 시 실행
+window.onload = function() {
+    updateDDay();
+    initMap();
+};
+
+// 1. 오디오
 function toggleAudio() {
     const audio = document.getElementById('bgm');
     const icon = document.getElementById('bgm-icon');
@@ -10,6 +17,7 @@ function toggleAudio() {
     }
 }
 
+// 6. 양가부모님 성함 + 신랑 신부 이름 + 연락처 메세지 보내기
 function openModal() {
     document.getElementById('modal-overlay').style.display = 'flex';
     // 모달 열릴 때 본문 스크롤 방지 (선택사항)
@@ -21,6 +29,7 @@ function closeModal() {
     document.body.style.overflow = 'auto';
 }
 
+// 8. 연재♥선홍 의 결혼식 OO전
 function updateDDay() {
     const targetDate = new Date("2026-06-27T00:00:00"); // 결혼식 당일
     const today = new Date();
@@ -43,13 +52,7 @@ function updateDDay() {
     }
 }
 
-// 페이지 로드 시 실행
-window.onload = function() {
-    updateDDay();
-    // 만약 오버레이(시작 화면) 함수가 있다면 여기서 같이 호출해 주세요.
-};
-
-
+// 9. 
 let gallerySwiper;
 function initSwiper() {
     gallerySwiper = new Swiper(".mySwiper", {
@@ -80,4 +83,40 @@ function closeSlider() {
     const modal = document.getElementById('gallery-modal');
     modal.style.display = 'none';
     document.body.style.overflow = 'auto'; // 스크롤 허용
+}
+
+// 10. 결혼식장 장소(맵 API 활용)
+function initMap() {
+    // 카카오 맵 라이브러리가 로드될 때까지 기다린 후 실행
+    kakao.maps.load(function() {
+        var container = document.getElementById('map');
+        var xpos = document.getElementById('wd_xpos').value; // 이전에 넣은 x 좌표
+        var ypos = document.getElementById('wd_ypos').value; // 이전에 넣은 y 좌표
+        
+        var options = {
+            center: new kakao.maps.LatLng(ypos, xpos), // 더뉴컨벤션 좌표 적용
+            level: 3
+        };
+
+        var map = new kakao.maps.Map(container, options);
+        
+        // 마커 추가 (선택사항)
+        var markerPosition = new kakao.maps.LatLng(ypos, xpos);
+        var marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+        marker.setMap(map);
+    });
+}
+
+function startNavigation() {
+    const xpos = document.getElementById('wd_xpos').value;
+    const ypos = document.getElementById('wd_ypos').value;
+
+    Kakao.Navi.start({
+        name: '더뉴컨벤션',
+        x: parseFloat(xpos),
+        y: parseFloat(ypos),
+        coordType: 'wgs84',
+    });
 }
