@@ -150,7 +150,7 @@ function copyToClipboard(text) {
 
 // 13. 카카오톡으로 공유하기, 청첩장 주소 복사하기
 function shareKakao() {
-    Kakao.Link.sendDefault({
+    Kakao.Share.sendDefault({
         objectType: 'feed',
         content: {
             title: '정연재 ❤️ 장선홍 결혼식에 초대합니다',
@@ -160,6 +160,11 @@ function shareKakao() {
                 mobileWebUrl: 'https://mangekyou93.github.io/yhwedding0627/',
                 webUrl: 'https://mangekyou93.github.io/yhwedding0627/',
             },
+        },
+        social: {
+            likeCount: 286,
+            commentCount: 45,
+            sharedCount: 845,
         },
         buttons: [
             {
@@ -172,6 +177,7 @@ function shareKakao() {
         ],
     });
 }
+
 // URL 복사
 function copyUrl() {
     const url = window.location.href; // 현재 페이지 주소
