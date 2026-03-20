@@ -19,13 +19,6 @@
 
 </head>
     <body>
-        <!--
-        11. 계좌번호
-        12. 방명록
-        13. 카카오톡으로 공유하기
-        14. 청첩장 주소 복사하기
-        -->
-
         <div id="root">
             <div style="display:none; justify-content:center; align-items:center; height:100vh;">
                 <p>초대장을 불러오는 중입니다...</p>
@@ -276,7 +269,29 @@
                         <a href="https://map.kakao.com/link/map/더뉴컨벤션,37.5562637915563,126.8368847974" target="_blank" class="map-detail-link">
                             지도를 자세히 보려면 여기를 눌러주세요
                         </a>
-                        <div class="way-guide">
+                        <script>
+                            // 카카오 맵 라이브러리가 로드될 때까지 기다린 후 실행
+                            kakao.maps.load(function() {
+                                var container = document.getElementById('map');
+                                var xpos = document.getElementById('wd_xpos').value; // 이전에 넣은 x 좌표
+                                var ypos = document.getElementById('wd_ypos').value; // 이전에 넣은 y 좌표
+                                
+                                var options = {
+                                    center: new kakao.maps.LatLng(ypos, xpos), // 더뉴컨벤션 좌표 적용
+                                    level: 3
+                                };
+
+                                var map = new kakao.maps.Map(container, options);
+                                
+                                // 마커 추가 (선택사항)
+                                var markerPosition = new kakao.maps.LatLng(ypos, xpos);
+                                var marker = new kakao.maps.Marker({
+                                    position: markerPosition
+                                });
+                                marker.setMap(map);
+                            });
+                        </script>
+                        <!-- <div class="way-guide">
                             <div class="guide-item">
                                 <span class="guide-tit">지하철</span>
                                 <span class="guide-txt">5호선 발산역 8번 출구 (도보 5분)</span>
@@ -285,10 +300,109 @@
                                 <span class="guide-tit">버스</span>
                                 <span class="guide-txt">발산역, 가양동 방면 버스 이용</span>
                             </div>
+                        </div> -->
+                    </div>
+                </section>
+
+                <!-- 11. 계좌번호 -->
+                <section class="account_wrap anchor_6 wrap_padding">
+                    <div class="offset_5 offset">
+                        <div class="account_inner inner_padding">
+                            <p class="section_tit theme_1_color" style="text-align:center; font-size: 1.2rem; margin-bottom: 20px;">마음을 전하실 곳</p>
+
+                            <div class="account_box">
+                                <div class="groom_account account_list">
+                                    <p class="account_tit" onclick="toggleAccount(this)">
+                                        <span>신랑측 계좌번호</span>
+                                        <i class="xi-angle-down-min arrow"></i>
+                                    </p>
+                                    <div class="cover_wrap" style="display: none;">
+                                        <div class="account_cover">
+                                            <div class="article1">
+                                                <p><span>기업은행</span> <span class="acc_num">231242424153245</span></p>
+                                                <p>정연재</p>
+                                            </div>
+                                            <div class="article2">
+                                                <button class="copy_btn" onclick="copyToClipboard('231242424153245')">복사</button>
+                                            </div>
+                                        </div>
+                                        <div class="account_cover">
+                                            <div class="article1">
+                                                <p><span>00은행</span> <span class="acc_num">110-000-000000</span></p>
+                                                <p>정철화 (부)</p>
+                                            </div>
+                                            <div class="article2">
+                                                <button class="copy_btn" onclick="copyToClipboard('110-000-000000')">복사</button>
+                                            </div>
+                                        </div>
+                                        <div class="account_cover">
+                                            <div class="article1">
+                                                <p><span>00은행</span> <span class="acc_num">110-000-000000</span></p>
+                                                <p>이용순 (모)</p>
+                                            </div>
+                                            <div class="article2">
+                                                <button class="copy_btn" onclick="copyToClipboard('110-000-000000')">복사</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bride_account account_list">
+                                    <p class="account_tit" onclick="toggleAccount(this)">
+                                        <span>신부측 계좌번호</span>
+                                        <i class="xi-angle-down-min arrow"></i>
+                                    </p>
+                                    <div class="cover_wrap" style="display: none;">
+                                        <div class="account_cover">
+                                            <div class="article1">
+                                                <p><span>00은행</span> <span class="acc_num">110-000-000000</span></p>
+                                                <p>장선홍</p>
+                                            </div>
+                                            <div class="article2">
+                                                <button class="copy_btn" onclick="copyToClipboard('110-000-000000')">복사</button>
+                                            </div>
+                                        </div>
+                                        <div class="account_cover">
+                                            <div class="article1">
+                                                <p><span>00은행</span> <span class="acc_num">110-000-000000</span></p>
+                                                <p>장수호 (부)</p>
+                                            </div>
+                                            <div class="article2">
+                                                <button class="copy_btn" onclick="copyToClipboard('110-000-000000')">복사</button>
+                                            </div>
+                                        </div>
+                                        <div class="account_cover">
+                                            <div class="article1">
+                                                <p><span>00은행</span> <span class="acc_num">110-000-000000</span></p>
+                                                <p>김희정 (모)</p>
+                                            </div>
+                                            <div class="article2">
+                                                <button class="copy_btn" onclick="copyToClipboard('110-000-000000')">복사</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
 
+                <!-- 12. 방명록 -->
+                
+                
+                <!-- 13. 카카오톡으로 공유하기, 청첩장 주소 복사하기 -->
+                <section class="share_wrap anchor_9 wrap_padding">
+                    <div class="offset_10 offset">
+                        <div class="share_inner inner_padding">
+                            <span class="kakao_btn" onclick="shareKakao()">
+                                <span id="kakao-link-btn">카카오톡으로 공유하기</span>
+                            </span>
+                            <span class="url_btn" onclick="copyUrl()">
+                                <span>청첩장 주소 복사하기</span>
+                            </span>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
     </body>

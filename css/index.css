@@ -422,7 +422,7 @@ section {
     display: inline-block;
 }
 /* 교통 안내 스타일 */
-.way-guide { margin-top: 40px; text-align: left; }
+/*.way-guide { margin-top: 40px; text-align: left; }
 .guide-item { margin-bottom: 20px; }
 .guide-tit {
     display: block;
@@ -431,4 +431,50 @@ section {
     color: var(--accent-color);
     margin-bottom: 5px;
 }
-.guide-txt { font-size: 14px; color: #666; line-height: 1.6; }
+.guide-txt { font-size: 14px; color: #666; line-height: 1.6; } */
+
+/* 11. 계좌번호 */
+.account_list { margin-bottom: 15px; border: 1px solid #e9e4de; border-radius: 8px; overflow: hidden; background: #fff; }
+.account_tit { 
+    background: #fdfaf7; padding: 18px 20px; cursor: pointer; 
+    display: flex; justify-content: space-between; align-items: center; 
+    font-weight: bold; margin: 0; transition: background 0.3s;
+}
+.account_tit.on { background: #f4efea; border-bottom: 1px solid #e9e4de; }
+
+/* 화살표 회전 애니메이션 */
+.arrow { font-size: 20px; color: #999; transition: transform 0.3s ease; }
+.account_tit.on .arrow { transform: rotate(180deg); color: #555; }
+
+.account_cover { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dotted #e9e4de; }
+.account_cover:last-child { border-bottom: none; }
+
+.article1 p { font-size: 14px; margin: 2px 0; color: #666; text-align: left; }
+.acc_num { font-weight: 600; color: #333; }
+
+.copy_btn { 
+    background: #eee; border: none; padding: 6px 15px; border-radius: 4px; 
+    font-size: 12px; cursor: pointer; color: #555; transition: 0.2s; 
+}
+.copy_btn:hover { background: #e2e2e2; }
+.copy_btn:active { background: #d2d2d2; }
+
+
+/* 12. 방명록 */
+
+
+/* 13. 카카오톡으로 공유하기, 청첩장 주소 복사하기 */
+.share_inner { text-align: center; padding: 20px 0; display: flex; justify-content: center; gap: 10px; }
+.kakao_btn, .url_btn { 
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 12px 20px; border-radius: 30px; cursor: pointer; font-size: 14px; transition: 0.3s;
+    border: 1px solid #e9e4de; background: #fff;
+}
+/* 카카오톡 버튼 포인트 컬러 */
+.kakao_btn { background: #FEE500; border: none; color: #3C1E1E; font-weight: bold; }
+.kakao_btn i { margin-right: 8px; font-size: 18px; }
+.kakao_btn:hover { background: #fada00; }
+
+/* URL 버튼 스타일 */
+.url_btn { background: #fdfaf7; color: #666; }
+.url_btn:hover { background: #f4efea; }

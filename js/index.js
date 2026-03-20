@@ -1,7 +1,6 @@
 // 페이지 로드 시 실행
 window.onload = function() {
     updateDDay();
-    initMap();
 };
 
 // 1. 오디오
@@ -85,30 +84,7 @@ function closeSlider() {
     document.body.style.overflow = 'auto'; // 스크롤 허용
 }
 
-// 10. 결혼식장 장소(맵 API 활용)
-function initMap() {
-    // 카카오 맵 라이브러리가 로드될 때까지 기다린 후 실행
-    kakao.maps.load(function() {
-        var container = document.getElementById('map');
-        var xpos = document.getElementById('wd_xpos').value; // 이전에 넣은 x 좌표
-        var ypos = document.getElementById('wd_ypos').value; // 이전에 넣은 y 좌표
-        
-        var options = {
-            center: new kakao.maps.LatLng(ypos, xpos), // 더뉴컨벤션 좌표 적용
-            level: 3
-        };
-
-        var map = new kakao.maps.Map(container, options);
-        
-        // 마커 추가 (선택사항)
-        var markerPosition = new kakao.maps.LatLng(ypos, xpos);
-        var marker = new kakao.maps.Marker({
-            position: markerPosition
-        });
-        marker.setMap(map);
-    });
-}
-
+// 10. 결혼식장 장소(카카오맵, 내비 API 활용)
 function startNavigation() {
     if (!Kakao.isInitialized()) {
         Kakao.init('669f1c6f440657e143d516895413ef21');
@@ -123,4 +99,93 @@ function startNavigation() {
         y: parseFloat(ypos),
         coordType: 'wgs84',
     });
+}
+
+
+// 11. 계좌번호
+// 아코디언
+function toggleAccount(element) {
+    const coverWrap = element.nextElementSibling;
+    
+    // 다른 아코디언을 닫고 싶다면 아래 주석을 해제하세요
+    // document.querySelectorAll('.cover_wrap').forEach(el => { if(el !== coverWrap) el.style.display = 'none'; });
+    // document.querySelectorAll('.account_tit').forEach(el => { if(el !== element) el.classList.remove('on'); });
+
+    if (coverWrap.style.display === "none" || coverWrap.style.display === "") {
+        coverWrap.style.display = "block";
+        element.classList.add('on');
+    } else {
+        coverWrap.style.display = "none";
+        element.classList.remove('on');
+    }
+}
+
+// 복사 함수
+function copyToClipboard(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        // HTTPS 환경
+        navigator.clipboard.writeText(text).then(() => {
+            alert("계좌번호가 복사되었습니다.");
+        });
+    } else {
+        // HTTP 환경 및 하위 호환
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed"; // 스크롤 방지
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            alert("계좌번호가 복사되었습니다.");
+        } catch (err) {
+            console.error('복사 실패', err);
+        }
+        document.body.removeChild(textArea);
+    }
+}
+
+// 12. 방명록
+
+
+// 13. 카카오톡으로 공유하기, 청첩장 주소 복사하기
+function shareKakao() {
+    Kakao.Link.sendDefault({
+        objectType: 'feed',
+        content: {
+            title: '정연재 ❤️ 장선홍 결혼식에 초대합니다',
+            description: '2026년 06월 27일 토요일 오후 6시\n더뉴컨벤션 웨딩홀 2층 더뉴홀',
+            imageUrl: 'https://mangekyou93.github.io/yhwedding0627/files/images/pictures/thumbnail_image.jpg', // 대표 이미지 경로
+            link: {
+                mobileWebUrl: 'https://mangekyou93.github.io/yhwedding0627/',
+                webUrl: 'https://mangekyou93.github.io/yhwedding0627/',
+            },
+        },
+        buttons: [
+            {
+                title: '모바일 청첩장 보기',
+                link: {
+                    mobileWebUrl: 'https://mangekyou93.github.io/yhwedding0627/',
+                    webUrl: 'https://mangekyou93.github.io/yhwedding0627/',
+                },
+            },
+        ],
+    });
+}
+// URL 복사
+function copyUrl() {
+    const url = window.location.href; // 현재 페이지 주소
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(url).then(() => {
+            alert("청첩장 주소가 복사되었습니다.");
+        });
+    } else {
+        const textArea = document.createElement("textarea");
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert("청첩장 주소가 복사되었습니다.");
+    }
 }
