@@ -1,6 +1,7 @@
 // 페이지 로드 시 실행
 window.onload = function() {
-    updateDDay();
+    update_DDay();
+    set_guestbook();
 };
 
 // 1. 오디오
@@ -29,7 +30,7 @@ function closeModal() {
 }
 
 // 8. 연재♥선홍 의 결혼식 OO전
-function updateDDay() {
+function update_DDay() {
     const targetDate = new Date("2026-06-27T00:00:00"); // 결혼식 당일
     const today = new Date();
     
@@ -51,7 +52,7 @@ function updateDDay() {
     }
 }
 
-// 9. 
+// 9. 이미지 갤러리
 let gallerySwiper;
 function initSwiper() {
     gallerySwiper = new Swiper(".mySwiper", {
@@ -146,6 +147,156 @@ function copyToClipboard(text) {
 }
 
 // 12. 방명록
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxepXniKsewiA82hNyGDSW_0Ht8Fksbk8xeUQ1S9-LEoRmz5FrWXjSYPG38go7LwnRTSQ/exec';
+async function set_guestbook() {
+
+    try {
+        const isGuestBookLoaded = await fetchGuestbook();
+
+        // 1. Swiper 초기화 (전역 변수로 할당하여 어디서든 접근 가능하게)
+        window.guestSwiper = new Swiper(".guest-swiper", {
+            slidesPerView: 1.2,
+            spaceBetween: 15,
+            centeredSlides: false,
+        });
+        
+        // 2. 요소 선택 및 이벤트 바인딩
+        const btnOpenAll = document.querySelector('.btn-open-all');
+        const btnOpenWrite = document.querySelector('.btn-open-write');
+        const allListPop = document.querySelector('.all-list-pop');
+        const allListOverlay = document.querySelector('.all-list-overlay');
+        const writeWrap = document.querySelector('.write-wrap');
+        const writeOverlay = document.querySelector('.write-overlay');
+
+        const fadeIn = (el) => {
+            if(!el) return;
+            el.style.display = 'block';
+            setTimeout(() => { el.style.opacity = '1'; }, 10);
+        };
+        
+        const fadeOut = (el) => {
+            if(!el) return;
+            el.style.opacity = '0';
+            setTimeout(() => { el.style.display = 'none'; }, 200);
+        };
+
+        btnOpenAll?.addEventListener('click', () => {
+            fadeIn(allListOverlay);
+            fadeIn(allListPop);
+        });
+
+        btnOpenWrite?.addEventListener('click', () => {
+            fadeIn(writeOverlay);
+            fadeIn(writeWrap);
+        });
+
+        document.querySelectorAll('.close-modal, .modal-overlay').forEach(btn => {
+            btn.addEventListener('click', () => {
+                fadeOut(allListOverlay);
+                fadeOut(allListPop);
+                fadeOut(writeOverlay);
+                fadeOut(writeWrap);
+            });
+        });
+    } catch (error) {
+        console.error("방명록 로드 실패:", error);
+    }
+}
+
+async function fetchGuestbook() {
+    let result = true;
+    showLoading(true);
+
+    try {
+        // GAS 호출 시 redirect 처리를 위해 follow 설정 (fetch 기본값이긴 합니다)
+        const response = await fetch(GAS_URL);
+        const data = await response.json();
+        
+        const listWrapper = document.getElementById('guestbook-list');
+        if (!listWrapper) return false;
+        
+        listWrapper.innerHTML = ''; 
+
+        // 데이터가 배열인지 확인 후 렌더링
+        if (Array.isArray(data)) {
+            data.reverse().forEach(item => {
+                // GAS 시트 첫 줄(Header) 이름과 정확히 일치해야 합니다.
+                // 만약 에러가 난다면 console.log(item)으로 Key값을 확인해보세요.
+                const slide = `
+                    <div class="swiper-slide book-slide-box">
+                        <div class="book-article">
+                            <p class="book-who"><span class="from-em">FROM.</span> ${item.name || '익명'}</p>
+                            <p class="book-slide-txt">${item.message || '내용 없음'}</p>
+                            <p class="book-date"><span>${item.date ? new Date(item.date).toLocaleDateString() : ''}</span></p>
+                        </div>
+                    </div>`;
+                listWrapper.insertAdjacentHTML('beforeend', slide);
+            });
+        }
+
+        // 4. Swiper 업데이트 (데이터가 비동기로 로드된 후 슬라이드 크기 재계산)
+        if (window.guestSwiper) {
+            window.guestSwiper.update();
+        }
+
+    } catch (error) {
+        console.error("방명록 로드 실패:", error);
+        result = false;
+    }
+    finally {
+        showLoading(false);
+    }
+
+    return result;
+}
+
+async function saveGuestbook() {
+    const nameInput = document.getElementById('write_guest_name');
+    const msgInput = document.getElementById('write_guest_text');
+    const submitBtn = document.querySelector('.btn-guestbook-submit');
+    if (!nameInput.value || !msgInput.value) {
+        alert("성함과 메시지를 모두 입력해주세요.");
+        return;
+    }
+
+    const payload = {
+        name: nameInput.value,
+        message: msgInput.value
+    };
+
+    try {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span class="btn-spinner"> </span>작성중...`;
+        // GAS doPost 호출
+        await fetch(GAS_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        });
+
+        // 입력창 초기화 및 모달 닫기
+        nameInput.value = '';
+        msgInput.value = '';
+        document.querySelector('.write-overlay').click(); // 닫기 이벤트 트리거
+        
+        // 목록 새로고침
+        fetchGuestbook();
+
+        setTimeout(() => { alert("축하해 주셔서 감사합니다!"); }, 100);
+        
+    } catch (error) {
+        alert("등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalContent;
+    }
+}
+// 방명록 로딩
+function showLoading(isLoading) {
+    const loader = document.getElementById('guestbook-loader'); // 별도의 로딩 레이어
+    if (!loader) return;
+    loader.style.display = isLoading ? 'flex' : 'none';
+}
+
 
 
 // 13. 카카오톡으로 공유하기, 청첩장 주소 복사하기
