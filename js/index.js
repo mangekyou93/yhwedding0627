@@ -18,14 +18,17 @@ function toggleAudio() {
 }
 
 // 6. 양가부모님 성함 + 신랑 신부 이름 + 연락처 메세지 보내기
+// 6. 혼주 연락처 모달 제어
 function openModal() {
-    document.getElementById('modal-overlay').style.display = 'flex';
-    // 모달 열릴 때 본문 스크롤 방지 (선택사항)
+    const overlay = document.getElementById('modal-overlay');
+    const content = overlay.querySelector('.modal-content');
+    overlay.style.display = 'block';
+    content.style.display = 'block';
     document.body.style.overflow = 'hidden';
 }
+
 function closeModal() {
     document.getElementById('modal-overlay').style.display = 'none';
-    // 스크롤 방지 해제
     document.body.style.overflow = 'auto';
 }
 
@@ -148,8 +151,10 @@ function copyToClipboard(text) {
 
 // 12. 방명록
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbxepXniKsewiA82hNyGDSW_0Ht8Fksbk8xeUQ1S9-LEoRmz5FrWXjSYPG38go7LwnRTSQ/exec';
+// 방명록 전역 변수 (캐시)
+window.cachedGuestbookData = [];
+// 방명록 세팅
 async function set_guestbook() {
-
     try {
         const isGuestBookLoaded = await fetchGuestbook();
 
@@ -203,6 +208,7 @@ async function set_guestbook() {
     }
 }
 
+// 방명록 조회
 async function fetchGuestbook() {
     let result = true;
     showLoading(true);
@@ -219,6 +225,9 @@ async function fetchGuestbook() {
 
         // 데이터가 배열인지 확인 후 렌더링
         if (Array.isArray(data)) {
+            // [핵심] 전역 변수에 데이터 저장 (나중에 전체보기에서 사용)
+            window.cachedGuestbookData = data;
+
             data.reverse().forEach(item => {
                 // GAS 시트 첫 줄(Header) 이름과 정확히 일치해야 합니다.
                 // 만약 에러가 난다면 console.log(item)으로 Key값을 확인해보세요.
@@ -250,7 +259,46 @@ async function fetchGuestbook() {
     return result;
 }
 
-async function saveGuestbook() {
+// 방명록 전체보기
+function showAllGuestbook() {
+    const bodyContainer = document.getElementById('all-guestbook-body');
+    const overlay = document.querySelector('.all-list-overlay');
+    const modal = document.querySelector('.all-list-pop');
+
+    if (!window.cachedGuestbookData || window.cachedGuestbookData.length === 0) {
+        bodyContainer.innerHTML = '<p class="all-gb-empty">등록된 메시지가 없습니다.</p>';
+    } else {
+        const html = window.cachedGuestbookData.map((item) => `
+            <div class="all-gb-card">
+                <div class="all-gb-top">
+                    <p class="all-gb-name"><span class="all-gb-from">FROM.</span> ${item.name}</p>
+                    <p class="all-gb-date">${item.date ? new Date(item.date).toLocaleDateString() : ''}</p>
+                </div>
+                <p class="all-gb-content">${item.message}</p>
+            </div>
+        `).join('');
+        
+        bodyContainer.innerHTML = html;
+    }
+
+    overlay.style.display = 'block';
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+function closeAllGuestbook() {
+    const overlay = document.querySelector('.all-list-overlay');
+    const modal = document.querySelector('.all-list-pop');
+    
+    overlay.style.display = 'none';
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto'; // 스크롤 복구
+}
+
+// 방명록 등록
+let isSubmitting = false;
+async function writeGuestbook() {
+    if (isSubmitting) return;
+
     const nameInput = document.getElementById('write_guest_name');
     const msgInput = document.getElementById('write_guest_text');
     const submitBtn = document.querySelector('.btn-guestbook-submit');
@@ -265,28 +313,35 @@ async function saveGuestbook() {
     };
 
     try {
+        isSubmitting = true;
         submitBtn.disabled = true;
-        submitBtn.innerHTML = `<span class="btn-spinner"> </span>작성중...`;
+        submitBtn.style.opacity = '0.5'; // 시각적으로도 막혔음을 표시
+        submitBtn.style.pointerEvents = 'none'; // 클릭 이벤트 자체를 차단
+        submitBtn.innerHTML = `작성중...`;
+        
+        // 입력창 초기화 및 모달 닫기
+        nameInput.value = '';
+        msgInput.value = '';
+        document.querySelector('.write-overlay').click(); // 닫기 이벤트 트리거
+        setTimeout(() => { alert("축하해 주셔서 감사합니다!"); }, 100);
+
         // GAS doPost 호출
         await fetch(GAS_URL, {
             method: 'POST',
             body: JSON.stringify(payload)
         });
-
-        // 입력창 초기화 및 모달 닫기
-        nameInput.value = '';
-        msgInput.value = '';
-        document.querySelector('.write-overlay').click(); // 닫기 이벤트 트리거
         
         // 목록 새로고침
         fetchGuestbook();
-
-        setTimeout(() => { alert("축하해 주셔서 감사합니다!"); }, 100);
         
     } catch (error) {
         alert("등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
     } finally {
+        isSubmitting = false;
         submitBtn.disabled = false;
+        submitBtn.innerHTML = `작성하기`;
+        submitBtn.style.opacity = '1';
+        submitBtn.style.pointerEvents = 'auto';
         submitBtn.innerHTML = originalContent;
     }
 }

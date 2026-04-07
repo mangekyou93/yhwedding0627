@@ -194,48 +194,67 @@ section {
 .parent-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 15px; }
 .parent-row a { text-decoration: none; color: #555; border: 1px solid #ddd; padding: 2px 8px; border-radius: 5px; font-size: 12px; }
 
-/* 모달 배경 (어둡게 처리) */
-.modal-overlay {
-    display: none; /* 초기 상태 숨김 */
+/* 모달 (혼주 연락, 방명록) */
+/* 모든 모달 오버레이 공통 */
+.modal-overlay, .write-overlay {
+    display: none; 
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(3px);
+    z-index: 9998;
 }
-.modal-content {
+/* 모든 모달 컨텐츠 공통 (중앙 정렬 핵심) */
+.modal-content, .write-wrap {
+    display: none;
+    position: fixed;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
     width: 90%;
-    max-width: 360px;
+    max-width: 400px;
     background: #fff;
     border-radius: 15px;
+    z-index: 9999;
     overflow: hidden;
-    animation: slideUp 0.3s ease-out;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
-@keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-.modal-header {
-    background: var(--main-color);
-    padding: 15px;
+/* 팝업 헤더 & 바디 레이아웃 */
+.pop-header, .modal-header {
+    padding: 15px 20px;
+    background: #fdfdfd;
+    border-bottom: 1px solid #eee;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--accent-color);
     font-weight: bold;
 }
-.modal-close {
-    background: none;
-    border: none;
-    font-size: 20px;
-    color: var(--accent-color);
-    cursor: pointer;
+.pop-body, .modal-body {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
 }
-.modal-body { padding: 20px; }
+/* 닫기 버튼 초기화 및 디자인 */
+.modal-close, .close-modal {
+    background: none;        /* 회색 배경 제거 */
+    border: none;            /* 기본 테두리 제거 */
+    outline: none;           /* 클릭 시 생기는 선 제거 */
+    cursor: pointer;
+    padding: 5px;            /* 클릭 영역 확보 */
+    font-size: 22px;         /* 적당한 크기 */
+    color: #999;             /* 너무 튀지 않는 회색 */
+    line-height: 1;
+    transition: color 0.2s;  /* 부드러운 반응 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 마우스 올렸을 때 살짝 진해지게 */
+.modal-close:hover, .close-modal:hover {
+    color: #333;
+}
 .group-title {
     font-size: 13px;
     color: var(--accent-color);
@@ -461,79 +480,121 @@ section {
 
 
 /* 12. 방명록 */
-#guestbook-section { padding: 60px 20px; background-color: #faf9f7; position: relative; }
-.book-box { margin: 30px 0; }
-/* 슬라이드 아이템 디자인 */
-.book-slide-box { 
-    background: #fff; 
-    padding: 20px; 
-    border-radius: 15px; 
-    border: 1px solid #eee;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-    height: auto;
+.write-wrap { padding: 25px; }
+.write-tit { font-size: 18px; font-weight: bold; margin-bottom: 20px; text-align: center; }
+.write-wrap input, .write-wrap textarea {
+    width: 100%; margin-bottom: 10px; padding: 12px;
+    border: 1px solid #eee; border-radius: 8px; font-size: 14px;
 }
-.book-who { font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #333; }
-.from-em { color: var(--accent-color); margin-right: 5px; font-style: italic; }
-.book-slide-txt { 
-    font-size: 14px; 
-    color: #666; 
-    line-height: 1.6; 
-    height: 60px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+.btn-guestbook-submit {
+    display: block; width: 100%; padding: 15px;
+    background: var(--accent-color); color: #fff;
+    text-align: center; border-radius: 8px; cursor: pointer;
 }
-.book-date { font-size: 11px; color: #aaa; margin-top: 15px; }
-/* 버튼 디자인 */
-.book-btn-group { display: flex; gap: 10px; justify-content: center; }
-.book-btn-group a {
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 13px;
-    background: var(--accent-color); /* 이전에 설정한 베이지/브라운 톤 */
-    color: #fff;
-    text-decoration: none;
+/* --- 12. 방명록 섹션 전체 배경 및 레이아웃 --- */
+#guestbook-section {
+    position: relative; /* 이게 있어야 loader가 이 안에서만 돕니다 */
+    min-height: 400px;  /* 로딩 중에도 영역 확보 */
+    background-color: #faf9f7;
 }
-/* 모달/팝업 공통 */
-.modal-overlay { 
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-    background: rgba(0,0,0,0.5); z-index: 100; 
+/* GUEST BOOK 타이틀 (상단 갈색 텍스트) */
+#guestbook-section .section-title {
+    font-size: 14px;
+    letter-spacing: 5px;
+    color: #8d7b68; /* 포인트 갈색 */
+    margin-bottom: 40px;
+    font-weight: 600;
 }
-.modal-content { 
-    display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-    width: 90%; max-width: 400px; background: #fff; border-radius: 15px; z-index: 101; 
-    padding: 25px; box-sizing: border-box;
-}
-.pop-header { font-weight: 600; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; }
-.write-tit { font-size: 18px; font-weight: 600; text-align: center; margin-bottom: 20px; }
-.write-wrap input, .write-wrap textarea { 
-    width: 100%; border: 1px solid #eee; border-radius: 5px; padding: 10px; margin-bottom: 10px; box-sizing: border-box; 
-}
-.btn-guestbook-submit { display: block; background: var(--accent-color); color: #fff; text-align: center; padding: 12px; border-radius: 5px; cursor: pointer; }
-/* 버튼 비활성화 상태 스타일 */
-.btn-guestbook-submit:disabled {
-    background-color: #ccc !important;
-    cursor: not-allowed;
+/* --- 방명록 스와이퍼 컨테이너 --- */
+.book-box {
+    width: 100%;
+    max-width: 420px; /* 너무 퍼지지 않게 제한 */
+    margin-bottom: 30px;
     position: relative;
 }
-
-/* 버튼 내부에 넣을 작은 스피너 */
-.btn-guestbook-spinner {
+/* 흰색 카드 형태 슬라이드 (image_3.png 핵심 디자인) */
+.guest-swiper {
+    width: 100%;
+    padding: 20px 0;
+}
+.book-slide-box {
+    width: 280px; /* 기본 너비 지정 */
+    margin: 0 auto; /* 1개일 때 중앙 정렬 */
+    background: #fff;
+    padding: 30px 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    /* 텍스트 중앙 정렬 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+/* 카드 내부 텍스트 스타일링 */
+.book-who {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+.from-em {
+    color: #8d7b68; /* FROM. 텍스트 갈색 포인트 */
+    font-style: italic; /* 이탤릭체 */
+    margin-right: 5px;
+    font-weight: 500;
+}
+.book-slide-txt {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 20px;
+    word-break: keep-all; /* 단어 단위 줄바꿈 */
+    overflow: hidden;
+}
+.book-date {
+    font-size: 11px;
+    color: #aaa;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+/* --- 하단 버튼 그룹 (정중앙 정렬) --- */
+.book-btn-group {
+    display: flex;
+    gap: 10px; /* 버튼 사이 간격 */
+    justify-content: center; /* 버튼들을 가로 중앙으로 */
+    width: 100%;
+    margin-top: 10px;
+}
+/* 세련된 갈색 버튼 디자인 (image_3.png 반영) */
+.book-btn-group a {
     display: inline-block;
-    width: 14px;
-    height: 14px;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-radius: 50%;
-    border-top-color: #fff;
-    animation: btn_spin 0.8s linear infinite;
-    margin-right: 8px;
-    vertical-align: middle;
+    padding: 12px 28px;
+    background-color: #8d7b68; /* 버튼 배경색 */
+    color: #fff !important;   /* 텍스트 무조건 흰색 */
+    text-decoration: none !important; /* 밑줄 절대 금지 */
+    border-radius: 8px;       /* 살짝 둥글게 */
+    font-size: 13px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    border: none;
+    cursor: pointer;
 }
-@keyframes btn_spin {
-    to { transform: rotate(360deg); }
+/* 버튼 호버 효과 */
+.book-btn-group a:hover {
+    background-color: #756555; /* 마우스 올리면 살짝 어둡게 */
 }
-/* 방명록 로딩 */
+/* 로딩 스피너 중앙 정렬 보정 */
+#guestbook-loader {
+    position: absolute !important; /* 부모인 #guestbook-section 기준 */
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .spinner {
     width: 30px;
     height: 30px;
@@ -546,8 +607,109 @@ section {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
-
+/* 1. 모달 레이아웃 & 배경 */
+.all-list-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 10001;
+    backdrop-filter: blur(2px);
+}
+.all-list-pop {
+    display: none;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; 
+    height: 100%;
+    background: #fff;
+    border-radius: 0;
+    overflow: hidden;
+    z-index: 10002;
+    animation: slideUp 0.3s ease-out;
+}
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+/* 2. 헤더 영역 (고정) */
+.all-gb-header {
+    position: sticky;
+    top: 0;
+    height: 60px;
+    background-color: var(--accent-color) !important; 
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+    font-weight: 600;
+    z-index: 10;
+}
+.all-gb-close {
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
+    font-size: 22px;
+    padding: 5px;
+}
+/* 3. 리스트 바디 */
+.all-gb-body {
+    height: calc(100% - 60px);
+    overflow-y: auto;
+    background: #fff;
+}
+/* 4. 개별 아이템 카드 */
+.all-gb-card {
+    padding: 25px 20px;
+    background: #fff;
+    text-align: left;
+}
+/* 항목 사이의 두꺼운 구분선 */
+.all-gb-card + .all-gb-card {
+    border-top: 10px solid #f7f7f7; 
+}
+/* 5. 카드 내부 상단 (이름 & 날짜) */
+.all-gb-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+.all-gb-name {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+.all-gb-from {
+    color: var(--accent-color);
+    font-weight: 700;
+    margin-right: 4px;
+}
+.all-gb-date {
+    font-size: 12px;
+    color: #bbb;
+}
+/* 6. 본문 메시지 */
+.all-gb-content {
+    font-size: 15px;
+    line-height: 1.65;
+    color: #555;
+    margin: 0;
+    word-break: break-all;
+    white-space: pre-wrap;
+}
+/* 데이터 없음 */
+.all-gb-empty {
+    padding: 60px 20px;
+    color: #999;
+    text-align: center;
+    font-size: 14px;
+}
 
 /* 13. 카카오톡으로 공유하기, 청첩장 주소 복사하기 */
 .share_inner { text-align: center; padding: 20px 0; display: flex; justify-content: center; gap: 10px; }

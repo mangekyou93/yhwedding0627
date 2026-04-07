@@ -30,7 +30,7 @@
                     <button onclick="toggleAudio()">
                         <img id="bgm-icon" src="files/images/icons/pause.svg" alt="bgm">
                     </button>
-                    <audio id="bgm" loop>
+                    <audio id="bgm" loop volumn="0.1">
                     <!-- <audio id="bgm" loop autoplay> -->
                         <source src="files/bgm/music.mp3" type="audio/mpeg">
                     </audio>
@@ -390,7 +390,7 @@
 
                 <!-- 12. 방명록 -->
                 <section id="guestbook-section" class="wrap_padding">
-                    <div id="guestbook-loader" style="display: flex; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); z-index: 10; flex-direction: column; justify-content: center; align-items: center;">
+                    <div id="guestbook-loader">
                         <div class="spinner"></div>
                         <p style="font-size: 12px; color: #999; margin-top: 10px;">방명록을 불러오고 있어요...</p>
                     </div>
@@ -403,23 +403,25 @@
                             </div>
                         </div>
                         <div class="book-btn-group">
-                            <a href="javascript:void(0);" class="btn-open-all"><i class="xi-bars"></i> 전체보기</a>
+                            <a href="javascript:showAllGuestbook();" class="btn-open-all"><i class="xi-bars"></i> 전체보기</a>
                             <a href="javascript:void(0);" class="btn-open-write"><i class="xi-pen"></i> 작성하기</a>
                         </div>
                     </div>
-                    <div class="modal-overlay all-list-overlay"></div>
-                    <div class="modal-content all-list-pop">
-                        <div class="pop-header">방명록 <i class="xi-close-thin close-modal"></i></div>
-                        <div class="pop-body" id="all-guestbook-body">
-                            </div>
+                    <div class="modal-overlay all-list-overlay" onclick="closeAllGuestbook()"></div>
+                    <div class="modal-content all-list-pop" style="max-width: 500px;">
+                        <div class="all-gb-header">
+                            방명록
+                            <i class="xi-close-thin all-gb-close" onclick="closeAllGuestbook()"></i>
+                        </div>
+                        <div class="all-gb-body" id="all-guestbook-body"></div>
                     </div>
                     <div class="modal-overlay write-overlay"></div>
                     <div class="modal-content write-wrap">
                         <i class="xi-close-thin close-modal write-close"></i>
                         <p class="write-tit">방명록 작성하기</p>
                         <input type="text" id="write_guest_name" placeholder="성함을 입력해주세요.">
-                        <textarea id="write_guest_text" rows="4" placeholder="축하 메시지를 남겨주세요." style="resize: none;"></textarea>
-                        <span class="btn-guestbook-submit" onclick="saveGuestbook()">작성하기</span>
+                        <textarea id="write_guest_text" rows="4" placeholder="내용을 입력해주세요 (비방, 욕설, 정치적성향의 글은 임의로 삭제되며 형사처벌의 대상이 될 수 있습니다.)" style="resize: none; font-family: 'Pretendard', -apple-system, sans-serif;"></textarea>
+                        <span class="btn-guestbook-submit" onclick="writeGuestbook()">작성하기</span>
                     </div>
                 </section>
                 
