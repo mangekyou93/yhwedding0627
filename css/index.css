@@ -1,3 +1,53 @@
+/* 준비중 입니다.. */
+#full-page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fcfbf9; /* 전체적인 베이지 톤 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999; /* 모든 요소보다 위에 */
+    transition: opacity 0.5s ease; /* 사라질 때 부드럽게 */
+}
+.loader-content {
+    text-align: center;
+}
+.main-flower {
+    font-size: 30px;
+    margin-bottom: 20px;
+    animation: pulse 1.5s infinite; /* 꽃 아이콘이 두근거리는 효과 */
+}
+.loader-text {
+    font-size: 18px;
+    color: #8d7b68; /* 메인 브라운 포인트 컬러 */
+    letter-spacing: 2px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    line-height: 25px;
+}
+.loader-subtext {
+    font-size: 14px;
+    color: #aaa;
+    line-height: 1.6;
+}
+.ready-spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #d4c1b0;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.8; }
+}
+
 /* 변수 설정 */
 :root {
     --main-color: #f4f1ea;   /* 따뜻한 느낌의 배경색 */
