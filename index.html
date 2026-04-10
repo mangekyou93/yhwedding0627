@@ -22,7 +22,6 @@
         <div id="root">
             <div id="full-page-loader">
                 <div class="loader-content">
-                    <!-- <div class="main-flower">💍</div>  -->
                     <div class="ready-spinner"></div>
                     <p class="loader-text">소중한 순간을 위해 잠시만 기다려 주세요...</p>
                     <p class="loader-subtext">정연재 & 장선홍<br/>2026년 6월 27일 오후 6시<br/>더뉴컨벤션웨딩 2층 더뉴홀</p>
@@ -34,15 +33,14 @@
 
             <div id="invitation-card">
                 <!-- 1. 오디오 -->
-                <div id="audio-section">
+                <section id="audio-section" style="padding: 0;">
                     <button onclick="toggleAudio()">
                         <img id="bgm-icon" src="files/images/icons/pause.svg" alt="bgm">
                     </button>
-                    <audio id="bgm" loop volumn="0.1">
-                    <!-- <audio id="bgm" loop autoplay> -->
+                    <audio id="bgm" loop autoplay onloadstart="this.volume=0.25">
                         <source src="files/bgm/music.mp3" type="audio/mpeg">
                     </audio>
-                </div>
+                </section>
 
                 <!-- 2. 신랑 신부 이름 -->
                 <section id="names">
@@ -114,53 +112,53 @@
                         <div class="parents-contact-btn" onclick="openModal()">
                             혼주에게 연락하기
                         </div>
-                        <div id="modal-overlay" class="modal-overlay" onclick="closeModal()">
-                            <div class="modal-content" onclick="event.stopPropagation()">
-                                <div class="modal-header">
-                                    <span>혼주에게 연락하기</span>
-                                    <button class="modal-close" onclick="closeModal()">✕</button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="modal-group">
-                                        <p class="group-title">신랑측 혼주</p>
-                                        <div class="parent-item">
-                                            <span class="parent-name">부 정철화</span>
-                                            <div class="parent-icons">
-                                                <a href="tel:01064374401">📞</a>
-                                                <a href="sms:01064374401">💬</a>
-                                            </div>
-                                        </div>
-                                        <div class="parent-item">
-                                            <span class="parent-name">모 이용순</span>
-                                            <div class="parent-icons">
-                                                <a href="tel:01039934401">📞</a>
-                                                <a href="sms:01039934401">💬</a>
-                                            </div>
-                                        </div>
+                    </div>
+                </section>
+                <div id="modal-overlay" class="modal-overlay" onclick="closeModal()">
+                    <div class="modal-content" onclick="event.stopPropagation()">
+                        <div class="modal-header">
+                            <span>혼주에게 연락하기</span>
+                            <button class="modal-close" onclick="closeModal()">✕</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-group">
+                                <p class="group-title">신랑측 혼주</p>
+                                <div class="parent-item">
+                                    <span class="parent-name">부 정철화</span>
+                                    <div class="parent-icons">
+                                        <a href="tel:01064374401">📞</a>
+                                        <a href="sms:01064374401">💬</a>
                                     </div>
-                                    <div class="modal-divider"></div>
-                                    <div class="modal-group">
-                                        <p class="group-title">신부측 혼주</p>
-                                        <div class="parent-item">
-                                            <span class="parent-name">부 장수호</span>
-                                            <div class="parent-icons">
-                                                <a href="tel:01038580149">📞</a>
-                                                <a href="sms:01038580149">💬</a>
-                                            </div>
-                                        </div>
-                                        <div class="parent-item">
-                                            <span class="parent-name">모 김희정</span>
-                                            <div class="parent-icons">
-                                                <a href="tel:01073261996">📞</a>
-                                                <a href="sms:01073261996">💬</a>
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="parent-item">
+                                    <span class="parent-name">모 이용순</span>
+                                    <div class="parent-icons">
+                                        <a href="tel:01039934401">📞</a>
+                                        <a href="sms:01039934401">💬</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-divider"></div>
+                            <div class="modal-group">
+                                <p class="group-title">신부측 혼주</p>
+                                <div class="parent-item">
+                                    <span class="parent-name">부 장수호</span>
+                                    <div class="parent-icons">
+                                        <a href="tel:01038580149">📞</a>
+                                        <a href="sms:01038580149">💬</a>
+                                    </div>
+                                </div>
+                                <div class="parent-item">
+                                    <span class="parent-name">모 김희정</span>
+                                    <div class="parent-icons">
+                                        <a href="tel:01073261996">📞</a>
+                                        <a href="sms:01073261996">💬</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
 
                 <!-- 7. 달력 -->
                 <section id="calendar-section">
@@ -236,27 +234,26 @@
                         <div class="thumb" onclick="openSlider(7)"><img src="files/images/pictures/gallery08.jpg" alt=""></div>
                         <div class="thumb" onclick="openSlider(8)"><img src="files/images/pictures/gallery09.jpg" alt=""></div>
                     </div>
-
-                    <div id="gallery-modal" class="gallery-modal">
-                        <button class="close-btn" onclick="closeSlider()">✕</button>
-                        <div class="swiper mySwiper">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide"><img src="files/images/pictures/gallery01.jpg"></div>
-                                <div class="swiper-slide"><img src="files/images/pictures/gallery02.jpg"></div>
-                                <div class="swiper-slide"><img src="files/images/pictures/gallery03.jpg"></div>
-                                <div class="swiper-slide"><img src="files/images/pictures/gallery04.jpg"></div>
-                                <div class="swiper-slide"><img src="files/images/pictures/gallery05.jpg"></div>
-                                <div class="swiper-slide"><img src="files/images/pictures/gallery06.jpg"></div>
-                                <div class="swiper-slide"><img src="files/images/pictures/gallery07.jpg"></div>
-                                <div class="swiper-slide"><img src="files/images/pictures/gallery08.jpg"></div>
-                                <div class="swiper-slide"><img src="files/images/pictures/gallery09.jpg"></div>
-                            </div>
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
-                            <div class="swiper-pagination"></div>
-                        </div>
-                    </div>
                 </section>
+                <div id="gallery-modal" class="gallery-modal">
+                    <button class="close-btn" onclick="closeSlider()">✕</button>
+                    <div class="swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide"><img src="files/images/pictures/gallery01.jpg"></div>
+                            <div class="swiper-slide"><img src="files/images/pictures/gallery02.jpg"></div>
+                            <div class="swiper-slide"><img src="files/images/pictures/gallery03.jpg"></div>
+                            <div class="swiper-slide"><img src="files/images/pictures/gallery04.jpg"></div>
+                            <div class="swiper-slide"><img src="files/images/pictures/gallery05.jpg"></div>
+                            <div class="swiper-slide"><img src="files/images/pictures/gallery06.jpg"></div>
+                            <div class="swiper-slide"><img src="files/images/pictures/gallery07.jpg"></div>
+                            <div class="swiper-slide"><img src="files/images/pictures/gallery08.jpg"></div>
+                            <div class="swiper-slide"><img src="files/images/pictures/gallery09.jpg"></div>
+                        </div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
                 
                 <!-- 10. 결혼식장 장소(맵 API 활용) -->
                 <section id="location-section">
@@ -268,9 +265,26 @@
                         <p class="venue-name">더뉴컨벤션 웨딩홀 2층 더뉴홀</p>
                         <p class="venue-address">서울 강서구 공항대로36길 57</p>
                         <p class="venue-tel">1661-3303</p>
-                        <a id="start-navigation" href="javascript:startNavigation()">
-                            <img src="https://developers.kakao.com/assets/img/about/buttons/navi/kakaonavi_btn_medium.png" alt="길 안내 버튼" />
-                        </a>
+                        <div class="more_view">
+                            <div class="bottom_box">
+                                <div class="navi">
+                                    <button class="map_btn tmap" onclick="openTMap()">
+                                        <span class="img_box"><img src="./img/tmap_icon.png" alt=""></span>티맵
+                                    </button>
+                                    <button class="map_btn kakao" onclick="startNavigation()">
+                                        <span class="img_box">
+                                            <img src="https://developers.kakao.com/assets/img/about/buttons/navi/kakaonavi_btn_medium.png" alt="길 안내 버튼" />
+                                        </span>카카오내비
+                                    </button>
+                                    <button class="map_btn naver" onclick="openNaverMap()">
+                                        <span class="img_box"><img src="./img/navermap_icon_2.png" alt=""></span>네이버지도
+                                    </button>
+                                    <!-- <a id="start-navigation" href="javascript:startNavigation()">
+                                        <img src="https://developers.kakao.com/assets/img/about/buttons/navi/kakaonavi_btn_medium.png" alt="길 안내 버튼" />
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
                         <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.7/kakao.min.js" integrity="sha384-tJkjbtDbvoxO+diRuDtwRO9JXR7pjWnfjfRn5ePUpl7e7RJCxKCwwnfqUAdXh53p" crossorigin="anonymous"></script>
 
                         <div id="map" style="width:100%; height:280px; margin:20px 0; border-radius:10px; background:#f8f8f8;"></div>
@@ -300,16 +314,6 @@
                                 marker.setMap(map);
                             });
                         </script>
-                        <!-- <div class="way-guide">
-                            <div class="guide-item">
-                                <span class="guide-tit">지하철</span>
-                                <span class="guide-txt">5호선 발산역 8번 출구 (도보 5분)</span>
-                            </div>
-                            <div class="guide-item">
-                                <span class="guide-tit">버스</span>
-                                <span class="guide-txt">발산역, 가양동 방면 버스 이용</span>
-                            </div>
-                        </div> -->
                     </div>
                 </section>
 
@@ -323,7 +327,7 @@
                                 <div class="groom_account account_list">
                                     <p class="account_tit" onclick="toggleAccount(this)">
                                         <span>신랑측 계좌번호</span>
-                                        <i class="xi-angle-down-min arrow"></i>
+                                        <span class="accordion-arrow">▶</span>
                                     </p>
                                     <div class="cover_wrap" style="display: none;">
                                         <div class="account_cover">
@@ -359,7 +363,7 @@
                                 <div class="bride_account account_list">
                                     <p class="account_tit" onclick="toggleAccount(this)">
                                         <span>신부측 계좌번호</span>
-                                        <i class="xi-angle-down-min arrow"></i>
+                                        <span class="accordion-arrow">▶</span>
                                     </p>
                                     <div class="cover_wrap" style="display: none;">
                                         <div class="account_cover">
@@ -415,23 +419,23 @@
                             <a href="javascript:void(0);" class="btn-open-write"><i class="xi-pen"></i> 작성하기</a>
                         </div>
                     </div>
-                    <div class="modal-overlay all-list-overlay" onclick="closeAllGuestbook()"></div>
-                    <div class="modal-content all-list-pop" style="max-width: 500px;">
-                        <div class="all-gb-header">
-                            방명록
-                            <i class="xi-close-thin all-gb-close" onclick="closeAllGuestbook()"></i>
-                        </div>
-                        <div class="all-gb-body" id="all-guestbook-body"></div>
-                    </div>
-                    <div class="modal-overlay write-overlay"></div>
-                    <div class="modal-content write-wrap">
-                        <i class="xi-close-thin close-modal write-close"></i>
-                        <p class="write-tit">방명록 작성하기</p>
-                        <input type="text" id="write_guest_name" placeholder="성함을 입력해주세요.">
-                        <textarea id="write_guest_text" rows="4" placeholder="내용을 입력해주세요 (비방, 욕설, 정치적성향의 글은 임의로 삭제되며 형사처벌의 대상이 될 수 있습니다.)" style="resize: none; font-family: 'Pretendard', -apple-system, sans-serif;"></textarea>
-                        <span class="btn-guestbook-submit" onclick="writeGuestbook()">작성하기</span>
-                    </div>
                 </section>
+                <div class="modal-overlay all-list-overlay" onclick="closeAllGuestbook()"></div>
+                <div class="modal-content all-list-pop" style="max-width: 450px;">
+                    <div class="all-gb-header">
+                        방명록
+                        <button class="close-btn" style="top: 15px; font-size: 20px;" onclick="closeAllGuestbook()">✕</button>
+                    </div>
+                    <div class="all-gb-body" id="all-guestbook-body"></div>
+                </div>
+                <div class="modal-overlay write-overlay"></div>
+                <div class="modal-content write-wrap">
+                    <button class="close-btn close-modal write-close" style="color: black; font-size: 20px;">✕</button>
+                    <p class="write-tit">방명록 작성하기</p>
+                    <input type="text" id="write_guest_name" placeholder="성함을 입력해주세요.">
+                    <textarea id="write_guest_text" rows="4" placeholder="내용을 입력해주세요 (비방, 욕설, 정치적성향의 글은 임의로 삭제되며 형사처벌의 대상이 될 수 있습니다.)" style="resize: none; font-family: 'Pretendard', -apple-system, sans-serif;"></textarea>
+                    <span class="btn-guestbook-submit" onclick="writeGuestbook()">작성하기</span>
+                </div>
                 
                 <!-- 13. 카카오톡으로 공유하기, 청첩장 주소 복사하기 -->
                 <section class="share_wrap anchor_9 wrap_padding">

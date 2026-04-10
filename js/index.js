@@ -1,8 +1,34 @@
 // 페이지 로드 시 실행
 window.onload = function() {
+    set_section_scroll();
     update_DDay();
     set_guestbook();
 };
+
+// 섹션 등장
+function set_section_scroll() {
+    const sections = document.querySelectorAll('section');
+
+    const observerOptions = {
+        root: null, // 브라우저 뷰포트 기준
+        threshold: 0.1 // 10% 정도 보였을 때 실행
+    };
+
+    const sectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // 화면에 들어오면 클래스 추가
+                entry.target.classList.add('is-visible');
+                // 한 번 나타난 후에는 감시 중단 (다시 사라지는 걸 원치 않을 때)
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        sectionObserver.observe(section);
+    });
+}
 
 // 1. 오디오
 function toggleAudio() {
@@ -129,7 +155,7 @@ function copyToClipboard(text) {
     if (navigator.clipboard && window.isSecureContext) {
         // HTTPS 환경
         navigator.clipboard.writeText(text).then(() => {
-            alert("계좌번호가 복사되었습니다.");
+            // alert("계좌번호가 복사되었습니다.");
         });
     } else {
         // HTTP 환경 및 하위 호환
@@ -141,7 +167,7 @@ function copyToClipboard(text) {
         textArea.select();
         try {
             document.execCommand('copy');
-            alert("계좌번호가 복사되었습니다.");
+            // alert("계좌번호가 복사되었습니다.");
         } catch (err) {
             console.error('복사 실패', err);
         }
@@ -324,6 +350,7 @@ async function writeGuestbook() {
         msgInput.value = '';
         document.querySelector('.write-overlay').click(); // 닫기 이벤트 트리거
         setTimeout(() => { alert("축하해 주셔서 감사합니다!"); }, 100);
+        showLoading(true);
 
         // GAS doPost 호출
         await fetch(GAS_URL, {
@@ -389,7 +416,7 @@ function copyUrl() {
     const url = window.location.href; // 현재 페이지 주소
     if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(url).then(() => {
-            alert("청첩장 주소가 복사되었습니다.");
+            // alert("청첩장 주소가 복사되었습니다.");
         });
     } else {
         const textArea = document.createElement("textarea");
@@ -398,6 +425,6 @@ function copyUrl() {
         textArea.select();
         document.execCommand('copy');
         document.body.removeChild(textArea);
-        alert("청첩장 주소가 복사되었습니다.");
+        // alert("청첩장 주소가 복사되었습니다.");
     }
 }

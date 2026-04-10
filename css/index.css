@@ -80,6 +80,16 @@ body {
     justify-content: center;
 }
 
+section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out; /* 부드러운 속도 조절 */
+}
+section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* 메인 컨테이너 */
 #root {
     width: 100%;
@@ -120,7 +130,6 @@ section {
     width: 90%;
     height: 90%;
 }
-
 
 /* 2. 신랑 신부 이름 */
 #names h5 {
@@ -427,6 +436,7 @@ section {
     letter-spacing: 1px;
 }
 
+
 /* 9. 이미지 갤러리 */
 #gallery-section { padding: 60px 20px; text-align: center; }
 .gallery-title { font-size: 14px; letter-spacing: 5px; color: var(--accent-color); margin-bottom: 30px; }
@@ -475,20 +485,43 @@ section {
 .venue-name { font-size: 18px; font-weight: 600; color: #333; }
 .venue-address { font-size: 14px; color: #888; margin-top: 5px; }
 .venue-tel { font-size: 13px; color: #aaa; margin-top: 3px; }
-/* 카카오내비 버튼 스타일 */
-.navi-btn {
-    display: inline-flex;
-    align-items: center;
-    background: #FEE500;
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 20px;
-    cursor: pointer;
+
+.navi {
+    display: flex;
+    justify-content: center;
+    gap: 8px; /* 버튼 사이 간격 */
+    padding: 10px 0;
 }
-.navi-btn img { width: 20px; margin-right: 5px; }
-.navi-btn span { color: #191919; margin-left: 2px; }
+.map_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1; /* 동일한 너비로 배분 */
+    max-width: 140px;
+    height: 35px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #333;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: background 0.2s;
+}
+.map_btn:active {
+    background: #f5f5f5; /* 클릭 시 살짝 어둡게 */
+}
+.img_box {
+    display: flex;
+    align-items: center;
+    margin-right: 6px;
+}
+.img_box img {
+    width: 16px; /* 아이콘 크기 조절 */
+    height: 16px;
+    object-fit: contain;
+}
+
 .map-detail-link {
     display: block;
     font-size: 12px;
@@ -498,17 +531,7 @@ section {
     border-bottom: 1px solid var(--accent-color);
     display: inline-block;
 }
-/* 교통 안내 스타일 */
-/*.way-guide { margin-top: 40px; text-align: left; }
-.guide-item { margin-bottom: 20px; }
-.guide-tit {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--accent-color);
-    margin-bottom: 5px;
-}
-.guide-txt { font-size: 14px; color: #666; line-height: 1.6; } */
+
 
 /* 11. 계좌번호 */
 .account_list { margin-bottom: 15px; border: 1px solid #e9e4de; border-radius: 8px; overflow: hidden; background: #fff; }
@@ -520,8 +543,8 @@ section {
 .account_tit.on { background: #f4efea; border-bottom: 1px solid #e9e4de; }
 
 /* 화살표 회전 애니메이션 */
-.arrow { font-size: 20px; color: #999; transition: transform 0.3s ease; }
-.account_tit.on .arrow { transform: rotate(180deg); color: #555; }
+.accordion-arrow { font-size: 16px; color: var(--text-color); transition: transform 0.3s ease; }
+.account_tit.on .accordion-arrow { transform: rotate(90deg); color: var(--text-color); }
 
 .account_cover { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dotted #e9e4de; }
 .account_cover:last-child { border-bottom: none; }
@@ -721,13 +744,10 @@ section {
 }
 /* 4. 개별 아이템 카드 */
 .all-gb-card {
-    padding: 25px 20px;
+    padding: 25px 25px;
     background: #fff;
     text-align: left;
-}
-/* 항목 사이의 두꺼운 구분선 */
-.all-gb-card + .all-gb-card {
-    border-top: 10px solid #f7f7f7; 
+    border-bottom: 15px solid #eaeaea; 
 }
 /* 5. 카드 내부 상단 (이름 & 날짜) */
 .all-gb-top {
