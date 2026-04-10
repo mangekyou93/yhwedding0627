@@ -11,6 +11,8 @@
     align-items: center;
     z-index: 99999; /* 모든 요소보다 위에 */
     transition: opacity 0.5s ease; /* 사라질 때 부드럽게 */
+    touch-action: none; 
+    overflow: hidden;
 }
 .loader-content {
     text-align: center;
@@ -22,7 +24,7 @@
 }
 .loader-text {
     font-size: 18px;
-    color: #8d7b68; /* 메인 브라운 포인트 컬러 */
+    color: #6D9D99; /* 메인 브라운 포인트 컬러 */
     letter-spacing: 2px;
     font-weight: 500;
     margin-bottom: 10px;
@@ -30,22 +32,28 @@
 }
 .loader-subtext {
     font-size: 14px;
-    color: #aaa;
+    color: #8d7b68;
     line-height: 1.6;
 }
 .ready-spinner {
     width: 30px;
     height: 30px;
     border: 3px solid #f3f3f3;
-    border-top: 3px solid #d4c1b0;
+    border-top: 3px solid #6D9D99;
     border-radius: 50%;
-    animation: spin 1s linear infinite;
+    animation: spin 1.5s linear infinite;
     margin: 20px auto;
 }
 @keyframes pulse {
     0% { transform: scale(1); opacity: 0.8; }
     50% { transform: scale(1.1); opacity: 1; }
     100% { transform: scale(1); opacity: 0.8; }
+}
+body.stop-scrolling {
+    height: 100%;
+    overflow: hidden;
+    position: fixed; /* 전체 화면을 고정시켜 버림 */
+    width: 100%;
 }
 
 /* 변수 설정 */
