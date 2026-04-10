@@ -37,7 +37,8 @@
                     <button onclick="toggleAudio()">
                         <img id="bgm-icon" src="files/images/icons/pause.svg" alt="bgm">
                     </button>
-                    <audio id="bgm" loop autoplay onloadstart="this.volume=0.25">
+                    <!-- <audio id="bgm" loop autoplay onloadstart="this.volume=0.25"> -->
+                    <audio id="bgm" loop onloadstart="this.volume=0.25"></audio>
                         <source src="files/bgm/music.mp3" type="audio/mpeg">
                     </audio>
                 </section>
