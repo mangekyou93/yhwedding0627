@@ -132,8 +132,8 @@ function startNavigation() {
 }
 function openNaverMap() {
     const destinationName = encodeURIComponent('더뉴컨벤션웨딩'); // 한글은 인코딩 필수
-    const lat = 37.5562;
-    const lng = 126.8368;
+    const lat = 37.5562637915563;
+    const lng = 126.8368847974;
     // 네이버지도 앱 실행 주소 (모바일용)
     const appUrl = `nmap://route/car?dlat=${lat}&dlng=${lng}&dname=${destinationName}&appname=mangekyou93.github.io`;
     
@@ -160,8 +160,8 @@ function openNaverMap() {
 }
 function openTMap() {
     const destinationName = encodeURIComponent('더뉴컨벤션웨딩');
-    const lat = 37.5593; // 위도
-    const lng = 126.8327; // 경도
+    const lat = 37.5562637915563; // 위도
+    const lng = 126.8368847974; // 경도
 
     // 티맵 앱 실행 주소 (모바일용)
     const appUrl = `tmap://route?goalname=${destinationName}&goalx=${lng}&goaly=${lat}`;
