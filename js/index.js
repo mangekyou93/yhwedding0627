@@ -383,31 +383,30 @@ function showLoading(isLoading) {
 
 // 13. 카카오톡으로 공유하기, 청첩장 주소 복사하기
 function shareKakao() {
+    if (!Kakao.isInitialized()) {
+        Kakao.init('669f1c6f440657e143d516895413ef21');
+    }
+
     Kakao.Share.sendDefault({
-        objectType: 'feed',
+        objectType: "feed",
         content: {
             title: '정연재 ❤️ 장선홍 결혼식에 초대합니다',
             description: '2026년 06월 27일 토요일 오후 6시\n더뉴컨벤션 웨딩홀 2층 더뉴홀',
             imageUrl: 'https://mangekyou93.github.io/yhwedding0627/files/images/pictures/thumbnail_image.jpg', // 대표 이미지 경로
             link: {
-                mobileWebUrl: 'https://mangekyou93.github.io/yhwedding0627/',
-                webUrl: 'https://mangekyou93.github.io/yhwedding0627/',
+                mobileWebUrl: 'https://mangekyou93.github.io/yhwedding0627',
+                webUrl: 'https://mangekyou93.github.io/yhwedding0627',
             },
-        },
-        social: {
-            likeCount: 286,
-            commentCount: 45,
-            sharedCount: 845,
         },
         buttons: [
             {
                 title: '모바일 청첩장 보기',
                 link: {
-                    mobileWebUrl: 'https://mangekyou93.github.io/yhwedding0627/',
-                    webUrl: 'https://mangekyou93.github.io/yhwedding0627/',
+                    mobileWebUrl: 'https://mangekyou93.github.io/yhwedding0627',
+                webUrl: 'https://mangekyou93.github.io/yhwedding0627',
                 },
-            },
-        ],
+            }
+        ]
     });
 }
 
