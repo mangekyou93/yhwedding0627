@@ -20,13 +20,13 @@
 </head>
     <body>
         <div id="root">
-            <div id="full-page-loader">
+            <!-- <div id="full-page-loader">
                 <div class="loader-content">
                     <div class="ready-spinner"></div>
                     <p class="loader-text">소중한 순간을 위해 잠시만 기다려 주세요...</p>
                     <p class="loader-subtext">정연재 & 장선홍<br/>2026년 6월 27일 오후 6시<br/>더뉴컨벤션웨딩 2층 더뉴홀</p>
                 </div>
-            </div>
+            </div> -->
             <div style="display:none; justify-content:center; align-items:center; height:100vh;">
                 <p>초대장을 불러오는 중입니다...</p>
             </div>
@@ -37,8 +37,7 @@
                     <button onclick="toggleAudio()">
                         <img id="bgm-icon" src="files/images/icons/pause.svg" alt="bgm">
                     </button>
-                    <!-- <audio id="bgm" loop autoplay onloadstart="this.volume=0.25"> -->
-                    <audio id="bgm" loop onloadstart="this.volume=0.25"></audio>
+                    <audio id="bgm" loop autoplay onloadstart="this.volume=0.25">
                         <source src="files/bgm/music.mp3" type="audio/mpeg">
                     </audio>
                 </section>
@@ -270,19 +269,24 @@
                             <div class="bottom_box">
                                 <div class="navi">
                                     <button class="map_btn tmap" onclick="openTMap()">
-                                        <span class="img_box"><img src="./img/tmap_icon.png" alt=""></span>티맵
+                                        <span class="img_box">
+                                            <img src="files/images/icons/tmap_icon.png" alt="">
+                                        </span>
+                                        티맵
                                     </button>
                                     <button class="map_btn kakao" onclick="startNavigation()">
                                         <span class="img_box">
                                             <img src="https://developers.kakao.com/assets/img/about/buttons/navi/kakaonavi_btn_medium.png" alt="길 안내 버튼" />
-                                        </span>카카오내비
+                                        </span>
+                                        카카오내비
                                     </button>
                                     <button class="map_btn naver" onclick="openNaverMap()">
-                                        <span class="img_box"><img src="./img/navermap_icon_2.png" alt=""></span>네이버지도
+                                        <span class="img_box">
+                                            <img src="files/images/icons/navermap_icon_2.png" alt="네이버 지도">
+                                        </span>
+                                        네이버지도
+                                        <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=uoachp4znc"></script>
                                     </button>
-                                    <!-- <a id="start-navigation" href="javascript:startNavigation()">
-                                        <img src="https://developers.kakao.com/assets/img/about/buttons/navi/kakaonavi_btn_medium.png" alt="길 안내 버튼" />
-                                    </a> -->
                                 </div>
                             </div>
                         </div>

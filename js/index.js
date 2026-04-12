@@ -130,6 +130,64 @@ function startNavigation() {
         coordType: 'wgs84',
     });
 }
+function openNaverMap() {
+    const destinationName = encodeURIComponent('더뉴컨벤션웨딩'); // 한글은 인코딩 필수
+    const lat = 37.5562;
+    const lng = 126.8368;
+    // 네이버지도 앱 실행 주소 (모바일용)
+    const appUrl = `nmap://route/car?dlat=${lat}&dlng=${lng}&dname=${destinationName}&appname=mangekyou93.github.io`;
+    
+    // 네이버지도 웹 실행 주소 (앱이 없을 때나 PC용)
+    const webUrl = `https://map.naver.com/v5/directions/-/${lng},${lat},${destinationName}/-/car`;
+
+    // 모바일인지 확인 후 처리
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        // 앱 실행 시도
+        location.href = appUrl;
+        
+        // 잠시 후 앱 실행이 안 되었을 경우 웹으로 이동 (딜레이 활용)
+        setTimeout(function() {
+            if (!document.hidden) {
+                window.location.href = webUrl;
+            }
+        }, 1500);
+    } else {
+        // PC일 경우 바로 웹으로 이동
+        window.open(webUrl);
+    }
+}
+function openTMap() {
+    const destinationName = encodeURIComponent('더뉴컨벤션웨딩');
+    const lat = 37.5593; // 위도
+    const lng = 126.8327; // 경도
+
+    // 티맵 앱 실행 주소 (모바일용)
+    const appUrl = `tmap://route?goalname=${destinationName}&goalx=${lng}&goaly=${lat}`;
+    
+    // 앱 미설치 시 이동할 웹 페이지 (티맵은 웹 길찾기보다 스토어 이동이 일반적입니다)
+    const storeUrl = /iPhone|iPad|iPod/i.test(navigator.userAgent) 
+        ? "https://apps.apple.com/kr/app/id431589174" 
+        : "https://play.google.com/store/apps/details?id=com.skt.tmap.ku";
+
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        // 앱 실행 시도
+        location.href = appUrl;
+
+        // 1.5초 후에도 반응이 없으면(앱이 없으면) 스토어로 이동
+        setTimeout(function() {
+            if (!document.hidden) {
+                window.location.href = storeUrl;
+            }
+        }, 1500);
+    } else {
+        // PC의 경우 티맵은 웹 서비스를 제공하지 않으므로 안내 메시지나 다른 지도를 권장
+        alert("티맵 길안내는 모바일 기기에서만 이용 가능합니다.");
+    }
+}
 
 
 // 11. 계좌번호
