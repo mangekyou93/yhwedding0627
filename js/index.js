@@ -403,7 +403,7 @@ function shareKakao() {
                 title: '모바일 청첩장 보기',
                 link: {
                     mobileWebUrl: 'https://mangekyou93.github.io/yhwedding0627',
-                webUrl: 'https://mangekyou93.github.io/yhwedding0627',
+                    webUrl: 'https://mangekyou93.github.io/yhwedding0627',
                 },
             }
         ]
