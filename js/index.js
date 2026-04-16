@@ -2,6 +2,7 @@
 window.onload = async function() {
     // 1. BGM 초기화 (이벤트 리스너 등록)
     initBgm();
+    document.getElementById('bgm').play();
 
     set_guestbook();
     await loadAndAnimateSVG();
@@ -117,68 +118,68 @@ const svgFiles = [
 ];
 // ✨ 2. SVG 파일 순차적으로 불러오기 (viewBox 방어 코드 추가)
 async function loadAndAnimateSVG() {
-  const container = document.getElementById("svg-container");
-  if (!container) return;
-  container.innerHTML = "";
+    const container = document.getElementById("svg-container");
+    if (!container) return;
+    
+    container.innerHTML = "";
+    let currentDelay = 0.3;
 
-  let currentDelay = 0.3;
-
-  for (const fileName of svgFiles) {
-    if (fileName === "space") {
-      const space = document.createElement("div");
-      space.style.width = "6px";
-      container.appendChild(space);
-      continue;
-    }
-
-    try {
-      const response = await fetch(`files/images/svg/${fileName}`);
-      if (!response.ok) {
-        console.warn(`파일 찾을 수 없음: ${fileName}`); // 오류 파악을 위한 로그
-        continue;
-      }
-      const svgText = await response.text();
-
-      const letterWrap = document.createElement("div");
-      letterWrap.className = "letter-wrap";
-      letterWrap.innerHTML = svgText;
-      container.appendChild(letterWrap);
-
-      const svgElement = letterWrap.querySelector("svg");
-      if (svgElement) {
-        // ★ 추가된 방어 코드: viewBox가 없다면 원래 width/height를 바탕으로 강제로 만들어줍니다.
-        if (!svgElement.getAttribute("viewBox")) {
-          const w = svgElement.getAttribute("width") || "50";
-          const h = svgElement.getAttribute("height") || "50";
-          // "px" 같은 문자가 있을 수 있으니 숫자만 추출
-          svgElement.setAttribute(
-            "viewBox",
-            `0 0 ${parseFloat(w)} ${parseFloat(h)}`,
-          );
+    for (const fileName of svgFiles) {
+        if (fileName === "space") {
+            const space = document.createElement("div");
+            space.style.width = "6px";
+            container.appendChild(space);
+            continue;
         }
 
-        // 비율을 유지하기 위해 고정 크기 제거
-        // svgElement.removeAttribute("width");
-        // svgElement.removeAttribute("height");
+        try {
+            const response = await fetch(`files/images/svg/${fileName}`);
+            if (!response.ok) {
+                console.warn(`파일 찾을 수 없음: ${fileName}`); // 오류 파악을 위한 로그
+                continue;
+            }
+            const svgText = await response.text();
 
-        const paths = svgElement.querySelectorAll("path, polygon, rect");
-        paths.forEach((path) => {
-          path.classList.add("draw-path");
+            const letterWrap = document.createElement("div");
+            letterWrap.className = "letter-wrap";
+            letterWrap.innerHTML = svgText;
+            container.appendChild(letterWrap);
 
-          const length = path.getTotalLength() + 5;
-          path.style.setProperty("--path-length", length);
-          path.style.strokeDasharray = length;
-          path.style.strokeDashoffset = length;
+            const svgElement = letterWrap.querySelector("svg");
+            if (svgElement) {
+                // ★ 추가된 방어 코드: viewBox가 없다면 원래 width/height를 바탕으로 강제로 만들어줍니다.
+                if (!svgElement.getAttribute("viewBox")) {
+                    const w = svgElement.getAttribute("width") || "50";
+                    const h = svgElement.getAttribute("height") || "50";
+                    // "px" 같은 문자가 있을 수 있으니 숫자만 추출
+                    svgElement.setAttribute(
+                        "viewBox",
+                        `0 0 ${parseFloat(w)} ${parseFloat(h)}`,
+                    );
+                }
 
-          path.style.animationDelay = `${currentDelay}s`;
-        });
+                // 비율을 유지하기 위해 고정 크기 제거
+                // svgElement.removeAttribute("width");
+                // svgElement.removeAttribute("height");
 
-        currentDelay += 0.3;
-      }
-    } catch (error) {
-      console.error(`${fileName} 로드 실패:`, error);
+                const paths = svgElement.querySelectorAll("path, polygon, rect");
+                paths.forEach((path) => {
+                    path.classList.add("draw-path");
+
+                    const length = path.getTotalLength() + 5;
+                    path.style.setProperty("--path-length", length);
+                    path.style.strokeDasharray = length;
+                    path.style.strokeDashoffset = length;
+
+                    path.style.animationDelay = `${currentDelay}s`;
+                });
+
+                currentDelay += 0.3;
+            }
+        } catch (error) {
+            console.error(`${fileName} 로드 실패:`, error);
+        }
     }
-  }
 }
 
 // 6. 양가부모님 성함 + 신랑 신부 이름 + 연락처 메세지 보내기
