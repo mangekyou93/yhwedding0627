@@ -1,10 +1,38 @@
 // 페이지 로드 시 실행
 window.onload = async function() {
+    // 1. BGM 초기화 (이벤트 리스너 등록)
+    initBgm();
+
     set_guestbook();
     await loadAndAnimateSVG();
     set_section_scroll();
     update_DDay();
 };
+
+// BGM 초기화 함수
+function initBgm() {
+    const bgm = document.getElementById('bgm');
+    if (!bgm) return;
+
+    bgm.volume = 0.25;
+
+    const playAudio = () => {
+        bgm.play().then(() => {
+            // 재생 성공 시 모든 리스너 제거 (중복 실행 방지)
+            document.removeEventListener('click', playAudio);
+            document.removeEventListener('touchstart', playAudio);
+            document.removeEventListener('scroll', playAudio);
+        }).catch(err => {
+            // 아직 터치가 없어서 발생하는 에러는 무시
+            console.log("Waiting for user interaction...");
+        });
+    };
+
+    // 사용자의 첫 액션을 감지하기 위해 등록
+    document.addEventListener('click', playAudio);
+    document.addEventListener('touchstart', playAudio);
+    document.addEventListener('scroll', playAudio);
+}
 
 // 섹션 등장
 function set_section_scroll() {
