@@ -51,15 +51,15 @@ function set_section_scroll() {
                 // 1. 어떤 섹션이든 보이면 클래스 추가
                 entry.target.classList.add('is-visible');
 
-                // 2. 어떤 섹션이든 보이기 시작할 때 음악 재생 (아직 재생 전이라면)
-                if (!isAudioPlayed && audio) {
-                    audio.play().then(() => {
-                        isAudioPlayed = true; // 재생 성공 시 플래그 true
-                    }).catch(error => {
-                        // 정책상 자동 재생이 막혔을 경우 콘솔 출력
-                        console.log("Audio play prevented: ", error);
-                    });
-                }
+                // // 2. 어떤 섹션이든 보이기 시작할 때 음악 재생 (아직 재생 전이라면)
+                // if (!isAudioPlayed && audio) {
+                //     audio.play().then(() => {
+                //         isAudioPlayed = true; // 재생 성공 시 플래그 true
+                //     }).catch(error => {
+                //         // 정책상 자동 재생이 막혔을 경우 콘솔 출력
+                //         console.log("Audio play prevented: ", error);
+                //     });
+                // }
                 
                 // 3. 비디오 섹션 전용 로직
                 if (entry.target.id === "video-section") {
