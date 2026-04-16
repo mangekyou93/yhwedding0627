@@ -1,13 +1,16 @@
 // 페이지 로드 시 실행
-window.onload = function() {
+window.onload = async function() {
+    set_guestbook();
+    await loadAndAnimateSVG();
     set_section_scroll();
     update_DDay();
-    set_guestbook();
 };
 
 // 섹션 등장
 function set_section_scroll() {
     const sections = document.querySelectorAll('section');
+    const audio = document.getElementById('bgm'); // 오디오 태그 가져오기
+    let isAudioPlayed = false; // 오디오가 재생되었는지 확인하는 변수
 
     const observerOptions = {
         root: null, // 브라우저 뷰포트 기준
@@ -17,11 +20,31 @@ function set_section_scroll() {
     const sectionObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // 화면에 들어오면 클래스 추가
+                // 1. 어떤 섹션이든 보이면 클래스 추가
                 entry.target.classList.add('is-visible');
+
+                // 2. 어떤 섹션이든 보이기 시작할 때 음악 재생 (아직 재생 전이라면)
+                if (!isAudioPlayed && audio) {
+                    audio.play().then(() => {
+                        isAudioPlayed = true; // 재생 성공 시 플래그 true
+                    }).catch(error => {
+                        // 정책상 자동 재생이 막혔을 경우 콘솔 출력
+                        console.log("Audio play prevented: ", error);
+                    });
+                }
+                
+                // 3. 비디오 섹션 전용 로직
+                if (entry.target.id === "video-section") {
+                    const video = entry.target.querySelector("#wedding-video");
+                    if (video) {
+                        video.playbackRate = 0.8; // 아련하게 0.8배속 설정
+                        video.play(); // 영상 재생 시작!
+                    }
+                }
+                
                 // 한 번 나타난 후에는 감시 중단 (다시 사라지는 걸 원치 않을 때)
                 observer.unobserve(entry.target);
-            }
+            } 
         });
     }, observerOptions);
 
@@ -41,6 +64,93 @@ function toggleAudio() {
         icon.setAttribute('src', 'files/images/icons/play.svg');
         audio.pause();
     }
+}
+
+// 3. 비디오
+// 기존 배열 (그대로 사용)
+const svgFiles = [
+  "S.svg",
+  "a.svg",
+  "v.svg",
+  "e.svg",
+  "space",
+  "space",
+  "space",
+  "T.svg",
+  "h.svg",
+  "e-1.svg", // 👈 여기에 대문자 T.svg 확인!
+  "space",
+  "space",
+  "space",
+  "D.svg",
+  "a-1.svg",
+  "t-1.svg",
+  "e-2.svg",
+];
+// ✨ 2. SVG 파일 순차적으로 불러오기 (viewBox 방어 코드 추가)
+async function loadAndAnimateSVG() {
+  const container = document.getElementById("svg-container");
+  if (!container) return;
+  container.innerHTML = "";
+
+  let currentDelay = 0.3;
+
+  for (const fileName of svgFiles) {
+    if (fileName === "space") {
+      const space = document.createElement("div");
+      space.style.width = "6px";
+      container.appendChild(space);
+      continue;
+    }
+
+    try {
+      const response = await fetch(`files/images/svg/${fileName}`);
+      if (!response.ok) {
+        console.warn(`파일 찾을 수 없음: ${fileName}`); // 오류 파악을 위한 로그
+        continue;
+      }
+      const svgText = await response.text();
+
+      const letterWrap = document.createElement("div");
+      letterWrap.className = "letter-wrap";
+      letterWrap.innerHTML = svgText;
+      container.appendChild(letterWrap);
+
+      const svgElement = letterWrap.querySelector("svg");
+      if (svgElement) {
+        // ★ 추가된 방어 코드: viewBox가 없다면 원래 width/height를 바탕으로 강제로 만들어줍니다.
+        if (!svgElement.getAttribute("viewBox")) {
+          const w = svgElement.getAttribute("width") || "50";
+          const h = svgElement.getAttribute("height") || "50";
+          // "px" 같은 문자가 있을 수 있으니 숫자만 추출
+          svgElement.setAttribute(
+            "viewBox",
+            `0 0 ${parseFloat(w)} ${parseFloat(h)}`,
+          );
+        }
+
+        // 비율을 유지하기 위해 고정 크기 제거
+        // svgElement.removeAttribute("width");
+        // svgElement.removeAttribute("height");
+
+        const paths = svgElement.querySelectorAll("path, polygon, rect");
+        paths.forEach((path) => {
+          path.classList.add("draw-path");
+
+          const length = path.getTotalLength() + 5;
+          path.style.setProperty("--path-length", length);
+          path.style.strokeDasharray = length;
+          path.style.strokeDashoffset = length;
+
+          path.style.animationDelay = `${currentDelay}s`;
+        });
+
+        currentDelay += 0.3;
+      }
+    } catch (error) {
+      console.error(`${fileName} 로드 실패:`, error);
+    }
+  }
 }
 
 // 6. 양가부모님 성함 + 신랑 신부 이름 + 연락처 메세지 보내기

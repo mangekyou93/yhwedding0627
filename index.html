@@ -16,22 +16,6 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="css/index.css">
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-        const bgm = document.getElementById('myAudio'); // 오디오 태그 ID
-
-        function playBgm() {
-            bgm.play().then(() => {
-                // 재생 성공 시 이벤트 리스너 제거 (한 번만 실행되도록)
-                window.removeEventListener('click', playBgm);
-                window.removeEventListener('touchstart', playBgm);
-            }).catch(error => {
-                console.log("재생 실패:", error);
-            });
-        }
-        // 사용자가 화면을 클릭하거나 터치할 때 함수 실행
-        window.addEventListener('click', playBgm);
-        window.addEventListener('touchstart', playBgm); // 모바일 터치 대응
-    </script>
 
 </head>
     <body>
@@ -53,7 +37,7 @@
                     <button onclick="toggleAudio()">
                         <img id="bgm-icon" src="files/images/icons/pause.svg" alt="bgm">
                     </button>
-                    <audio id="bgm" loop autoplay onloadstart="this.volume=0.25">
+                    <audio id="bgm" loop onloadstart="this.volume=0.25">
                         <source src="files/bgm/music.mp3" type="audio/mpeg">
                     </audio>
                 </section>
@@ -72,6 +56,23 @@
                 <section id="main-visual" style="padding: 0;">
                     <div>
                         <img src="files/images/pictures/main_image.jpg" alt="메인 사진">
+                    </div>
+                </section>
+                <section id="video-section">
+                    <div class="video-container">
+                        <p class="video-title">OUR MOMENT</p>
+
+                        <div class="video-wrapper">
+                            <!-- <video id="wedding-video" muted loop playsinline poster="files/images/pictures/video_thumbnail.jpg"> -->
+                            <video id="wedding-video" muted loop playsinline autoplay>
+                                <source src="files/videos/0627.mp4" type="video/mp4" />
+                            </video>
+
+                            <div class="video-subtitle">
+                                감사한 마음을 담아 <br />
+                                초대의 인사를 전합니다.
+                            </div>
+                        </div>
                     </div>
                 </section>
 

@@ -148,7 +148,7 @@ section {
 }
 
 
-/* 3. 신랑/신부 메인 사진 or 동영상 */
+/* 3. 신랑/신부 메인 사진, 동영상 */
 #main-visual {
     padding: 0;
 }
@@ -162,6 +162,71 @@ section {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* 영상 섹션 등장 속도를 더 느리고 부드럽게 (기본 0.8s -> 1.5s) */
+#video-section {
+  padding: 0 20px 40px 20px;
+  transition: all 1.5s ease-out; /* 등장 속도 느리게 */
+}
+.video-container {
+  background: #fff;
+  padding: 15px;
+  border-radius: 15px;
+  /* box-shadow: 0 4px 15px rgba(0,0,0,0.05); */
+  /* border: 1px solid #eee; */
+}
+.video-title {
+  font-size: 16px;
+  letter-spacing: 4px;
+  color: var(--accent-color);
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: 500;
+}
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  /* 최신 CSS 방식으로 9:16 비율 고정 */
+  aspect-ratio: 9 / 14;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #f8f8f8;
+}
+
+/* 혹시 구형 브라우저(구버전 사파리 등) 호환이 걱정되신다면 
+  aspect-ratio 대신 아래 코드를 사용하세요:
+  padding-top: 177.78%; 
+*/
+#wedding-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.youtube-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.video-subtitle {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  z-index: 10;
+  text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transform: translateY(-20px);
 }
 
 /* 4. 장소(텍스트) */
