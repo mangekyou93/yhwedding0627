@@ -502,7 +502,6 @@ section {
 
 
 /* 9. 이미지 갤러리 */
-/* 9. 이미지 갤러리 */
 #gallery-section { padding: 60px 20px; text-align: center; }
 .gallery-title { font-size: 14px; letter-spacing: 5px; color: var(--accent-color); margin-bottom: 30px; }
 /* 3열 바둑판 그리드 - 기본 설정 */
