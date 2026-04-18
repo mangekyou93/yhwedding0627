@@ -502,22 +502,59 @@ section {
 
 
 /* 9. 이미지 갤러리 */
+/* 9. 이미지 갤러리 */
 #gallery-section { padding: 60px 20px; text-align: center; }
 .gallery-title { font-size: 14px; letter-spacing: 5px; color: var(--accent-color); margin-bottom: 30px; }
-/* 3열 바둑판 그리드 */
+/* 3열 바둑판 그리드 - 기본 설정 */
 .thumbnail-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 10px;
+    max-width: 500px;
+    margin: 0 auto;
 }
 .thumb {
+    grid-column: span 2;
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    cursor: pointer;
     border-radius: 4px;
 }
-.thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+/* 비율 설정 변경: 비율을 고정하지 않고 img의 object-fit에 맞춤 */
+.thumb img { 
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .thumb:hover img { transform: scale(1.05); }
+/* --- 1번째 이미지처럼 배치하기 위한 핵심 CSS --- */
+/* 가로로 2칸 차지하는 이미지 */
+.wide-thumb {
+    grid-column: span 3; 
+    aspect-ratio: 1.2 / 0.8;
+}
+/* 나머지는 기본적으로 aspect-ratio: 1.2/1.2(정방형)을 가집니다. */
+.thumb:not(.wide-thumb):not(.tall-thumb) {
+    aspect-ratio: 1.2 / 1.2; 
+}
+.thumb:nth-of-type(2) img { 
+    object-position: center 85%;
+}
+.thumb:nth-of-type(3) img { 
+    object-position: center 25%;
+}
+.thumb:nth-of-type(5) img { 
+    object-position: center 55%;
+}
+.thumb:nth-of-type(6) img { 
+    object-position: center 75%;
+}
+.thumb:nth-of-type(7) img { 
+    object-position: center 75%;
+}
+.thumb:nth-of-type(8) img { 
+    object-position: center 37%;
+}
+
 /* 슬라이더 모달 스타일 */
 .gallery-modal {
     display: none;
