@@ -628,9 +628,9 @@ section {
 /* 10. 결혼식장 장소(맵 API 활용) */
 #location-section { padding: 60px 20px; text-align: center; background-color: #fff; }
 .section-title { font-size: 14px; letter-spacing: 5px; color: var(--accent-color); margin-bottom: 20px; }
-.venue-name { font-size: 18px; font-weight: 600; color: #333; }
-.venue-address { font-size: 14px; color: #888; margin-top: 5px; }
-.venue-tel { font-size: 13px; color: #aaa; margin-top: 3px; }
+.venue-name { font-size: 20px; font-weight: 600; color: #333; }
+.venue-address { font-size: 16px; color: #888; margin-top: 5px; }
+.venue-tel { font-size: 15px; color: #aaa; margin-top: 3px; }
 
 .navi {
     display: flex;
@@ -676,6 +676,50 @@ section {
     margin-top: 10px;
     border-bottom: 1px solid var(--accent-color);
     display: inline-block;
+}
+
+.location-info {
+    padding: 35px 20px 0;
+    text-align: left; /* 안내 문구는 좌측 정렬이 읽기 편합니다 */
+    background-color: #fff;
+    line-height: 1.6;
+}
+.info-group {
+    margin-bottom: 25px;
+}
+.info-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+.info-label {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent-color, #8e97a4); /* 기존 강조색 사용 */
+    margin-bottom: 8px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 3px;
+    display: inline-block;
+}
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.info-list li {
+    font-size: 16px;
+    color: #555;
+    position: relative;
+    padding-left: 12px;
+    margin-bottom: 4px;
+}
+/* 불렛 포인트(·) 구현 */
+.info-list li::before {
+    content: "·";
+    position: absolute;
+    left: 0;
+    font-weight: bold;
 }
 
 
