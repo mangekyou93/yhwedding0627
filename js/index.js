@@ -4,7 +4,7 @@ window.onload = async function() {
     initBgm();
     document.getElementById('bgm').play();
 
-    preventSave();
+    preventMobileMenu();
     set_guestbook();
     await loadAndAnimateSVG();
     set_section_scroll();
@@ -627,20 +627,29 @@ function copyUrl() {
     }
 }
 
+function preventMobileMenu() {
+    // 1. 우클릭 방지 (이미 하셨겠지만 다시 확인)
+    document.addEventListener('contextmenu', e => e.preventDefault());
 
-// window.onload 안에 추가하거나 별도 스크립트로 작성
-function preventSave() {
-    // 1. 우클릭 방지
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-    }, false);
+    // 2. 모바일 길게 누르기 방지
+    window.oncontextmenu = function() {
+        return false;
+    };
 
-    // 2. 드래그 방지
+    // 3. 이미지 태그에 대해 터치 시작 시 시스템 메뉴 호출 방지
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+        img.addEventListener('touchstart', function(e) {
+            // 필요 시 추가적인 제어 가능
+        }, { passive: true });
+    });
+    
+    // 4. 드래그 방지
     document.addEventListener('dragstart', function(e) {
         e.preventDefault();
     }, false);
 
-    // 3. 선택 방지 (텍스트 등)
+    // 5. 선택 방지 (텍스트 등)
     document.addEventListener('selectstart', function(e) {
         e.preventDefault();
     }, false);
