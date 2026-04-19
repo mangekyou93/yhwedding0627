@@ -4,6 +4,7 @@ window.onload = async function() {
     initBgm();
     document.getElementById('bgm').play();
 
+    preventSave();
     set_guestbook();
     await loadAndAnimateSVG();
     set_section_scroll();
@@ -41,44 +42,45 @@ function set_section_scroll() {
     const audio = document.getElementById('bgm'); // 오디오 태그 가져오기
     let isAudioPlayed = false; // 오디오가 재생되었는지 확인하는 변수
 
-    const observerOptions = {
-        root: null, // 브라우저 뷰포트 기준
-        threshold: 0.1 // 10% 정도 보였을 때 실행
-    };
-
-    const sectionObserver = new IntersectionObserver((entries, observer) => {
+    // 1. 일반 섹션용 옵션 (10% 보일 때)
+    const defaultOptions = { root: null, threshold: 0.1 };
+    
+    // 2. 비디오 섹션 전용 옵션 (30% 보일 때)
+    const videoOptions = { root: null, threshold: 0.4 };
+// --- 일반 섹션 옵저버 ---
+    const defaultObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // 1. 어떤 섹션이든 보이면 클래스 추가
                 entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, defaultOptions);
 
-                // // 2. 어떤 섹션이든 보이기 시작할 때 음악 재생 (아직 재생 전이라면)
-                // if (!isAudioPlayed && audio) {
-                //     audio.play().then(() => {
-                //         isAudioPlayed = true; // 재생 성공 시 플래그 true
-                //     }).catch(error => {
-                //         // 정책상 자동 재생이 막혔을 경우 콘솔 출력
-                //         console.log("Audio play prevented: ", error);
-                //     });
-                // }
+    // --- 비디오 섹션 전용 옵저버 ---
+    const videoObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible'); // 등장 애니메이션 실행
                 
-                // 3. 비디오 섹션 전용 로직
-                if (entry.target.id === "video-section") {
-                    const video = entry.target.querySelector("#wedding-video");
-                    if (video) {
-                        video.playbackRate = 0.8; // 아련하게 0.8배속 설정
-                        video.play(); // 영상 재생 시작!
-                    }
+                const video = entry.target.querySelector("#wedding-video");
+                if (video) {
+                    video.playbackRate = 0.8;   // 0.8 배속
+                    video.play();
                 }
                 
-                // 한 번 나타난 후에는 감시 중단 (다시 사라지는 걸 원치 않을 때)
-                observer.unobserve(entry.target);
-            } 
+                observer.unobserve(entry.target); // 한 번 실행 후 감시 종료
+            }
         });
-    }, observerOptions);
+    }, videoOptions);
 
+    // 섹션별로 어떤 옵저버를 붙일지 결정
     sections.forEach(section => {
-        sectionObserver.observe(section);
+        if (section.id === "video-section") {
+            videoObserver.observe(section); // 비디오는 0.3 버전 옵저버가 감시
+        } else {
+            defaultObserver.observe(section); // 나머지는 0.1 버전 옵저버가 감시
+        }
     });
 }
 
@@ -623,4 +625,23 @@ function copyUrl() {
         document.body.removeChild(textArea);
         // alert("청첩장 주소가 복사되었습니다.");
     }
+}
+
+
+// window.onload 안에 추가하거나 별도 스크립트로 작성
+function preventSave() {
+    // 1. 우클릭 방지
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    }, false);
+
+    // 2. 드래그 방지
+    document.addEventListener('dragstart', function(e) {
+        e.preventDefault();
+    }, false);
+
+    // 3. 선택 방지 (텍스트 등)
+    document.addEventListener('selectstart', function(e) {
+        e.preventDefault();
+    }, false);
 }
