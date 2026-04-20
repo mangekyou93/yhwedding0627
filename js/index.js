@@ -234,6 +234,11 @@ function initSwiper() {
             el: ".swiper-pagination",
             clickable: true,
         },
+        // 혹은 lazy 옵션 강화
+        lazy: {
+            loadPrevNext: true, // 앞뒤 사진만 미리 로드
+            loadPrevNextAmount: 1,
+        },
     });
 }
 
