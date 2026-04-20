@@ -590,7 +590,7 @@ function shareKakao() {
         content: {
             title: '정연재 ❤️ 장선홍 결혼식에 초대합니다',
             description: '2026년 06월 27일 토요일 오후 6시\n더뉴컨벤션 웨딩홀 2층 더뉴홀',
-            imageUrl: 'https://mangekyou93.github.io/yhwedding0627/files/images/pictures/thumbnail_image.jpg', // 대표 이미지 경로
+            imageUrl: 'https://mangekyou93.github.io/yhwedding0627/files/images/pictures/thumbnail_image.webp', // 대표 이미지 경로
             link: {
                 mobileWebUrl: 'https://mangekyou93.github.io/yhwedding0627',
                 webUrl: 'https://mangekyou93.github.io/yhwedding0627',

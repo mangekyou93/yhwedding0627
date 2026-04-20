@@ -607,10 +607,10 @@ section {
     object-position: center 75%;
 }
 .thumb:nth-of-type(7) img { 
-    object-position: center 75%;
+    object-position: center 37%;
 }
 .thumb:nth-of-type(8) img { 
-    object-position: center 37%;
+    object-position: center 75%;
 }
 
 /* 슬라이더 모달 스타일 */
