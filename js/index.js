@@ -676,4 +676,22 @@ function preventMenus() {
             event.preventDefault();
         }
     }, { passive: false });
+
+    // 8. 강제 배율 1로 강제 초기화
+    // 삼성 인터넷/크롬 강제 확대 방지 로직 추가
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', function() {
+            if (window.visualViewport.scale > 1) {
+                const viewport = document.querySelector('meta[name="viewport"]');
+                if (viewport) {
+                    viewport.setAttribute(
+                        'content', 
+                        'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+                    );
+                }
+                // 줌이 되었을 때 강제로 화면을 원래 크기로 돌리는 트리거 (선택 사항)
+                window.scrollTo(window.scrollX, window.scrollY); 
+            }
+        });
+    }
 }

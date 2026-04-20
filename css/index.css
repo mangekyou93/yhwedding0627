@@ -68,7 +68,10 @@ body.stop-scrolling {
 /* 기본 리셋 */
 * {
     box-sizing: border-box;
-    touch-action: pan-y;
+    touch-action: pan-y !important;
+}
+html {
+    touch-action: pan-y !important;
 }
 body {
     margin: 0;
@@ -86,6 +89,7 @@ body {
     -ms-user-select: none;       /* 익스플로러 */
     user-select: none;           /* 표준 */
     -webkit-user-drag: none;     /* 드래그 방지 */
+    touch-action: pan-y !important;
 }
 /* 메인 이미지와 갤러리 이미지 전체에 적용 */
 img, .thumb, .swiper-slide img, .main-image-class {
@@ -96,6 +100,8 @@ img, .thumb, .swiper-slide img, .main-image-class {
     -ms-user-select: none !important;
     user-select: none !important;
     -webkit-user-drag: none !important;      /* 드래그 방지 */
+    touch-action: none !important;
+    -ms-touch-action: none !important;
 }
 /* 이미지 위에 투명한 가상 요소 생성 */
 .img::after {
