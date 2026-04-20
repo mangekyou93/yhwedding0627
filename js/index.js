@@ -4,7 +4,7 @@ window.onload = async function() {
     initBgm();
     document.getElementById('bgm').play();
 
-    preventMenus();
+    // preventMenus();
     set_guestbook();
     await loadAndAnimateSVG();
     set_section_scroll();

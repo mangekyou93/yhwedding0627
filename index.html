@@ -16,6 +16,74 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="css/index.css">
     <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        // 1. 우클릭 방지 (이미 하셨겠지만 다시 확인)
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        // 2. 모바일 길게 누르기 방지
+        window.oncontextmenu = function() {
+            return false;
+        };
+
+        // 3. 이미지 태그에 대해 터치 시작 시 시스템 메뉴 호출 방지
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+            img.addEventListener('touchstart', function(e) {
+                // 필요 시 추가적인 제어 가능
+            }, { passive: true });
+        });
+        
+        // 4. 드래그 방지
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+        }, false);
+
+        // 5. 선택 방지 (텍스트 등)
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+        }, false);
+
+        // 6. 모바일 더블 탭 확대 방지
+        document.addEventListener('touchstart', function (event) {
+            if (event.touches.length > 1) {
+                event.preventDefault(); // 다중 터치(핀치 줌) 방지
+            }
+        }, { passive: false });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault(); // 300ms 이내 더블 탭 시 확대 방지
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // 7. PC 브라우저 휠 확대(Ctrl+휠) 방지
+        document.addEventListener('wheel', function (event) {
+            if (event.ctrlKey) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+
+        // 8. 강제 배율 1로 강제 초기화
+        // 삼성 인터넷/크롬 강제 확대 방지 로직 추가
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', function() {
+                if (window.visualViewport.scale > 1) {
+                    const viewport = document.querySelector('meta[name="viewport"]');
+                    if (viewport) {
+                        viewport.setAttribute(
+                            'content', 
+                            'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+                        );
+                    }
+                    // 줌이 되었을 때 강제로 화면을 원래 크기로 돌리는 트리거 (선택 사항)
+                    window.scrollTo(window.scrollX, window.scrollY); 
+                }
+            });
+        }
+    </script>
 
 </head>
     <body>
