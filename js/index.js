@@ -4,7 +4,7 @@ window.onload = async function() {
     initBgm();
     document.getElementById('bgm').play();
 
-    preventMobileMenu();
+    preventMenus();
     set_guestbook();
     await loadAndAnimateSVG();
     set_section_scroll();
@@ -627,7 +627,7 @@ function copyUrl() {
     }
 }
 
-function preventMobileMenu() {
+function preventMenus() {
     // 1. 우클릭 방지 (이미 하셨겠지만 다시 확인)
     document.addEventListener('contextmenu', e => e.preventDefault());
 
@@ -653,4 +653,27 @@ function preventMobileMenu() {
     document.addEventListener('selectstart', function(e) {
         e.preventDefault();
     }, false);
+
+    // 6. 모바일 더블 탭 확대 방지
+    document.addEventListener('touchstart', function (event) {
+        if (event.touches.length > 1) {
+            event.preventDefault(); // 다중 터치(핀치 줌) 방지
+        }
+    }, { passive: false });
+
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault(); // 300ms 이내 더블 탭 시 확대 방지
+        }
+        lastTouchEnd = now;
+    }, false);
+
+    // 7. PC 브라우저 휠 확대(Ctrl+휠) 방지
+    document.addEventListener('wheel', function (event) {
+        if (event.ctrlKey) {
+            event.preventDefault();
+        }
+    }, { passive: false });
 }

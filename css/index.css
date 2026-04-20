@@ -68,6 +68,7 @@ body.stop-scrolling {
 /* 기본 리셋 */
 * {
     box-sizing: border-box;
+    touch-action: pan-y;
 }
 body {
     margin: 0;
