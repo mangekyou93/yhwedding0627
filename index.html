@@ -49,6 +49,12 @@
                 event.preventDefault(); // 다중 터치(핀치 줌) 방지
             }
         }, { passive: false });
+        // 페이지 로드 완료 시점에 한 번 더 리셋
+        if (document.readyState === 'complete') {
+            resetViewport();
+        } else {
+            window.addEventListener('load', resetViewport);
+        }
 
         let lastTouchEnd = 0;
         document.addEventListener('touchend', function (event) {
@@ -70,18 +76,21 @@
         // 삼성 인터넷/크롬 강제 확대 방지 로직 추가
         if (window.visualViewport) {
             window.visualViewport.addEventListener('resize', function() {
-                if (window.visualViewport.scale > 1) {
-                    const viewport = document.querySelector('meta[name="viewport"]');
-                    if (viewport) {
-                        viewport.setAttribute(
-                            'content', 
-                            'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
-                        );
-                    }
-                    // 줌이 되었을 때 강제로 화면을 원래 크기로 돌리는 트리거 (선택 사항)
-                    window.scrollTo(window.scrollX, window.scrollY); 
+                if (window.visualViewport.scale !== 1) {
+                    // 배율이 1이 아니면 즉시 강제 초기화
+                    resetViewport();
+                    // 삼성 인터넷 등에서 강제로 배율을 맞추기 위해 스크롤을 살짝 튕겨줌
+                    window.scrollTo(window.scrollX, window.scrollY);
                 }
             });
+        }
+        
+        function resetViewport() {
+            const viewport = document.querySelector('meta[name="viewport"]');
+            if (viewport) {
+                // 기존 설정을 완전히 덮어씌워 1.0으로 강제 고정
+                viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0');
+            }
         }
     </script>
 
