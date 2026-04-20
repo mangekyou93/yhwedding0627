@@ -179,7 +179,22 @@ section {
 #main-visual {
     padding: 0;
 }
-#main-visual > div {
+.main-image-bg {
+    width: 100%;
+    height: 500px; /* 메인 이미지 높이에 맞게 조절 */
+    background-image: url('/files/images/pictures/main_image.jpg'); /* 여기에 이미지 경로 */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    -webkit-touch-callout: none;
+}
+.touch-guard {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 10;
+}
+/* #main-visual > div {
     width: 100%;
     height: 500px;
     background: #ddd;
@@ -189,7 +204,7 @@ section {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
+} */
 
 /* 영상 섹션 등장 속도를 더 느리고 부드럽게 (기본 0.8s -> 1.5s) */
 #video-section {
