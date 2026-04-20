@@ -100,8 +100,7 @@ img, .thumb, .swiper-slide img, .main-image-class {
     -ms-user-select: none !important;
     user-select: none !important;
     -webkit-user-drag: none !important;      /* 드래그 방지 */
-    touch-action: none !important;
-    -ms-touch-action: none !important;
+    touch-action: pan-y !important;
 }
 /* 이미지 위에 투명한 가상 요소 생성 */
 .img::after {
