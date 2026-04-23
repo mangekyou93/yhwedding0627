@@ -99,7 +99,7 @@ function set_section_scroll() {
 // }
 
 // ==========================================
-// 🎵 자동 서랍형 뮤직 플레이어 제어
+// 🎵 자동 서랍형 뮤직 플레이어 (최종 통합본)
 // ==========================================
 function initFloatingPlayer() {
     const player = document.getElementById("floating-music-player");
@@ -111,96 +111,74 @@ function initFloatingPlayer() {
 
     if (!player || !audio) return;
 
-    let autoCloseTimer = null; // 자동 닫기 타이머 변수
-
     // 1. 처음 입장 시 3초 뒤 자동으로 닫기
-    autoCloseTimer = setTimeout(() => {
+    let autoCloseTimer = setTimeout(() => {
         player.classList.add("collapsed");
     }, 3000);
 
-    // 2. 오디오 기본 설정
-    const START_TIME = 15;
     audio.volume = 0.25;
-    audio.addEventListener("loadedmetadata", () => {
-        audio.currentTime = START_TIME;
-    });
 
-    // 3. 재생/일시정지 및 열기 토글 함수
-    function handlePlayerInteraction() {
-        // 타이머가 돌고 있다면 취소 (사용자 클릭이 우선)
+    // ✨ 2. [단일화된 BGM 자동재생 로직] 
+    const forcePlayAudio = () => {
+        audio.play().then(() => {
+            iconPlay.style.display = "none";
+            iconPause.style.display = "block";
+            if (albumCoverImg) albumCoverImg.classList.remove("spin-paused");
+
+            // 재생에 성공하면 모든 감시기 끄기 (중복 방지)
+            document.removeEventListener('click', forcePlayAudio);
+            document.removeEventListener('touchstart', forcePlayAudio);
+            document.removeEventListener('touchend', forcePlayAudio); // 아이폰 필수
+            document.removeEventListener('scroll', forcePlayAudio);
+        }).catch(err => {
+            // 에러 나면 조용히 다음 터치를 기다림
+        });
+    };
+
+    // 로드되자마자 일단 한번 찔러보기
+    forcePlayAudio();
+
+    // 3. 화면의 모든 스크롤/터치에 반응하도록 감시기 달아두기
+    document.addEventListener('click', forcePlayAudio, { passive: true });
+    document.addEventListener('touchstart', forcePlayAudio, { passive: true });
+    document.addEventListener('touchend', forcePlayAudio, { passive: true }); // 아이폰 필수
+    document.addEventListener('scroll', forcePlayAudio, { passive: true });
+
+    // 4. 플레이어 직접 클릭 시 제어 (열기/닫기/재생/정지)
+    function handlePlayerInteraction(e) {
+        e.stopPropagation(); // 플레이어 클릭이 배경 클릭으로 번지지 않게 막음
+        
         if (autoCloseTimer) clearTimeout(autoCloseTimer);
 
-        // 만약 닫혀있다면? -> 열기만 함
         if (player.classList.contains("collapsed")) {
             player.classList.remove("collapsed");
-
-            // ✨ 열린 뒤 2초 뒤에 다시 자동으로 닫기
             autoCloseTimer = setTimeout(() => {
                 player.classList.add("collapsed");
             }, 2000);
-        }
-        // 이미 열려있다면? -> 재생/일시정지 토글
-        else {
+        } else {
             if (audio.paused) {
-                audio.play().then(() => {
-                    iconPlay.style.display = "none";
-                    iconPause.style.display = "block";
-                    if (albumCoverImg) albumCoverImg.classList.remove("spin-paused");
-                });
+                forcePlayAudio();
             } else {
                 audio.pause();
                 iconPlay.style.display = "block";
                 iconPause.style.display = "none";
                 if (albumCoverImg) albumCoverImg.classList.add("spin-paused");
             }
-
-            // 재생/정지 버튼을 눌러도 2초 뒤에 다시 닫히도록 설정
             autoCloseTimer = setTimeout(() => {
                 player.classList.add("collapsed");
             }, 2000);
         }
     }
 
-    // 플레이어 전체 클릭 이벤트 연결
     player.addEventListener("click", handlePlayerInteraction);
 
-    // 4. 진행 바 업데이트
+    // 5. 진행 바 업데이트
     audio.addEventListener("timeupdate", () => {
         if (audio.duration) {
             const percentage = (audio.currentTime / audio.duration) * 100;
             progressBar.style.width = percentage + "%";
         }
     });
-
-    // 5. 첫 터치/스크롤 시 자동 재생 (강화된 방어 로직)
-    const autoPlayOnInteract = (e) => {
-        // ✨ 핵심: 시스템이 강제로 스크롤(새로고침 시 scrollTo 등)한 것은 무시하고, '진짜 사람(isTrusted)'의 조작일 때만 실행
-        if (e && e.isTrusted === false) return;
-
-        audio
-            .play()
-            .then(() => {
-                // 재생에 완벽하게 성공했을 때만 아이콘을 바꾸고 감시를 종료합니다.
-                iconPlay.style.display = "none";
-                iconPause.style.display = "block";
-                if (albumCoverImg) albumCoverImg.classList.remove("spin-paused");
-
-                document.removeEventListener("click", autoPlayOnInteract);
-                document.removeEventListener("touchstart", autoPlayOnInteract);
-                document.removeEventListener("scroll", autoPlayOnInteract);
-            })
-            .catch((err) => {
-                // 브라우저가 아직 허락하지 않았다면 조용히 다음 터치를 기다립니다.
-                console.log("브라우저 정책으로 대기 중... 다음 터치 시 재생됩니다.");
-            });
-    };
-
-    // { passive: true } 를 추가하여 스크롤할 때 버벅거리지 않게 최적화
-    document.addEventListener("click", autoPlayOnInteract, { passive: true });
-    document.addEventListener("touchstart", autoPlayOnInteract, {
-        passive: true,
-    });
-    document.addEventListener("scroll", autoPlayOnInteract, { passive: true });
 }
 
 // 3. Save the date
