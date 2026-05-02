@@ -48,6 +48,18 @@ function set_section_scroll() {
             if (entry.isIntersecting) {
                 entry.target.classList.add("is-visible");
                 observer.unobserve(entry.target);
+                // ✨ 추가: 섹션이 처음 등장할 때 BGM 자동 재생 시작 (1회만 실행)
+                if (!isAudioPlayed) {
+                    isAudioPlayed = true;
+                    
+                    // initFloatingPlayer 내의 재생/동기화 로직 실행
+                    if (typeof initFloatingPlayer === 'function') {
+                        initFloatingPlayer();
+                    } else {
+                        // 만약 함수가 정의되어 있지 않다면 기본 재생 시도
+                        audio.play().catch(err => console.log("자동 재생 대기 중...", err));
+                    }
+                }
             }
         });
     }, defaultOptions);
