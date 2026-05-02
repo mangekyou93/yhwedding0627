@@ -10,8 +10,7 @@
     <meta name="description" content="2026년 6월, 저희 두 사람이 하나가 되는 자리에 모십니다." />
     <meta property="og:title" content="연재 & 선홍 결혼합니다" />
     <meta property="og:description" content="2026. 06. 27. 토요일 오후 6:00" />
-    <meta property="og:image"
-        content="https://mangekyou93.github.io/yhwedding0627/files/images/pictures/thumbnail_image.webp" />
+    <meta property="og:image" content="https://mangekyou93.github.io/yhwedding0627/files/images/pictures/thumbnail_image.webp" />
     <meta property="og:url" content="https://mangekyou93.github.io/yhwedding0627/" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -144,15 +143,7 @@
 
         <div id="invitation-card">
             <!-- 1. 오디오 -->
-            <section id="audio-section" style="padding: 15px">
-                <!-- <button onclick="toggleAudio()">
-                        <img id="bgm-icon" src="files/images/icons/pause.svg" alt="bgm">
-                    </button>
-                    <audio id="bgm" loop onloadstart="this.volume=0.25">
-                        <source src="files/bgm/music.mp3" type="audio/mpeg">
-                    </audio> -->
-            </section>
-            <div id="floating-music-player">
+            <section id="floating-music-player">
                 <div class="album-cover-wrapper" id="album-cover-btn">
                     <img src="files\images\pictures\music-player-cover.webp" alt="Album Cover"
                         class="album-cover spin-paused" />
@@ -184,7 +175,8 @@
                 <audio id="bgm" loop preload="metadata" autoplay>
                     <source src="files/bgm/music.mp3" type="audio/mpeg" />
                 </audio>
-            </div>
+            </section>
+            
             <!-- 2. 신랑 신부 이름 -->
             <section id="names" class="section-main">
                 <div id="svg-container"></div>
@@ -201,12 +193,6 @@
                         <span class="hero-name">장선홍</span>
                     </div>
                 </div>
-
-                <!-- <h2>
-            ❤️🧡💛💚💙💜🖤🤍🤎🩶🩵🩷
-            🫰❣️💕💞💓💗💖💘💝💟❤️‍🔥❤️‍🩹
-            정연재 <span>❤️</span> 장선홍
-          </h2> -->
 
                 <!-- 4. 장소(텍스트) -->
                 <div id="main-info">
@@ -422,68 +408,36 @@
             <!-- 9. 이미지 갤러리-->
             <section id="gallery-section">
                 <div class="gallery-title">GALLERY</div>
+                <div class="gallery-main-view">
+                    <img class="main-gallery-img active-gallery" src="files/images/pictures/gallery01.webp" alt="메인 갤러리 사진"/>
+                </div>
                 <div class="thumbnail-grid">
-                    <div class="thumb" onclick="openSlider(0)">
-                        <img src="files/images/pictures/gallery01.webp" loading="eager" fetchpriority="high" alt="" />
+                    <div class="thumb active-thumb" onclick="changeMainImage(this, 'files/images/pictures/gallery01.webp')">
+                        <img src="files/images/pictures/gallery01.webp" alt="" />
                     </div>
-                    <div class="thumb" onclick="openSlider(1)">
-                        <img src="files/images/pictures/gallery02.webp" loading="eager" fetchpriority="high" alt="" />
+                    <div class="thumb" onclick="changeMainImage(this, 'files/images/pictures/gallery02.webp')">
+                        <img src="files/images/pictures/gallery02.webp" alt="" />
                     </div>
-                    <div class="thumb" onclick="openSlider(2)">
-                        <img src="files/images/pictures/gallery03.webp" loading="eager" fetchpriority="high" alt="" />
+                    <div class="thumb" onclick="changeMainImage(this, 'files/images/pictures/gallery03.webp')">
+                        <img src="files/images/pictures/gallery03.webp" alt="" />
                     </div>
-                    <div class="thumb" onclick="openSlider(3)">
-                        <img src="files/images/pictures/gallery04.webp" loading="eager" fetchpriority="high" alt="" />
+                    <div class="thumb" onclick="changeMainImage(this, 'files/images/pictures/gallery04.webp')">
+                        <img src="files/images/pictures/gallery04.webp" alt="" />
                     </div>
-                    <div class="thumb" onclick="openSlider(4)">
-                        <img src="files/images/pictures/gallery05.webp" loading="eager" fetchpriority="high" alt="" />
+                    <div class="thumb" onclick="changeMainImage(this, 'files/images/pictures/gallery05.webp')">
+                        <img src="files/images/pictures/gallery05.webp" alt="" />
                     </div>
-                    <div class="thumb" onclick="openSlider(5)">
-                        <img src="files/images/pictures/gallery06.webp" loading="eager" fetchpriority="high" alt="" />
+                    <div class="thumb" onclick="changeMainImage(this, 'files/images/pictures/gallery06.webp')">
+                        <img src="files/images/pictures/gallery06.webp" alt="" />
                     </div>
-                    <div class="thumb wide-thumb" onclick="openSlider(6)">
-                        <img src="files/images/pictures/gallery07.webp" loading="eager" fetchpriority="high" alt="" />
+                    <div class="thumb wide-thumb" onclick="changeMainImage(this, 'files/images/pictures/gallery07.webp')">
+                        <img src="files/images/pictures/gallery07.webp" alt="" />
                     </div>
-                    <div class="thumb wide-thumb" onclick="openSlider(7)">
-                        <img src="files/images/pictures/gallery08.webp" loading="eager" fetchpriority="high" alt="" />
+                    <div class="thumb wide-thumb" onclick="changeMainImage(this, 'files/images/pictures/gallery08.webp')">
+                        <img src="files/images/pictures/gallery08.webp" alt="" />
                     </div>
                 </div>
             </section>
-            <div id="gallery-modal" class="gallery-modal">
-                <button class="close-btn" onclick="closeSlider()">✕</button>
-
-                <div class="swiper mySwiper">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src="files/images/pictures/gallery01.webp" decoding="async" loading="lazy" />
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="files/images/pictures/gallery02.webp" decoding="async" loading="lazy" />
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="files/images/pictures/gallery03.webp" decoding="async" loading="lazy" />
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="files/images/pictures/gallery04.webp" decoding="async" loading="lazy" />
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="files/images/pictures/gallery05.webp" decoding="async" loading="lazy" />
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="files/images/pictures/gallery06.webp" decoding="async" loading="lazy" />
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="files/images/pictures/gallery07.webp" decoding="async" loading="lazy" />
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="files/images/pictures/gallery08.webp" decoding="async" loading="lazy" />
-                        </div>
-                    </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-pagination"></div>
-                </div>
-            </div>
 
             <!-- 10. 결혼식장 장소(맵 API 활용) -->
             <section id="location-section">

@@ -1,4 +1,25 @@
 // 페이지 로드 시 실행
+// 이미지 먼저 로드
+window.addEventListener('DOMContentLoaded', function () { // 'load' 대신 'DOMContentLoaded'로 앞당김
+    const imagesToPreload = [
+        "files/images/pictures/gallery01.webp",
+        "files/images/pictures/gallery02.webp",
+        "files/images/pictures/gallery03.webp",
+        "files/images/pictures/gallery04.webp",
+        "files/images/pictures/gallery05.webp",
+        "files/images/pictures/gallery06.webp",
+        "files/images/pictures/gallery07.webp",
+        "files/images/pictures/gallery08.webp"
+        // 16개 전체 이미지 경로 작성
+    ];
+
+    imagesToPreload.forEach(function (src) {
+        // 백그라운드에서 이미지 객체 생성 및 로드
+        var img = new Image();
+        img.src = src;
+    });
+});
+
 window.onload = async function () {
     // 1. 플로팅 BGM 초기화
     initFloatingPlayer();
@@ -7,35 +28,8 @@ window.onload = async function () {
     await loadAndAnimateSVG();
     set_section_scroll();
     update_DDay();
+    document.getElementById("bgm").play();
 };
-
-// BGM 초기화 함수
-// function initBgm() {
-//   const bgm = document.getElementById("bgm");
-//   if (!bgm) return;
-
-//   bgm.volume = 0.25;
-
-//   const playAudio = () => {
-//     bgm
-//       .play()
-//       .then(() => {
-//         // 재생 성공 시 모든 리스너 제거 (중복 실행 방지)
-//         document.removeEventListener("click", playAudio);
-//         document.removeEventListener("touchstart", playAudio);
-//         document.removeEventListener("scroll", playAudio);
-//       })
-//       .catch((err) => {
-//         // 아직 터치가 없어서 발생하는 에러는 무시
-//         console.log("Waiting for user interaction...");
-//       });
-//   };
-
-//   // 사용자의 첫 액션을 감지하기 위해 등록
-//   document.addEventListener("click", playAudio);
-//   document.addEventListener("touchstart", playAudio);
-//   document.addEventListener("scroll", playAudio);
-// }
 
 // 섹션 등장
 function set_section_scroll() {
@@ -84,19 +78,6 @@ function set_section_scroll() {
         }
     });
 }
-
-// 1. 오디오
-// function toggleAudio() {
-//   const audio = document.getElementById("bgm");
-//   const icon = document.getElementById("bgm-icon");
-//   if (audio.paused) {
-//     icon.setAttribute("src", "files/images/icons/pause.svg");
-//     audio.play();
-//   } else {
-//     icon.setAttribute("src", "files/images/icons/play.svg");
-//     audio.pause();
-//   }
-// }
 
 // ==========================================
 // 🎵 자동 서랍형 뮤직 플레이어 제어
@@ -336,41 +317,46 @@ function update_DDay() {
 }
 
 // 9. 이미지 갤러리
-let gallerySwiper;
-function initSwiper() {
-    gallerySwiper = new Swiper(".mySwiper", {
-        loop: true,
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-        // 혹은 lazy 옵션 강화
-        lazy: {
-            loadPrevNext: true, // 앞뒤 사진만 미리 로드
-            loadPrevNextAmount: 1,
-        },
+function changeMainImage(clickedThumb, imageSrc) {
+    const mainView = document.querySelector(".gallery-main-view");
+    
+    // 1. 기존에 띄워져 있던 메인 이미지들을 모두 숨김 처리 및 투명도 0
+    const currentImgs = mainView.querySelectorAll(".main-gallery-img");
+    currentImgs.forEach(img => {
+        img.classList.remove("active-gallery");
+        img.style.opacity = 0;
     });
-}
 
-function openSlider(index) {
-    const modal = document.getElementById("gallery-modal");
-    modal.style.display = "flex";
+    // 2. 이미 존재하는 이미지인지 확인
+    let targetImg = mainView.querySelector(`img[src="${imageSrc}"]`);
 
-    if (!gallerySwiper) {
-        initSwiper();
+    if (!targetImg) {
+        // 3. 없으면 새로 생성하여 추가 (필요할 때만 로드 및 렌더링)
+        const newImg = document.createElement("img");
+        newImg.className = "main-gallery-img active-gallery";
+        newImg.src = imageSrc;
+        newImg.alt = "메인 갤러리 사진";
+        newImg.style.opacity = 0;
+        
+        mainView.appendChild(newImg);
+        
+        setTimeout(() => {
+            newImg.style.opacity = 1;
+        }, 50);
+    } else {
+        // 4. 이미 생성된 적이 있으면 표시
+        targetImg.classList.add("active-gallery");
+        setTimeout(() => {
+            targetImg.style.opacity = 1;
+        }, 50);
     }
-    gallerySwiper.slideToLoop(index, 0); // 클릭한 이미지 인덱스로 이동
-    document.body.style.overflow = "hidden"; // 스크롤 방지
-}
 
-function closeSlider() {
-    const modal = document.getElementById("gallery-modal");
-    modal.style.display = "none";
-    document.body.style.overflow = "auto"; // 스크롤 허용
+    // 5. 썸네일 활성화 상태 변경
+    const allThumbs = document.querySelectorAll(".thumbnail-grid .thumb");
+    allThumbs.forEach((thumb) => {
+        thumb.classList.remove("active-thumb");
+    });
+    clickedThumb.classList.add("active-thumb");
 }
 
 // 10. 결혼식장 장소(카카오맵, 내비 API 활용)
