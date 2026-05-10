@@ -558,7 +558,7 @@ async function fetchGuestbook() {
                     <div class="swiper-slide book-slide-box">
                         <div class="book-article">
                             <p class="book-who"><span class="from-em">FROM.</span> ${item.name || "익명"}</p>
-                            <p class="book-slide-txt">${item.message || "내용 없음"}</p>
+                            <p class="book-slide-txt">${truncateByByte(item.message || "내용 없음")}</p>
                             <p class="book-date"><span>${item.date ? new Date(item.date).toLocaleDateString() : ""}</span></p>
                         </div>
                     </div>`;
@@ -578,6 +578,42 @@ async function fetchGuestbook() {
     }
 
     return result;
+}
+// 방명록 미리보기 글자수
+function truncateByByte(str, maxByte = 100) {
+    let currentByte = 0;
+    let truncatedStr = "";
+
+    for (let i = 0; i < str.length; i++) {
+        const charCode = str.charCodeAt(i);
+        let charByte = 0;
+
+        // 1. 이모지 체크 (Surrogate Pair 판별)
+        // 이모지는 보통 2개의 charCode로 구성되므로 다음 글자까지 포함해서 체크합니다.
+        if (charCode >= 0xD800 && charCode <= 0xDBFF) {
+            charByte = 4; // 이모지 4바이트
+            i++; // 다음 서로게이트 페어 스킵
+        } 
+        // 2. 한글 및 기타 다국어 (UTF-8 기준 한글은 보통 3바이트지만, 요청하신 2바이트 기준으로 작성)
+        else if (charCode > 128) {
+            charByte = 2; 
+        } 
+        // 3. 영문, 숫자, 특수문자
+        else {
+            charByte = 1;
+        }
+
+        // 바이트 합산 전 체크
+        if (currentByte + charByte <= maxByte) {
+            currentByte += charByte;
+            // 이모지인 경우 실제 2글자(서로게이트 페어)를 다 가져와야 함
+            truncatedStr += (charByte === 4) ? str[i-1] + str[i] : str[i];
+        } else {
+            return truncatedStr + "...";
+        }
+    }
+
+    return truncatedStr;
 }
 
 // 방명록 전체보기

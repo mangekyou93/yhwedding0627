@@ -1201,7 +1201,7 @@ section.section-main {
 
 .book-slide-box {
     width: 280px;
-    /* 기본 너비 지정 */
+    height: 200px;
     margin: 0 auto;
     /* 1개일 때 중앙 정렬 */
     background: #fff;
@@ -1212,6 +1212,7 @@ section.section-main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
 }
 
