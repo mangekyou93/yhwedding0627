@@ -202,8 +202,8 @@ section.section-main {
 /* 🎵 자동 서랍형 뮤직 플레이어 */
 #floating-music-player {
     position: fixed;
-    top: 10px;
-    left: max(10px, calc(50vw - 220px));
+    top: 60px;
+    left: max(10px, calc(50vw - 230px));
     display: flex;
     align-items: center;
     background: rgba(255, 255, 255, 0.95);
@@ -319,6 +319,26 @@ section.section-main {
     width: 0%;
     background: #682c2d;
     border-radius: 2px;
+}
+
+/* =======================================
+   🎵 오디오 버튼 터치 씹힘 & 투명 방패 뚫기 완벽 해결
+   ======================================= */
+.player-details .player-controls-mini {
+    pointer-events: auto !important; /* 투명 방패 뚫고 터치 살리기 */
+}
+
+#mini-play-pause {
+    position: relative;
+    z-index: 50;
+    pointer-events: auto !important; /* 버튼 자체도 터치 무조건 활성화 */
+    cursor: pointer;
+}
+
+/* 버튼 안의 SVG 그림이 터치를 가로채는 현상 방지 */
+#mini-play-pause svg,
+#mini-play-pause path {
+    pointer-events: none !important;
 }
 
 /* 2. 신랑 신부 이름 */
@@ -835,87 +855,86 @@ section.section-main {
 
 /* 9. 이미지 갤러리 */
 #gallery-section {
-  padding: 60px 20px;
-  text-align: center;
+    padding: 60px 20px;
+    text-align: center;
 }
 
 .gallery-title {
-  font-size: 14px;
-  letter-spacing: 5px;
-  color: var(--accent-color);
-  margin-bottom: 25px;
+    font-size: 14px;
+    letter-spacing: 5px;
+    color: var(--accent-color);
+    margin-bottom: 25px;
 }
 
 /* ✨ 메인 뷰어 영역 (큰 사진) */
 .gallery-main-view {
-  width: 100%;
-  max-width: 500px;
-  height: 450px;
-  margin: 0 auto 15px auto;
-  border-radius: 8px;
-  background-color: #f8f8f8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+    width: 100%;
+    max-width: 500px;
+    height: 450px;
+    margin: 0 auto 15px auto;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
 .gallery-main-view img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transition: opacity 0.3s ease;
-  display: none; /* 기본적으로 모두 숨김 */
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: opacity 0.3s ease;
+    display: none; /* 기본적으로 모두 숨김 */
 }
 
 .gallery-main-view .active-gallery {
-  display: block; /* active 클래스가 있는 것만 표시 */
+    display: block; /* active 클래스가 있는 것만 표시 */
 }
 
 .thumbnail-grid {
-  display: grid;
-  grid-template-columns: repeat(
-    4,
-    1fr
-  ); /* ✨ 핵심: 1줄에 4장씩 들어가게 변경 */
-  gap: 8px;
-  max-width: 500px;
-  margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(
+        4,
+        1fr
+    ); /* ✨ 핵심: 1줄에 4장씩 들어가게 변경 */
+    gap: 8px;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
 .thumb {
-  position: relative;
-  /* 기존에 있던 grid-column: span 2; 삭제 */
-  aspect-ratio: 1 / 1; /* 모든 썸네일은 예쁜 정사각형으로 통일 */
-  overflow: hidden;
-  border-radius: 4px;
-  cursor: pointer;
-  opacity: 0.5; /* 선택 안 된 사진은 살짝 어둡게 */
-  transition: all 0.2s ease;
+    position: relative;
+    /* 기존에 있던 grid-column: span 2; 삭제 */
+    aspect-ratio: 1 / 1; /* 모든 썸네일은 예쁜 정사각형으로 통일 */
+    overflow: hidden;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.5; /* 선택 안 된 사진은 살짝 어둡게 */
+    transition: all 0.2s ease;
 }
 
 .thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* 현재 띄워진 썸네일 강조 효과 */
 .thumb.active-thumb {
-  opacity: 1;
-  border: 2px solid var(--accent-color);
+    opacity: 1;
+    border: 2px solid var(--accent-color);
 }
 
 /* ✨ 기존에 넓게 설정했던 가로 사진(wide-thumb)도 강제로 1칸 정사각형으로 맞춤 */
 .wide-thumb {
-  grid-column: span 1 !important;
-  aspect-ratio: 1 / 1 !important;
+    grid-column: span 1 !important;
+    aspect-ratio: 1 / 1 !important;
 }
-
 
 /* 10. 결혼식장 장소(맵 API 활용) */
 #location-section {
-    padding: 60px 20px;
+    padding: 30px 20px 60px 20px;
     text-align: center;
     background-color: #fff;
 }
@@ -1481,11 +1500,13 @@ section.section-main {
     width: 100%;
     height: 100%;
     /* 위쪽(버튼부분)과 아래쪽(글씨부분) 모두 살짝 어둡게 처리 */
-    background: linear-gradient(to bottom,
-            rgba(0, 0, 0, 0.4) 0%,
-            rgba(0, 0, 0, 0) 30%,
-            rgba(0, 0, 0, 0) 60%,
-            rgba(0, 0, 0, 0.6) 100%);
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0) 30%,
+        rgba(0, 0, 0, 0) 60%,
+        rgba(0, 0, 0, 0.6) 100%
+    );
 }
 
 /* ✨ 내용물 설정: 위아래 양끝으로 분리 (핵심) */
@@ -1608,4 +1629,189 @@ section.section-main {
     to {
         fill: #8d7b68;
     }
+}
+
+/* =========================================
+   상단 고정 탭 메뉴 (당일 안내 / 모청 본문)
+========================================= */
+.main-tab-nav {
+    position: sticky;
+    top: 0;
+    display: flex;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(5px);
+    z-index: 99999;
+    border-bottom: 1px solid #f4eff9;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+.tab-nav-btn {
+    flex: 1;
+    padding: 16px 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #888;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+.tab-nav-btn.active {
+    color: #8d7b68;
+    font-weight: 700;
+    border-bottom: 3px solid #8d7b68;
+}
+
+/* =========================================
+   첫 화면 메인 비주얼 글씨 오버레이
+========================================= */
+.main-visual-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: #ffffff;
+    text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.8),
+        0 4px 15px rgba(0, 0, 0, 0.4);
+
+    z-index: 20;
+    padding: 60px 20px 30px;
+    box-sizing: border-box;
+
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0.2) 20%,
+        rgba(0, 0, 0, 0) 100%
+    );
+}
+
+.main-visual-overlay .ov-date {
+    font-size: clamp(18px, 5.5vw, 26px);
+    letter-spacing: 3px;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.main-visual-overlay .ov-venue {
+    font-size: clamp(18px, 5.5vw, 26px);
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-top: 5px;
+}
+/* =========================================
+   안내사항 (INFORMATION) 섹션
+========================================= */
+#notice-section {
+    padding: 30px 20px 40px;
+    background: #fff;
+    text-align: center;
+}
+.notice-title {
+    font-size: 14px;
+    letter-spacing: 5px;
+    color: #8d7b68;
+    margin-bottom: 25px;
+}
+.notice-container {
+    background: #faf9f7;
+    border: 1px solid #e9e4de;
+    border-radius: 12px;
+    padding: 25px 20px;
+    text-align: left;
+}
+.notice-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+.notice-icon {
+    font-size: 24px;
+    line-height: 1;
+    margin-top: 2px;
+}
+.notice-text .title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #8d7b68;
+    margin: 0 0 4px 0;
+}
+.notice-text .desc {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+    word-break: keep-all;
+}
+.notice-line {
+    height: 1px;
+    background: #e9e4de;
+    margin: 20px 0;
+}
+
+/* =========================================
+   📋 탭 제어용 반응형 노출 조건 규칙
+========================================= */
+
+/* 1. 당일 안내 가이드 뷰 모드 */
+#invitation-card.view-notice #names,
+#invitation-card.view-notice #video-section,
+#invitation-card.view-notice #welcome-message-section,
+#invitation-card.view-notice #contact-section,
+#invitation-card.view-notice #calendar-section,
+#invitation-card.view-notice #gallery-section,
+#invitation-card.view-notice .account_wrap,
+#invitation-card.view-notice #guestbook-section,
+#invitation-card.view-notice #footer-share-section {
+    display: none !important;
+}
+
+/* 당일 안내 탭에서 디데이를 맨 밑으로 보내기 */
+#invitation-card.view-notice {
+    display: flex;
+    flex-direction: column;
+}
+#invitation-card.view-notice #dday-section {
+    order: 99;
+    margin-bottom: 40px;
+}
+
+/* 탭 전환에 따른 메인 사진 스위칭 강제 제어 */
+#invitation-card.view-notice .img-full {
+    display: none !important;
+}
+#invitation-card.view-notice .img-notice {
+    display: block !important;
+}
+#invitation-card.view-notice .main-visual-overlay {
+    display: block !important;
+}
+#invitation-card.view-full #notice-section {
+    display: none !important;
+}
+#invitation-card.view-full .img-notice {
+    display: none !important;
+}
+#invitation-card.view-full .img-full {
+    display: block !important;
+}
+#invitation-card.view-full .main-visual-overlay {
+    display: none !important;
+}
+#invitation-card.view-full section {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+#mini-play-pause {
+    position: relative;
+    z-index: 50;
+}
+#mini-play-pause svg,
+#mini-play-pause path {
+    pointer-events: none;
 }

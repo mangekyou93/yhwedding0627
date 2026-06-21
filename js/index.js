@@ -1,6 +1,7 @@
 // 페이지 로드 시 실행
 // 이미지 먼저 로드
-window.addEventListener('DOMContentLoaded', function () { // 'load' 대신 'DOMContentLoaded'로 앞당김
+window.addEventListener("DOMContentLoaded", function () {
+    // 'load' 대신 'DOMContentLoaded'로 앞당김
     const imagesToPreload = [
         "files/images/pictures/gallery01.webp",
         "files/images/pictures/gallery02.webp",
@@ -9,7 +10,7 @@ window.addEventListener('DOMContentLoaded', function () { // 'load' 대신 'DOMC
         "files/images/pictures/gallery05.webp",
         "files/images/pictures/gallery06.webp",
         "files/images/pictures/gallery07.webp",
-        "files/images/pictures/gallery08.webp"
+        "files/images/pictures/gallery08.webp",
         // 16개 전체 이미지 경로 작성
     ];
 
@@ -21,155 +22,172 @@ window.addEventListener('DOMContentLoaded', function () { // 'load' 대신 'DOMC
 });
 
 window.onload = async function () {
-    // 1. 플로팅 BGM 초기화
     initFloatingPlayer();
 
     set_guestbook();
     await loadAndAnimateSVG();
     set_section_scroll();
     update_DDay();
-    document.getElementById("bgm").play();
 };
 
 // 섹션 등장
 function set_section_scroll() {
     const sections = document.querySelectorAll("section");
-    const audio = document.getElementById("bgm"); // 오디오 태그 가져오기
-    let isAudioPlayed = false; // 오디오가 재생되었는지 확인하는 변수
 
-    // 1. 일반 섹션용 옵션 (10% 보일 때)
     const defaultOptions = { root: null, threshold: 0.1 };
-
-    // 2. 비디오 섹션 전용 옵션 (30% 보일 때)
     const videoOptions = { root: null, threshold: 0.4 };
-    // --- 일반 섹션 옵저버 ---
+
     const defaultObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("is-visible");
                 observer.unobserve(entry.target);
-                // ✨ 추가: 섹션이 처음 등장할 때 BGM 자동 재생 시작 (1회만 실행)
-                if (!isAudioPlayed) {
-                    isAudioPlayed = true;
-                    
-                    // initFloatingPlayer 내의 재생/동기화 로직 실행
-                    if (typeof initFloatingPlayer === 'function') {
-                        initFloatingPlayer();
-                    } else {
-                        // 만약 함수가 정의되어 있지 않다면 기본 재생 시도
-                        audio.play().catch(err => console.log("자동 재생 대기 중...", err));
-                    }
-                }
+                // (오디오 중복 실행을 유발하던 문제가 되는 코드 완전 삭제 완료)
             }
         });
     }, defaultOptions);
 
-    // --- 비디오 섹션 전용 옵저버 ---
     const videoObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                entry.target.classList.add("is-visible"); // 등장 애니메이션 실행
+                entry.target.classList.add("is-visible");
 
                 const video = entry.target.querySelector("#wedding-video");
                 if (video) {
-                    video.playbackRate = 0.8; // 0.8 배속
+                    video.playbackRate = 0.8;
                     video.play();
                 }
-
-                observer.unobserve(entry.target); // 한 번 실행 후 감시 종료
+                observer.unobserve(entry.target);
             }
         });
     }, videoOptions);
 
-    // 섹션별로 어떤 옵저버를 붙일지 결정
     sections.forEach((section) => {
         if (section.id === "video-section") {
-            videoObserver.observe(section); // 비디오는 0.3 버전 옵저버가 감시
+            videoObserver.observe(section);
         } else {
-            defaultObserver.observe(section); // 나머지는 0.1 버전 옵저버가 감시
+            defaultObserver.observe(section);
         }
     });
 }
 
 // ==========================================
-// 🎵 자동 서랍형 뮤직 플레이어 (최종 통합본)
+// 🎵 자동 서랍형 뮤직 플레이어 (아이콘 상태 동기화 완벽 해결)
 // ==========================================
 function initFloatingPlayer() {
     const player = document.getElementById("floating-music-player");
     const albumCoverImg = player?.querySelector(".album-cover");
+    const playPauseBtn = document.getElementById("mini-play-pause");
     const iconPlay = document.getElementById("mini-icon-play");
     const iconPause = document.getElementById("mini-icon-pause");
     const audio = document.getElementById("bgm");
     const progressBar = document.getElementById("mini-progress-bar");
 
-    if (!player || !audio) return;
+    if (!player || !audio || player.dataset.initialized) return;
+    player.dataset.initialized = "true";
 
-    // 1. 처음 입장 시 3초 뒤 자동으로 닫기
-    let autoCloseTimer = setTimeout(() => {
-        player.classList.add("collapsed");
-    }, 3000);
+    let autoCloseTimer = null;
 
+    const closeDrawer = (delay) => {
+        if (autoCloseTimer) clearTimeout(autoCloseTimer);
+        autoCloseTimer = setTimeout(() => {
+            player.classList.add("collapsed");
+        }, delay);
+    };
+
+    closeDrawer(3000);
     audio.volume = 0.25;
 
-    // ✨ 2. [단일화된 BGM 자동재생 로직] 
-    const forcePlayAudio = () => {
-        audio.play().then(() => {
-            iconPlay.style.display = "none";
-            iconPause.style.display = "block";
+    // ✨ [해결 1] 아이콘과 애니메이션을 변경해주는 전용 함수
+    const updateUI = (isPlaying) => {
+        if (isPlaying) {
+            if (iconPlay) iconPlay.style.display = "none";
+            if (iconPause) iconPause.style.display = "block";
             if (albumCoverImg) albumCoverImg.classList.remove("spin-paused");
+        } else {
+            if (iconPlay) iconPlay.style.display = "block";
+            if (iconPause) iconPause.style.display = "none";
+            if (albumCoverImg) albumCoverImg.classList.add("spin-paused");
+        }
+    };
 
-            // 재생에 성공하면 모든 감시기 끄기 (중복 방지)
-            document.removeEventListener('click', forcePlayAudio);
-            document.removeEventListener('touchstart', forcePlayAudio);
-            document.removeEventListener('touchend', forcePlayAudio); // 아이폰 필수
-            document.removeEventListener('scroll', forcePlayAudio);
-        }).catch(err => {
-            // 에러 나면 조용히 다음 터치를 기다림
+    // ✨ [해결 2] 오디오의 실제 플레이/정지 이벤트에 UI를 무조건 동기화시킴!
+    audio.addEventListener("play", () => updateUI(true));
+    audio.addEventListener("pause", () => updateUI(false));
+
+    // ✨ [해결 3] 페이지 로드 직후 이미 노래가 자동 재생 중이라면, 즉시 일시정지(⏸) 아이콘으로 변경!
+    if (!audio.paused) {
+        updateUI(true);
+    }
+
+    let isAudioUnlocked = false;
+
+    // 문서 클릭 시 백그라운드 재생
+    const stealthPlayAudio = (e) => {
+        // e.target이 존재하는지, 그리고 closest를 지원하는지 확인 후 안전하게 실행
+        if (e && e.target && typeof e.target.closest === "function") {
+            if (e.target.closest("#floating-music-player")) return;
+        }
+
+        if (!audio.paused) return;
+
+        audio
+            .play()
+            .then(() => {
+                updateUI(true);
+                removeStealthListeners();
+            })
+            .catch(() => {});
+    };
+
+    const removeStealthListeners = () => {
+        ["click", "touchstart", "scroll"].forEach((evt) => {
+            document.removeEventListener(evt, stealthPlayAudio);
         });
     };
 
-    // 로드되자마자 일단 한번 찔러보기
-    forcePlayAudio();
+    ["click", "touchstart", "scroll"].forEach((evt) => {
+        document.addEventListener(evt, stealthPlayAudio, { passive: true });
+    });
 
-    // 3. 화면의 모든 스크롤/터치에 반응하도록 감시기 달아두기
-    document.addEventListener('click', forcePlayAudio, { passive: true });
-    document.addEventListener('touchstart', forcePlayAudio, { passive: true });
-    document.addEventListener('touchend', forcePlayAudio, { passive: true }); // 아이폰 필수
-    document.addEventListener('scroll', forcePlayAudio, { passive: true });
+    // 재생/정지 버튼 클릭 이벤트
+    if (playPauseBtn) {
+        const toggleAudio = function (e) {
+            e.preventDefault();
+            e.stopPropagation();
 
-    // 4. 플레이어 직접 클릭 시 제어 (열기/닫기/재생/정지)
-    function handlePlayerInteraction(e) {
-        e.stopPropagation(); // 플레이어 클릭이 배경 클릭으로 번지지 않게 막음
-        
-        if (autoCloseTimer) clearTimeout(autoCloseTimer);
+            isAudioUnlocked = true;
+            removeStealthListeners();
+
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+            closeDrawer(2000);
+        };
+
+        playPauseBtn.addEventListener("touchstart", toggleAudio, {
+            passive: false,
+        });
+        playPauseBtn.addEventListener("click", toggleAudio);
+    }
+
+    // 플레이어 서랍 클릭 이벤트
+    player.addEventListener("click", function (e) {
+        if (e.target.closest("#mini-play-pause")) return;
 
         if (player.classList.contains("collapsed")) {
             player.classList.remove("collapsed");
-            autoCloseTimer = setTimeout(() => {
-                player.classList.add("collapsed");
-            }, 2000);
-        } else {
-            if (audio.paused) {
-                forcePlayAudio();
-            } else {
-                audio.pause();
-                iconPlay.style.display = "block";
-                iconPause.style.display = "none";
-                if (albumCoverImg) albumCoverImg.classList.add("spin-paused");
-            }
-            autoCloseTimer = setTimeout(() => {
-                player.classList.add("collapsed");
-            }, 2000);
         }
-    }
+        closeDrawer(2000);
+    });
 
-    player.addEventListener("click", handlePlayerInteraction);
-
-    // 5. 진행 바 업데이트
+    // 진행 바
     audio.addEventListener("timeupdate", () => {
         if (audio.duration) {
             const percentage = (audio.currentTime / audio.duration) * 100;
-            progressBar.style.width = percentage + "%";
+            if (progressBar) progressBar.style.width = percentage + "%";
         }
     });
 }
@@ -248,7 +266,9 @@ async function loadAndAnimateSVG() {
                     svgElement.style.width = "auto";
                 }
 
-                const paths = svgElement.querySelectorAll("path, polygon, rect");
+                const paths = svgElement.querySelectorAll(
+                    "path, polygon, rect",
+                );
                 paths.forEach((path) => {
                     path.classList.add("draw-path");
 
@@ -300,19 +320,19 @@ function update_DDay() {
     if (diffDays > 0) {
         displayElement.innerText = `${diffDays}일 남았습니다`;
     } else if (diffDays === 0) {
-        displayElement.innerText = `오늘이 바로 그날입니다! ✨`;
+        displayElement.innerText = `드디어 오늘 예쁘게 만나요! 👰🤵✨`;
     } else {
-        displayElement.innerText = `결혼한 지 ${Math.abs(diffDays)}일째 되는 날입니다 🩷`;
+        displayElement.innerText = `우리가 부부가 된 지 ${Math.abs(diffDays)}일째 되는 날입니다 🩷`;
     }
 }
 
 // 9. 이미지 갤러리
 function changeMainImage(clickedThumb, imageSrc) {
     const mainView = document.querySelector(".gallery-main-view");
-    
+
     // 1. 기존에 띄워져 있던 메인 이미지들을 모두 숨김 처리 및 투명도 0
     const currentImgs = mainView.querySelectorAll(".main-gallery-img");
-    currentImgs.forEach(img => {
+    currentImgs.forEach((img) => {
         img.classList.remove("active-gallery");
         img.style.opacity = 0;
     });
@@ -327,9 +347,9 @@ function changeMainImage(clickedThumb, imageSrc) {
         newImg.src = imageSrc;
         newImg.alt = "메인 갤러리 사진";
         newImg.style.opacity = 0;
-        
+
         mainView.appendChild(newImg);
-        
+
         setTimeout(() => {
             newImg.style.opacity = 1;
         }, 50);
@@ -518,14 +538,16 @@ async function set_guestbook() {
             fadeIn(writeWrap);
         });
 
-        document.querySelectorAll(".close-modal, .modal-overlay").forEach((btn) => {
-            btn.addEventListener("click", () => {
-                fadeOut(allListOverlay);
-                fadeOut(allListPop);
-                fadeOut(writeOverlay);
-                fadeOut(writeWrap);
+        document
+            .querySelectorAll(".close-modal, .modal-overlay")
+            .forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    fadeOut(allListOverlay);
+                    fadeOut(allListPop);
+                    fadeOut(writeOverlay);
+                    fadeOut(writeWrap);
+                });
             });
-        });
     } catch (error) {
         console.error("방명록 로드 실패:", error);
     }
@@ -590,14 +612,14 @@ function truncateByByte(str, maxByte = 100) {
 
         // 1. 이모지 체크 (Surrogate Pair 판별)
         // 이모지는 보통 2개의 charCode로 구성되므로 다음 글자까지 포함해서 체크합니다.
-        if (charCode >= 0xD800 && charCode <= 0xDBFF) {
+        if (charCode >= 0xd800 && charCode <= 0xdbff) {
             charByte = 4; // 이모지 4바이트
             i++; // 다음 서로게이트 페어 스킵
-        } 
+        }
         // 2. 한글 및 기타 다국어 (UTF-8 기준 한글은 보통 3바이트지만, 요청하신 2바이트 기준으로 작성)
         else if (charCode > 128) {
-            charByte = 2; 
-        } 
+            charByte = 2;
+        }
         // 3. 영문, 숫자, 특수문자
         else {
             charByte = 1;
@@ -607,7 +629,7 @@ function truncateByByte(str, maxByte = 100) {
         if (currentByte + charByte <= maxByte) {
             currentByte += charByte;
             // 이모지인 경우 실제 2글자(서로게이트 페어)를 다 가져와야 함
-            truncatedStr += (charByte === 4) ? str[i-1] + str[i] : str[i];
+            truncatedStr += charByte === 4 ? str[i - 1] + str[i] : str[i];
         } else {
             return truncatedStr + "...";
         }
@@ -622,7 +644,10 @@ function showAllGuestbook() {
     const overlay = document.querySelector(".all-list-overlay");
     const modal = document.querySelector(".all-list-pop");
 
-    if (!window.cachedGuestbookData || window.cachedGuestbookData.length === 0) {
+    if (
+        !window.cachedGuestbookData ||
+        window.cachedGuestbookData.length === 0
+    ) {
         bodyContainer.innerHTML =
             '<p class="all-gb-empty">등록된 메시지가 없습니다.</p>';
     } else {
@@ -726,8 +751,7 @@ function shareKakao() {
         objectType: "feed",
         content: {
             title: "정연재 ❤️ 장선홍 결혼식에 초대합니다.",
-            description:
-                "2026년 06월 27일 토요일 오후 6시",
+            description: "2026년 06월 27일 토요일 오후 6시",
             imageUrl:
                 "https://mangekyou93.github.io/yhwedding0627/files/images/pictures/thumbnail_image.webp", // 대표 이미지 경로
             link: {

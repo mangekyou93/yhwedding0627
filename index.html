@@ -1,750 +1,1140 @@
 <!doctype html>
 <html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>정연재❤️장선홍 결혼식에 초대합니다.</title>
+        <meta
+            name="description"
+            content="2026년 6월, 저희 두 사람이 하나가 되는 자리에 모십니다."
+        />
+        <meta
+            property="og:title"
+            content="정연재❤️장선홍 결혼식에 초대합니다."
+        />
+        <meta
+            property="og:description"
+            content="2026년 6월 27일 토요일 오후 6시"
+        />
+        <meta
+            property="og:image"
+            content="https://mangekyou93.github.io/yhwedding0627/files/images/pictures/thumbnail_image.webp"
+        />
+        <meta
+            property="og:url"
+            content="https://mangekyou93.github.io/yhwedding0627/"
+        />
 
-    <title>정연재❤️장선홍 결혼식에 초대합니다.</title>
-    <meta name="description" content="2026년 6월, 저희 두 사람이 하나가 되는 자리에 모십니다." />
-    <meta property="og:title" content="정연재❤️장선홍 결혼식에 초대합니다." />
-    <meta property="og:description" content="2026년 6월 27일 토요일 오후 6시" />
-    <meta property="og:image" content="https://mangekyou93.github.io/yhwedding0627/files/images/pictures/thumbnail_image.webp" />
-    <meta property="og:url" content="https://mangekyou93.github.io/yhwedding0627/" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <link rel="stylesheet" href="css/index.css" />
-    <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-        // 1. 우클릭 방지 (이미 하셨겠지만 다시 확인)
-        document.addEventListener("contextmenu", (e) => e.preventDefault());
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-        // 2. 모바일 길게 누르기 방지
-        window.oncontextmenu = function () {
-            return false;
-        };
+        <link rel="stylesheet" href="css/index.css" />
+        <script type="text/javascript" src="js/index.js"></script>
 
-        // 3. 이미지 태그에 대해 터치 시작 시 시스템 메뉴 호출 방지
-        const images = document.querySelectorAll("img");
-        images.forEach((img) => {
-            img.addEventListener(
-                "touchstart",
-                function (e) {
-                    // 필요 시 추가적인 제어 가능
-                },
-                { passive: true },
-            );
-        });
+        <script type="text/javascript">
+            // 우클릭 및 화면 조작 방지 스크립트
+            document.addEventListener("contextmenu", (e) => e.preventDefault());
+            window.oncontextmenu = function () {
+                return false;
+            };
 
-        // 4. 드래그 방지
-        document.addEventListener(
-            "dragstart",
-            function (e) {
-                e.preventDefault();
-            },
-            false,
-        );
-
-        // 5. 선택 방지 (텍스트 등)
-        document.addEventListener(
-            "selectstart",
-            function (e) {
-                e.preventDefault();
-            },
-            false,
-        );
-
-        // 6. 모바일 더블 탭 확대 방지
-        document.addEventListener(
-            "touchstart",
-            function (event) {
-                if (event.touches.length > 1) {
-                    event.preventDefault(); // 다중 터치(핀치 줌) 방지
-                }
-            },
-            { passive: false },
-        );
-        // 페이지 로드 완료 시점에 한 번 더 리셋
-        if (document.readyState === "complete") {
-            resetViewport();
-        } else {
-            window.addEventListener("load", resetViewport);
-        }
-
-        let lastTouchEnd = 0;
-        document.addEventListener(
-            "touchend",
-            function (event) {
-                const now = new Date().getTime();
-                if (now - lastTouchEnd <= 300) {
-                    event.preventDefault(); // 300ms 이내 더블 탭 시 확대 방지
-                }
-                lastTouchEnd = now;
-            },
-            false,
-        );
-
-        // 7. PC 브라우저 휠 확대(Ctrl+휠) 방지
-        document.addEventListener(
-            "wheel",
-            function (event) {
-                if (event.ctrlKey) {
-                    event.preventDefault();
-                }
-            },
-            { passive: false },
-        );
-
-        // 8. 강제 배율 1로 강제 초기화
-        // 삼성 인터넷/크롬 강제 확대 방지 로직 추가
-        if (window.visualViewport) {
-            window.visualViewport.addEventListener("resize", function () {
-                if (window.visualViewport.scale !== 1) {
-                    // 배율이 1이 아니면 즉시 강제 초기화
-                    resetViewport();
-                    // 삼성 인터넷 등에서 강제로 배율을 맞추기 위해 스크롤을 살짝 튕겨줌
-                    window.scrollTo(window.scrollX, window.scrollY);
-                }
+            const images = document.querySelectorAll("img");
+            images.forEach((img) => {
+                img.addEventListener("touchstart", function (e) {}, {
+                    passive: true,
+                });
             });
-        }
 
-        function resetViewport() {
-            const viewport = document.querySelector('meta[name="viewport"]');
-            if (viewport) {
-                // 기존 설정을 완전히 덮어씌워 1.0으로 강제 고정
-                viewport.setAttribute(
-                    "content",
-                    "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
-                );
+            document.addEventListener(
+                "dragstart",
+                (e) => e.preventDefault(),
+                false,
+            );
+            document.addEventListener(
+                "selectstart",
+                (e) => e.preventDefault(),
+                false,
+            );
+
+            document.addEventListener(
+                "touchstart",
+                function (event) {
+                    if (event.touches.length > 1) {
+                        event.preventDefault();
+                    }
+                },
+                { passive: false },
+            );
+
+            if (document.readyState === "complete") {
+                resetViewport();
+            } else {
+                window.addEventListener("load", resetViewport);
             }
-        }
-    </script>
-</head>
 
-<body>
-    <div id="root">
-        <!-- <div id="full-page-loader">
-                <div class="loader-content">
-                    <div class="ready-spinner"></div>
-                    <p class="loader-text">소중한 순간을 위해 잠시만 기다려 주세요...</p>
-                    <p class="loader-subtext">정연재 & 장선홍<br/>2026년 6월 27일 오후 6시<br/>더뉴컨벤션웨딩 2층 더뉴홀</p>
-                </div>
-            </div> -->
-        <div style="
-          display: none;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-        ">
-            <p>초대장을 불러오는 중입니다...</p>
-        </div>
+            let lastTouchEnd = 0;
+            document.addEventListener(
+                "touchend",
+                function (event) {
+                    const now = new Date().getTime();
+                    if (now - lastTouchEnd <= 300) {
+                        event.preventDefault();
+                    }
+                    lastTouchEnd = now;
+                },
+                false,
+            );
 
-        <div id="invitation-card">
-            <!-- 1. 오디오 -->
-            <section id="floating-music-player">
-                <div class="album-cover-wrapper" id="album-cover-btn">
-                    <img src="files\images\pictures\music-player-cover.jpg" alt="Album Cover"
-                        class="album-cover spin-paused" />
-                </div>
+            document.addEventListener(
+                "wheel",
+                function (event) {
+                    if (event.ctrlKey) {
+                        event.preventDefault();
+                    }
+                },
+                { passive: false },
+            );
 
-                <div class="player-details">
-                    <div class="song-info">
-                        <p class="song-title">Popcorn</p>
-                        <p class="song-artist">D.O.</p>
-                    </div>
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener("resize", function () {
+                    if (window.visualViewport.scale !== 1) {
+                        resetViewport();
+                        window.scrollTo(window.scrollX, window.scrollY);
+                    }
+                });
+            }
 
-                    <div class="player-controls-mini">
-                        <button id="mini-play-pause">
-                            <svg id="mini-icon-play" width="22" height="22" viewBox="0 0 24 24" fill="#682c2d">
-                                <path d="M8 5v14l11-7z" />
-                            </svg>
-                            <svg id="mini-icon-pause" width="22" height="22" viewBox="0 0 24 24" fill="#682c2d"
-                                style="display: none">
-                                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-                            </svg>
-                        </button>
-                    </div>
+            function resetViewport() {
+                const viewport = document.querySelector(
+                    'meta[name="viewport"]',
+                );
+                if (viewport) {
+                    viewport.setAttribute(
+                        "content",
+                        "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+                    );
+                }
+            }
 
-                    <div class="mini-progress-wrapper">
-                        <div id="mini-progress-bar"></div>
-                    </div>
-                </div>
-                <audio id="bgm" loop preload="metadata" autoplay>
-                    <source src="files/bgm/music.mp3" type="audio/mpeg" />
-                </audio>
-            </section>
-            
-            <!-- 2. 신랑 신부 이름 -->
-            <section id="names" class="section-main">
-                <div id="svg-container"></div>
-                <!-- <h5>SAVE THE DATE</h5> -->
+            // ✨ 메인 탭 전환 로직
+            function switchMainTab(tabName) {
+                const card = document.getElementById("invitation-card");
+                const btns = document.querySelectorAll(".tab-nav-btn");
 
-                <div class="hero-name-wrap">
-                    <div class="hero-name-box">
-                        <span class="hero-label">신랑</span>
-                        <span class="hero-name">정연재</span>
-                    </div>
-                    <h2><span>💍</span></h2>
-                    <div class="hero-name-box">
-                        <span class="hero-label">신부</span>
-                        <span class="hero-name">장선홍</span>
-                    </div>
-                </div>
+                if (tabName === "notice") {
+                    card.className = "view-notice";
+                    btns[0].classList.add("active");
+                    btns[1].classList.remove("active");
+                } else {
+                    card.className = "view-full";
+                    btns[0].classList.remove("active");
+                    btns[1].classList.add("active");
+                }
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+        </script>
+    </head>
 
-                <!-- 4. 장소(텍스트) -->
-                <div id="main-info">
-                    <p>
-                        2026년 06월 27일 토요일 오후 6시<br />
-                        더뉴컨벤션 웨딩홀 2층 더뉴홀
-                    </p>
-                </div>
-            </section>
-
-            <!-- 3. 신랑/신부 메인 사진 or 동영상 -->
-            <section id="main-visual" style="padding: 0">
-                <div class="main-image-bg">
-                    <div class="touch-guard"></div>
-                </div>
-            </section>
-            <section id="video-section">
-                <div class="video-container">
-                    <p class="video-title">OUR MOMENT</p>
-
-                    <div class="video-wrapper">
-                        <video id="wedding-video" muted loop playsinline>
-                            <source src="files/videos/0627.mp4" type="video/mp4" />
-                        </video>
-
-                        <div class="video-subtitle">
-                            감사한 마음을 담아 <br />
-                            초대의 인사를 전합니다.
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 5. 웰컴(결혼 청첩장) 문구 -->
-            <section id="welcome-message-section">
-                <div class="welcome-flower">🌸</div>
-                <h5 class="welcome-title">INVITATION</h5>
-                <div class="welcome-text">
-                    <p>봄처럼 포근하고 여름처럼 뜨겁고</p>
-                    <p>가을처럼 충만하고 겨울처럼 설레는 사람을 만났습니다.</p>
-                    <p>이제 서로의 모든 계절을 채워가려 합니다.</p>
-                    <br />
-                    <p>가장 빛나는 날,</p>
-                    <p>늘 곁에서 아껴준 고마운 분들을 초대합니다.</p>
-                </div>
-            </section>
-
-            <!-- 6. 양가부모님 성함 + 신랑 신부 이름 + 연락처 메세지 보내기 -->
-            <section id="contact-section">
-                <div class="contact-container">
-                    <div class="contact-group">
-                        <div class="contact-title">GROOM</div>
-                        <div class="person-row">
-                            <span class="name">정철화 · 이용순</span>
-                            <span class="relation">의 차남</span>
-                            <span class="main-name">연재</span>
-                            <div class="icon-wrap">
-                                <a href="tel:01095554401">📞</a>
-                                <a href="sms:01095554401">💬</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="divider"></div>
-                    <div class="contact-group">
-                        <div class="contact-title">BRIDE</div>
-                        <div class="person-row">
-                            <span class="name">장수호 · 김희정</span>
-                            <span class="relation">의 장녀</span>
-                            <span class="main-name">선홍</span>
-                            <div class="icon-wrap">
-                                <a href="tel:01041010149">📞</a>
-                                <a href="sms:01041010149">💬</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="parents-contact-btn" onclick="openModal()">
-                        혼주에게 연락하기
-                    </div>
-                </div>
-            </section>
-            <div id="modal-overlay" class="modal-overlay" onclick="closeModal()">
-                <div class="modal-content" onclick="event.stopPropagation()">
-                    <div class="modal-header">
-                        <span>혼주에게 연락하기</span>
-                        <button class="modal-close" onclick="closeModal()">✕</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="modal-group">
-                            <p class="group-title">신랑측 혼주</p>
-                            <div class="parent-item">
-                                <span class="parent-name">부 정철화</span>
-                                <div class="parent-icons">
-                                    <a href="tel:01064374401">📞</a>
-                                    <a href="sms:01064374401">💬</a>
-                                </div>
-                            </div>
-                            <div class="parent-item">
-                                <span class="parent-name">모 이용순</span>
-                                <div class="parent-icons">
-                                    <a href="tel:01039934401">📞</a>
-                                    <a href="sms:01039934401">💬</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-divider"></div>
-                        <div class="modal-group">
-                            <p class="group-title">신부측 혼주</p>
-                            <div class="parent-item">
-                                <span class="parent-name">부 장수호</span>
-                                <div class="parent-icons">
-                                    <a href="tel:01038580149">📞</a>
-                                    <a href="sms:01038580149">💬</a>
-                                </div>
-                            </div>
-                            <div class="parent-item">
-                                <span class="parent-name">모 김희정</span>
-                                <div class="parent-icons">
-                                    <a href="tel:01073261996">📞</a>
-                                    <a href="sms:01073261996">💬</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <body>
+        <div id="root">
+            <div
+                style="
+                    display: none;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                "
+            >
+                <p>초대장을 불러오는 중입니다...</p>
             </div>
 
-            <!-- 7. 달력 -->
-            <section id="calendar-section">
-                <div class="calendar-title">
-                    <span class="month-num">06</span>
-                    <span class="month-text">JUNE</span>
-                </div>
+            <div id="invitation-card" class="view-notice">
+                <!-- 1. 오디오 -->
+                <section id="floating-music-player">
+                    <div class="album-cover-wrapper" id="album-cover-btn">
+                        <img
+                            src="files\images\pictures\music-player-cover.jpg"
+                            alt="Album Cover"
+                            class="album-cover spin-paused"
+                        />
+                    </div>
 
-                <div class="calendar-container">
-                    <table class="calendar-table">
-                        <thead>
-                            <tr>
-                                <th class="sun">SUN</th>
-                                <th>MON</th>
-                                <th>TUE</th>
-                                <th>WED</th>
-                                <th>THU</th>
-                                <th>FRI</th>
-                                <th>SAT</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="sun"></td>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>6</td>
-                            </tr>
-                            <tr>
-                                <td class="sun">7</td>
-                                <td>8</td>
-                                <td>9</td>
-                                <td>10</td>
-                                <td>11</td>
-                                <td>12</td>
-                                <td>13</td>
-                            </tr>
-                            <tr>
-                                <td class="sun">14</td>
-                                <td>15</td>
-                                <td>16</td>
-                                <td>17</td>
-                                <td>18</td>
-                                <td>19</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td class="sun">21</td>
-                                <td>22</td>
-                                <td>23</td>
-                                <td>24</td>
-                                <td>25</td>
-                                <td>26</td>
-                                <td class="sat">
-                                    <div class="wedding-day">27</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="sun">28</td>
-                                <td>29</td>
-                                <td>30</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- 8. 연재♥선홍 의 결혼식 OO전 -->
-            <section id="dday-section">
-                <div class="dday-wrap">
-                    <p class="dday-text">
-                        <span class="name">연재</span>
-                        <span class="heart">♥</span>
-                        <span class="name">선홍</span>
-                        의 결혼식
-                    </p>
-                    <div id="wd_d-day" class="dday-count">로딩 중...</div>
-                </div>
-            </section>
-
-            <!-- 9. 이미지 갤러리-->
-            <section id="gallery-section">
-                <div class="gallery-title">GALLERY</div>
-                <div class="gallery-main-view">
-                    <img class="main-gallery-img active-gallery" src="files/images/pictures/gallery01.webp" alt="메인 갤러리 사진"/>
-                </div>
-                <div class="thumbnail-grid">
-                    <div class="thumb active-thumb" onclick="changeMainImage(this, 'files/images/pictures/gallery01.webp')">
-                        <img src="files/images/pictures/gallery01.webp" alt="" />
-                    </div>
-                    <div class="thumb" onclick="changeMainImage(this, 'files/images/pictures/gallery02.webp')">
-                        <img src="files/images/pictures/gallery02.webp" alt="" />
-                    </div>
-                    <div class="thumb" onclick="changeMainImage(this, 'files/images/pictures/gallery03.webp')">
-                        <img src="files/images/pictures/gallery03.webp" alt="" />
-                    </div>
-                    <div class="thumb" onclick="changeMainImage(this, 'files/images/pictures/gallery04.webp')">
-                        <img src="files/images/pictures/gallery04.webp" alt="" />
-                    </div>
-                    <div class="thumb" onclick="changeMainImage(this, 'files/images/pictures/gallery05.webp')">
-                        <img src="files/images/pictures/gallery05.webp" alt="" />
-                    </div>
-                    <div class="thumb" onclick="changeMainImage(this, 'files/images/pictures/gallery06.webp')">
-                        <img src="files/images/pictures/gallery06.webp" alt="" />
-                    </div>
-                    <div class="thumb wide-thumb" onclick="changeMainImage(this, 'files/images/pictures/gallery07.webp')">
-                        <img src="files/images/pictures/gallery07.webp" alt="" />
-                    </div>
-                    <div class="thumb wide-thumb" onclick="changeMainImage(this, 'files/images/pictures/gallery08.webp')">
-                        <img src="files/images/pictures/gallery08.webp" alt="" />
-                    </div>
-                </div>
-            </section>
-
-            <!-- 10. 결혼식장 장소(맵 API 활용) -->
-            <section id="location-section">
-                <input type="hidden" id="wd_xpos" value="126.8368847974" />
-                <input type="hidden" id="wd_ypos" value="37.5562637915563" />
-
-                <div class="location-container">
-                    <p class="section-title">LOCATION</p>
-                    <p class="venue-name">더뉴컨벤션 웨딩홀 2층 더뉴홀</p>
-                    <p class="venue-address">서울 강서구 공항대로36길 57</p>
-                    <p class="venue-tel">1661-3303</p>
-                    <div class="more_view">
-                        <div class="bottom_box">
-                            <div class="navi">
-                                <button class="map_btn tmap" onclick="openTMap()">
-                                    <span class="img_box">
-                                        <img src="files/images/icons/tmap_icon.png" alt="" />
-                                    </span>
-                                    티맵
-                                </button>
-                                <button class="map_btn kakao" onclick="startNavigation()">
-                                    <span class="img_box">
-                                        <img src="https://developers.kakao.com/assets/img/about/buttons/navi/kakaonavi_btn_medium.png"
-                                            alt="길 안내 버튼" />
-                                    </span>
-                                    카카오내비
-                                </button>
-                                <button class="map_btn naver" onclick="openNaverMap()">
-                                    <span class="img_box">
-                                        <img src="files/images/icons/navermap_icon_2.png" alt="네이버 지도" />
-                                    </span>
-                                    네이버지도
-                                    <script type="text/javascript"
-                                        src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=uoachp4znc"></script>
-                                </button>
-                            </div>
+                    <div class="player-details">
+                        <div class="song-info">
+                            <p class="song-title">Popcorn</p>
+                            <p class="song-artist">D.O.</p>
+                        </div>
+                        <div class="player-controls-mini">
+                            <button id="mini-play-pause">
+                                <svg
+                                    id="mini-icon-play"
+                                    width="22"
+                                    height="22"
+                                    viewBox="0 0 24 24"
+                                    fill="#682c2d"
+                                >
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                                <svg
+                                    id="mini-icon-pause"
+                                    width="22"
+                                    height="22"
+                                    viewBox="0 0 24 24"
+                                    fill="#682c2d"
+                                    style="display: none"
+                                >
+                                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="mini-progress-wrapper">
+                            <div id="mini-progress-bar"></div>
                         </div>
                     </div>
-                    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.7/kakao.min.js"
-                        integrity="sha384-tJkjbtDbvoxO+diRuDtwRO9JXR7pjWnfjfRn5ePUpl7e7RJCxKCwwnfqUAdXh53p"
-                        crossorigin="anonymous"></script>
+                    <audio id="bgm" loop preload="metadata" autoplay>
+                        <source src="files/bgm/music.mp3" type="audio/mpeg" />
+                    </audio>
+                </section>
 
-                    <div id="map" style="
-                width: 100%;
-                height: 280px;
-                margin: 20px 0;
-                border-radius: 10px;
-                background: #f8f8f8;
-              "></div>
-                    <script type="text/javascript"
-                        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=669f1c6f440657e143d516895413ef21&libraries=services&autoload=false"></script>
-                    <a href="https://map.kakao.com/link/map/더뉴컨벤션,37.5562637915563,126.8368847974" target="_blank"
-                        class="map-detail-link">
-                        지도를 자세히 보려면 여기를 눌러주세요
-                    </a>
-                    <script>
-                        // 카카오 맵 라이브러리가 로드될 때까지 기다린 후 실행
-                        kakao.maps.load(function () {
-                            var container = document.getElementById("map");
-                            var xpos = document.getElementById("wd_xpos").value; // 이전에 넣은 x 좌표
-                            var ypos = document.getElementById("wd_ypos").value; // 이전에 넣은 y 좌표
-
-                            var options = {
-                                center: new kakao.maps.LatLng(ypos, xpos), // 더뉴컨벤션 좌표 적용
-                                level: 3,
-                            };
-
-                            var map = new kakao.maps.Map(container, options);
-
-                            // 마커 추가 (선택사항)
-                            var markerPosition = new kakao.maps.LatLng(ypos, xpos);
-                            var marker = new kakao.maps.Marker({
-                                position: markerPosition,
-                            });
-                            marker.setMap(map);
-                        });
-                    </script>
-
-                    <div class="location-info">
-                        <div class="info-group">
-                            <div class="info-label">💍 더뉴컨벤션웨딩</div>
-                            <ul class="info-list">
-                                <li>서울 강서구 공항대로 36길 57 (Tel. 1661-3303)</li>
-                            </ul>
-                        </div>
-
-                        <div class="info-group">
-                            <div class="info-label">🚈 지하철</div>
-                            <ul class="info-list">
-                                <li>5호선 발산역 하차 8번 출구 (7번 출구 이용 가능)</li>
-                                <li>이대서울병원 방향 도보 3분</li>
-                            </ul>
-                        </div>
-
-                        <div class="info-group">
-                            <div class="info-label">🚎 버스</div>
-                            <ul class="info-list">
-                                <li>간선버스: 601, 605, 642, 652</li>
-                                <li>지선버스: 6629, 6630, 6632, 6642, 6643, 6645, 6657</li>
-                                <li>공항버스: 김포공항-6000, 인천공항-6001, 6003, 6008</li>
-                                <li>일반버스: 1, 2, 6, 60, 60-3, 66, 69, 88, 631</li>
-                            </ul>
-                        </div>
-
-                        <div class="info-group">
-                            <div class="info-label">🚗 자가용</div>
-                            <ul class="info-list">
-                                <li>더뉴컨벤션웨딩 주차장 이용 가능</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 11. 계좌번호 -->
-            <section class="account_wrap anchor_6 wrap_padding">
-                <div class="offset_5 offset">
-                    <div class="account_inner inner_padding">
-                        <p class="section_tit theme_1_color" style="
-                  text-align: center;
-                  font-size: 1.2rem;
-                  margin-bottom: 20px;
-                ">
-                            마음을 전하실 곳
-                        </p>
-
-                        <div class="account_box">
-                            <div class="groom_account account_list">
-                                <p class="account_tit" onclick="toggleAccount(this)">
-                                    <span>신랑측 계좌번호</span>
-                                    <span class="accordion-arrow">▶</span>
-                                </p>
-                                <div class="cover_wrap" style="display: none">
-                                    <div class="account_cover">
-                                        <div class="article1">
-                                            <p>
-                                                <span>카카오뱅크</span>
-                                                <span class="acc_num">3333-20-5356335</span>
-                                            </p>
-                                            <p>정연재</p>
-                                        </div>
-                                        <div class="article2">
-                                            <button class="copy_btn" onclick="copyToClipboard('3333205356335 카카오뱅크')">
-                                                복사
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="account_cover">
-                                        <div class="article1">
-                                            <p>
-                                                <span>국민은행</span>
-                                                <span class="acc_num">028-21-0308-567</span>
-                                            </p>
-                                            <p>정철화 (부)</p>
-                                        </div>
-                                        <div class="article2">
-                                            <button class="copy_btn" onclick="copyToClipboard('028210308567 국민은행')">
-                                                복사
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="account_cover">
-                                        <div class="article1">
-                                            <p>
-                                                <span>국민은행</span>
-                                                <span class="acc_num">961401-01-168896</span>
-                                            </p>
-                                            <p>이용순 (모)</p>
-                                        </div>
-                                        <div class="article2">
-                                            <button class="copy_btn" onclick="copyToClipboard('96140101168896 국민은행')">
-                                                복사
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="bride_account account_list">
-                                <p class="account_tit" onclick="toggleAccount(this)">
-                                    <span>신부측 계좌번호</span>
-                                    <span class="accordion-arrow">▶</span>
-                                </p>
-                                <div class="cover_wrap" style="display: none">
-                                    <div class="account_cover">
-                                        <div class="article1">
-                                            <p>
-                                                <span>카카오뱅크</span>
-                                                <span class="acc_num">3333-09-9964835</span>
-                                            </p>
-                                            <p>장선홍</p>
-                                        </div>
-                                        <div class="article2">
-                                            <button class="copy_btn" onclick="copyToClipboard('3333099964835 카카오뱅크')">
-                                                복사
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="account_cover">
-                                        <div class="article1">
-                                            <p>
-                                                <span>신한은행</span>
-                                                <span class="acc_num">110-015-223430</span>
-                                            </p>
-                                            <p>장수호 (부)</p>
-                                        </div>
-                                        <div class="article2">
-                                            <button class="copy_btn" onclick="copyToClipboard('110015223430 신한은행')">
-                                                복사
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="account_cover">
-                                        <div class="article1">
-                                            <p>
-                                                <span>국민은행</span>
-                                                <span class="acc_num">457001-01-410560</span>
-                                            </p>
-                                            <p>김희정 (모)</p>
-                                        </div>
-                                        <div class="article2">
-                                            <button class="copy_btn" onclick="copyToClipboard('45700101410560 국민은행')">
-                                                복사
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 12. 방명록 -->
-            <section id="guestbook-section" class="wrap_padding">
-                <div id="guestbook-loader">
-                    <div class="spinner"></div>
-                    <p style="font-size: 12px; color: #999; margin-top: 10px">
-                        방명록을 불러오고 있어요...
-                    </p>
-                </div>
-                <div class="guestbook-inner">
-                    <p class="section-title">GUEST BOOK</p>
-                    <div class="book-box">
-                        <div id="" class="swiper guest-swiper">
-                            <!-- 내용 -->
-                            <div class="swiper-wrapper" id="guestbook-list"></div>
-                        </div>
-                    </div>
-                    <div class="book-btn-group">
-                        <a href="javascript:showAllGuestbook();" class="btn-open-all"><i class="xi-bars"></i> 전체보기</a>
-                        <a href="javascript:void(0);" class="btn-open-write"><i class="xi-pen"></i> 작성하기</a>
-                    </div>
-                </div>
-            </section>
-            <div class="modal-overlay all-list-overlay" onclick="closeAllGuestbook()"></div>
-            <div class="modal-content all-list-pop" style="max-width: 450px">
-                <div class="all-gb-header">
-                    방명록
-                    <button class="close-btn" style="top: 15px; font-size: 20px" onclick="closeAllGuestbook()">
-                        ✕
+                <div class="main-tab-nav">
+                    <button
+                        class="tab-nav-btn active"
+                        onclick="switchMainTab('notice')"
+                    >
+                        📋 당일 예식 안내
+                    </button>
+                    <button class="tab-nav-btn" onclick="switchMainTab('full')">
+                        💌 청첩장 본문보기
                     </button>
                 </div>
-                <div class="all-gb-body" id="all-guestbook-body"></div>
-            </div>
-            <div class="modal-overlay write-overlay"></div>
-            <div class="modal-content write-wrap">
-                <button class="close-btn close-modal write-close" style="color: black; font-size: 20px">
-                    ✕
-                </button>
-                <p class="write-tit">방명록 작성하기</p>
-                <input type="text" id="write_guest_name" placeholder="성함을 입력해주세요." />
-                <textarea id="write_guest_text" rows="4"
-                    placeholder="내용을 입력해주세요 (비방, 욕설, 정치적성향의 글은 임의로 삭제되며 형사처벌의 대상이 될 수 있습니다.)" style="
-              resize: none;
-              font-family:
-                &quot;Pretendard&quot;,
-                -apple-system,
-                sans-serif;
-            "></textarea>
-                <span class="btn-guestbook-submit" onclick="writeGuestbook()">작성하기</span>
-            </div>
 
-            <!-- 13. 카카오톡으로 공유하기, 청첩장 주소 복사하기 -->
-            <section id="footer-share-section">
-                <div class="footer-bg-wrapper">
-                    <img src="files/images/pictures/footer.webp" alt="마지막 사진" class="footer-bg-img" />
-                    <div class="footer-overlay"></div>
+                <!-- 2. 신랑 신부 이름 -->
+                <section id="names" class="section-main">
+                    <div id="svg-container"></div>
+                    <div class="hero-name-wrap">
+                        <div class="hero-name-box">
+                            <span class="hero-label">신랑</span>
+                            <span class="hero-name">정연재</span>
+                        </div>
+                        <h2><span>💍</span></h2>
+                        <div class="hero-name-box">
+                            <span class="hero-label">신부</span>
+                            <span class="hero-name">장선홍</span>
+                        </div>
+                    </div>
+                    <!-- 4. 장소(텍스트) -->
+                    <div id="main-info">
+                        <p>
+                            2026년 06월 27일 토요일 오후 6시<br />
+                            더뉴컨벤션 웨딩홀 2층 더뉴홀
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 3. 신랑/신부 메인 사진 or 동영상 -->
+                <section
+                    id="main-visual"
+                    style="
+                        padding: 0;
+                        position: relative;
+                        width: 100%;
+                        background-color: #f8f8f8;
+                    "
+                >
+                    <img
+                        class="img-notice"
+                        src="files/images/pictures/thumbnail_image2.webp"
+                        style="width: 100%; height: auto; object-fit: contain"
+                        alt="당일 안내 메인 사진"
+                    />
+
+                    <img
+                        class="img-full"
+                        src="files/images/pictures/thumbnail_image.webp"
+                        style="
+                            width: 100%;
+                            height: auto;
+                            object-fit: contain;
+                            display: none;
+                        "
+                        alt="기존 청첩장 메인 사진"
+                    />
+
+                    <div
+                        class="touch-guard"
+                        style="
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            z-index: 10;
+                        "
+                    ></div>
+
+                    <div class="main-visual-overlay" style="z-index: 20">
+                        <p class="ov-date">2026. 06. 27 SAT 6:00 PM</p>
+                        <p class="ov-venue">더뉴컨벤션 웨딩홀 2층 더뉴홀</p>
+                    </div>
+                </section>
+
+                <section id="notice-section">
+                    <div class="notice-title">INFORMATION</div>
+                    <div class="notice-container">
+                        <div class="notice-card">
+                            <div class="notice-icon">🍽️</div>
+                            <div class="notice-text">
+                                <p class="title">식사 안내</p>
+                                <p class="desc">
+                                    하객분들의 편안한 식사를 위해 연회장은
+                                    <strong>오후 5시부터 8시까지</strong>
+                                    운영됩니다.<br />
+                                    <span style="color: #666; font-size: 0.9em"
+                                        >(5세 이하 어린이는 무료입장
+                                        가능합니다.)</span
+                                    >
+                                </p>
+                            </div>
+                        </div>
+                        <div class="notice-line"></div>
+                        <div class="notice-card">
+                            <div class="notice-icon">🚗</div>
+                            <div class="notice-text">
+                                <p class="title">주차 안내</p>
+                                <p class="desc">
+                                    더뉴컨벤션 웨딩홀 내 주차가 가능하며,
+                                    하객분들께는
+                                    <strong>2시간 무료 주차</strong>를
+                                    지원합니다.<br />
+                                    예식 당일 상황에 따라 제휴
+                                    주차장(이대서울병원)으로 안내될 수 있으니,
+                                    <strong
+                                        >웨딩홀 방문 시 현장 주차 요원의 안내에
+                                        따라 주차 부탁드립니다.</strong
+                                    >
+                                </p>
+                            </div>
+                        </div>
+                        <div class="notice-line"></div>
+                        <div class="notice-card">
+                            <div class="notice-icon">📸</div>
+                            <div class="notice-text">
+                                <p class="title">포토부스 안내</p>
+                                <p class="desc">
+                                    소중한 날, 귀한 걸음 해주신 마음을 담아
+                                    로비에
+                                    <strong>포토부스</strong>를 준비했습니다.<br />예쁜
+                                    사진으로 소중한 추억을 남기시고, 축하의
+                                    한마디를 남겨주세요!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="video-section">
+                    <div class="video-container">
+                        <p class="video-title">OUR MOMENT</p>
+                        <div class="video-wrapper">
+                            <video id="wedding-video" muted loop playsinline>
+                                <source
+                                    src="files/videos/0627.mp4"
+                                    type="video/mp4"
+                                />
+                            </video>
+                            <div class="video-subtitle">
+                                감사한 마음을 담아 <br />초대의 인사를 전합니다.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. 웰컴(결혼 청첩장) 문구 -->
+                <section id="welcome-message-section">
+                    <div class="welcome-flower">🌸</div>
+                    <h5 class="welcome-title">INVITATION</h5>
+                    <div class="welcome-text">
+                        <p>봄처럼 포근하고 여름처럼 뜨겁고</p>
+                        <p>
+                            가을처럼 충만하고 겨울처럼 설레는 사람을 만났습니다.
+                        </p>
+                        <p>이제 서로의 모든 계절을 채워가려 합니다.</p>
+                        <br />
+                        <p>가장 빛나는 날,</p>
+                        <p>늘 곁에서 아껴준 고마운 분들을 초대합니다.</p>
+                    </div>
+                </section>
+
+                <!-- 6. 양가부모님 성함 + 신랑 신부 이름 + 연락처 메세지 보내기 -->
+                <section id="contact-section">
+                    <div class="contact-container">
+                        <div class="contact-group">
+                            <div class="contact-title">GROOM</div>
+                            <div class="person-row">
+                                <span class="name">정철화 · 이용순</span>
+                                <span class="relation">의 차남</span>
+                                <span class="main-name">연재</span>
+                                <div class="icon-wrap">
+                                    <a href="tel:01095554401">📞</a>
+                                    <a href="sms:01095554401">💬</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="contact-group">
+                            <div class="contact-title">BRIDE</div>
+                            <div class="person-row">
+                                <span class="name">장수호 · 김희정</span>
+                                <span class="relation">의 장녀</span>
+                                <span class="main-name">선홍</span>
+                                <div class="icon-wrap">
+                                    <a href="tel:01041010149">📞</a>
+                                    <a href="sms:01041010149">💬</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="parents-contact-btn" onclick="openModal()">
+                            혼주에게 연락하기
+                        </div>
+                    </div>
+                </section>
+
+                <div
+                    id="modal-overlay"
+                    class="modal-overlay"
+                    onclick="closeModal()"
+                >
+                    <div
+                        class="modal-content"
+                        onclick="event.stopPropagation()"
+                    >
+                        <div class="modal-header">
+                            <span>혼주에게 연락하기</span>
+                            <button class="modal-close" onclick="closeModal()">
+                                ✕
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-group">
+                                <p class="group-title">신랑측 혼주</p>
+                                <div class="parent-item">
+                                    <span class="parent-name">부 정철화</span>
+                                    <div class="parent-icons">
+                                        <a href="tel:01064374401">📞</a>
+                                        <a href="sms:01064374401">💬</a>
+                                    </div>
+                                </div>
+                                <div class="parent-item">
+                                    <span class="parent-name">모 이용순</span>
+                                    <div class="parent-icons">
+                                        <a href="tel:01039934401">📞</a>
+                                        <a href="sms:01039934401">💬</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-divider"></div>
+                            <div class="modal-group">
+                                <p class="group-title">신부측 혼주</p>
+                                <div class="parent-item">
+                                    <span class="parent-name">부 장수호</span>
+                                    <div class="parent-icons">
+                                        <a href="tel:01038580149">📞</a>
+                                        <a href="sms:01038580149">💬</a>
+                                    </div>
+                                </div>
+                                <div class="parent-item">
+                                    <span class="parent-name">모 김희정</span>
+                                    <div class="parent-icons">
+                                        <a href="tel:01073261996">📞</a>
+                                        <a href="sms:01073261996">💬</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="footer-content">
-                    <div class="share-btn-group">
-                        <button class="btn-share btn-kakao" onclick="shareKakao()">
-                            카카오톡 공유하기
-                        </button>
-                        <button class="btn-share btn-url" onclick="copyUrl()">
-                            청첩장 주소 복사하기
-                        </button>
+                <!-- 7. 달력 -->
+                <section id="calendar-section">
+                    <div class="calendar-title">
+                        <span class="month-num">06</span>
+                        <span class="month-text">JUNE</span>
                     </div>
+                    <div class="calendar-container">
+                        <table class="calendar-table">
+                            <thead>
+                                <tr>
+                                    <th class="sun">SUN</th>
+                                    <th>MON</th>
+                                    <th>TUE</th>
+                                    <th>WED</th>
+                                    <th>THU</th>
+                                    <th>FRI</th>
+                                    <th>SAT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="sun"></td>
+                                    <td>1</td>
+                                    <td>2</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>5</td>
+                                    <td>6</td>
+                                </tr>
+                                <tr>
+                                    <td class="sun">7</td>
+                                    <td>8</td>
+                                    <td>9</td>
+                                    <td>10</td>
+                                    <td>11</td>
+                                    <td>12</td>
+                                    <td>13</td>
+                                </tr>
+                                <tr>
+                                    <td class="sun">14</td>
+                                    <td>15</td>
+                                    <td>16</td>
+                                    <td>17</td>
+                                    <td>18</td>
+                                    <td>19</td>
+                                    <td>20</td>
+                                </tr>
+                                <tr>
+                                    <td class="sun">21</td>
+                                    <td>22</td>
+                                    <td>23</td>
+                                    <td>24</td>
+                                    <td>25</td>
+                                    <td>26</td>
+                                    <td class="sat">
+                                        <div class="wedding-day">27</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="sun">28</td>
+                                    <td>29</td>
+                                    <td>30</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
 
-                    <div class="footer-credits">
-                        <p>♡ 감사합니다 ♡</p>
-                        <p>Designed by 연재 & 선홍</p>
+                <!-- 8. 연재♥선홍 의 결혼식 OO전 -->
+                <section id="dday-section">
+                    <div class="dday-wrap">
+                        <p class="dday-text">
+                            <span class="name">연재</span
+                            ><span class="heart">♥</span
+                            ><span class="name">선홍</span> 의 결혼식
+                        </p>
+                        <div id="wd_d-day" class="dday-count">로딩 중...</div>
                     </div>
+                </section>
+
+                <!-- 9. 이미지 갤러리-->
+                <section id="gallery-section">
+                    <div class="gallery-title">GALLERY</div>
+                    <div class="gallery-main-view">
+                        <img
+                            class="main-gallery-img active-gallery"
+                            src="files/images/pictures/gallery01.webp"
+                            alt="메인 갤러리 사진"
+                        />
+                    </div>
+                    <div class="thumbnail-grid">
+                        <div
+                            class="thumb active-thumb"
+                            onclick="
+                                changeMainImage(
+                                    this,
+                                    'files/images/pictures/gallery01.webp',
+                                )
+                            "
+                        >
+                            <img
+                                src="files/images/pictures/gallery01.webp"
+                                alt=""
+                            />
+                        </div>
+                        <div
+                            class="thumb"
+                            onclick="
+                                changeMainImage(
+                                    this,
+                                    'files/images/pictures/gallery02.webp',
+                                )
+                            "
+                        >
+                            <img
+                                src="files/images/pictures/gallery02.webp"
+                                alt=""
+                            />
+                        </div>
+                        <div
+                            class="thumb"
+                            onclick="
+                                changeMainImage(
+                                    this,
+                                    'files/images/pictures/gallery03.webp',
+                                )
+                            "
+                        >
+                            <img
+                                src="files/images/pictures/gallery03.webp"
+                                alt=""
+                            />
+                        </div>
+                        <div
+                            class="thumb"
+                            onclick="
+                                changeMainImage(
+                                    this,
+                                    'files/images/pictures/gallery04.webp',
+                                )
+                            "
+                        >
+                            <img
+                                src="files/images/pictures/gallery04.webp"
+                                alt=""
+                            />
+                        </div>
+                        <div
+                            class="thumb"
+                            onclick="
+                                changeMainImage(
+                                    this,
+                                    'files/images/pictures/gallery05.webp',
+                                )
+                            "
+                        >
+                            <img
+                                src="files/images/pictures/gallery05.webp"
+                                alt=""
+                            />
+                        </div>
+                        <div
+                            class="thumb"
+                            onclick="
+                                changeMainImage(
+                                    this,
+                                    'files/images/pictures/gallery06.webp',
+                                )
+                            "
+                        >
+                            <img
+                                src="files/images/pictures/gallery06.webp"
+                                alt=""
+                            />
+                        </div>
+                        <div
+                            class="thumb wide-thumb"
+                            onclick="
+                                changeMainImage(
+                                    this,
+                                    'files/images/pictures/gallery07.webp',
+                                )
+                            "
+                        >
+                            <img
+                                src="files/images/pictures/gallery07.webp"
+                                alt=""
+                            />
+                        </div>
+                        <div
+                            class="thumb wide-thumb"
+                            onclick="
+                                changeMainImage(
+                                    this,
+                                    'files/images/pictures/gallery08.webp',
+                                )
+                            "
+                        >
+                            <img
+                                src="files/images/pictures/gallery08.webp"
+                                alt=""
+                            />
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 10. 결혼식장 장소(맵 API 활용) -->
+                <section id="location-section">
+                    <input type="hidden" id="wd_xpos" value="126.8368847974" />
+                    <input
+                        type="hidden"
+                        id="wd_ypos"
+                        value="37.5562637915563"
+                    />
+
+                    <div class="location-container">
+                        <p class="section-title">LOCATION</p>
+                        <p class="venue-name">더뉴컨벤션 웨딩홀 2층 더뉴홀</p>
+                        <p class="venue-address">서울 강서구 공항대로36길 57</p>
+                        <p class="venue-tel">1661-3303</p>
+                        <div class="more_view">
+                            <div class="bottom_box">
+                                <div class="navi">
+                                    <button
+                                        class="map_btn tmap"
+                                        onclick="openTMap()"
+                                    >
+                                        <span class="img_box"
+                                            ><img
+                                                src="files/images/icons/tmap_icon.png"
+                                                alt=""
+                                        /></span>
+                                        티맵
+                                    </button>
+                                    <button
+                                        class="map_btn kakao"
+                                        onclick="startNavigation()"
+                                    >
+                                        <span class="img_box"
+                                            ><img
+                                                src="https://developers.kakao.com/assets/img/about/buttons/navi/kakaonavi_btn_medium.png"
+                                                alt="길 안내 버튼"
+                                        /></span>
+                                        카카오내비
+                                    </button>
+                                    <button
+                                        class="map_btn naver"
+                                        onclick="openNaverMap()"
+                                    >
+                                        <span class="img_box"
+                                            ><img
+                                                src="files/images/icons/navermap_icon_2.png"
+                                                alt="네이버 지도"
+                                        /></span>
+                                        네이버지도
+                                        <script
+                                            type="text/javascript"
+                                            src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=uoachp4znc"
+                                        ></script>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            id="map"
+                            style="
+                                width: 100%;
+                                height: 280px;
+                                margin: 20px 0;
+                                border-radius: 10px;
+                                background: #f8f8f8;
+                            "
+                        ></div>
+                        <script
+                            type="text/javascript"
+                            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=669f1c6f440657e143d516895413ef21&libraries=services&autoload=false"
+                        ></script>
+                        <a
+                            href="https://map.kakao.com/link/map/더뉴컨벤션,37.5562637915563,126.8368847974"
+                            target="_blank"
+                            class="map-detail-link"
+                        >
+                            지도를 자세히 보려면 여기를 눌러주세요
+                        </a>
+                        <script>
+                            kakao.maps.load(function () {
+                                var container = document.getElementById("map");
+                                var xpos =
+                                    document.getElementById("wd_xpos").value;
+                                var ypos =
+                                    document.getElementById("wd_ypos").value;
+                                var options = {
+                                    center: new kakao.maps.LatLng(ypos, xpos),
+                                    level: 3,
+                                };
+                                var map = new kakao.maps.Map(
+                                    container,
+                                    options,
+                                );
+                                var markerPosition = new kakao.maps.LatLng(
+                                    ypos,
+                                    xpos,
+                                );
+                                var marker = new kakao.maps.Marker({
+                                    position: markerPosition,
+                                });
+                                marker.setMap(map);
+                            });
+                        </script>
+
+                        <div class="location-info">
+                            <div class="info-group">
+                                <div class="info-label">💍 더뉴컨벤션웨딩</div>
+                                <ul class="info-list">
+                                    <li>
+                                        서울 강서구 공항대로 36길 57 (Tel.
+                                        1661-3303)
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="info-group">
+                                <div class="info-label">🚈 지하철</div>
+                                <ul class="info-list">
+                                    <li>
+                                        5호선 발산역 하차 8번 출구 (7번 출구
+                                        이용 가능)
+                                    </li>
+                                    <li>이대서울병원 방향 도보 3분</li>
+                                </ul>
+                            </div>
+                            <div class="info-group">
+                                <div class="info-label">🚎 버스</div>
+                                <ul class="info-list">
+                                    <li>간선버스: 601, 605, 642, 652</li>
+                                    <li>
+                                        지선버스: 6629, 6630, 6632, 6642, 6643,
+                                        6645, 6657
+                                    </li>
+                                    <li>
+                                        공항버스: 김포공항-6000, 인천공항-6001,
+                                        6003, 6008
+                                    </li>
+                                    <li>
+                                        일반버스: 1, 2, 6, 60, 60-3, 66, 69, 88,
+                                        631
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="info-group">
+                                <div class="info-label">🚗 자가용</div>
+                                <ul class="info-list">
+                                    <li>더뉴컨벤션웨딩 주차장 이용 가능</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 11. 계좌번호 -->
+                <section class="account_wrap anchor_6 wrap_padding">
+                    <div class="offset_5 offset">
+                        <div class="account_inner inner_padding">
+                            <p
+                                class="section_tit theme_1_color"
+                                style="
+                                    text-align: center;
+                                    font-size: 1.2rem;
+                                    margin-bottom: 20px;
+                                "
+                            >
+                                마음을 전하실 곳
+                            </p>
+                            <div class="account_box">
+                                <div class="groom_account account_list">
+                                    <p
+                                        class="account_tit"
+                                        onclick="toggleAccount(this)"
+                                    >
+                                        <span>신랑측 계좌번호</span>
+                                        <span class="accordion-arrow">▶</span>
+                                    </p>
+                                    <div
+                                        class="cover_wrap"
+                                        style="display: none"
+                                    >
+                                        <div class="account_cover">
+                                            <div class="article1">
+                                                <p>
+                                                    <span>카카오뱅크</span>
+                                                    <span class="acc_num"
+                                                        >3333-20-5356335</span
+                                                    >
+                                                </p>
+                                                <p>정연재</p>
+                                            </div>
+                                            <div class="article2">
+                                                <button
+                                                    class="copy_btn"
+                                                    onclick="
+                                                        copyToClipboard(
+                                                            '3333205356335 카카오뱅크',
+                                                        )
+                                                    "
+                                                >
+                                                    복사
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="account_cover">
+                                            <div class="article1">
+                                                <p>
+                                                    <span>국민은행</span>
+                                                    <span class="acc_num"
+                                                        >028-21-0308-567</span
+                                                    >
+                                                </p>
+                                                <p>정철화 (부)</p>
+                                            </div>
+                                            <div class="article2">
+                                                <button
+                                                    class="copy_btn"
+                                                    onclick="
+                                                        copyToClipboard(
+                                                            '028210308567 국민은행',
+                                                        )
+                                                    "
+                                                >
+                                                    복사
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="account_cover">
+                                            <div class="article1">
+                                                <p>
+                                                    <span>국민은행</span>
+                                                    <span class="acc_num"
+                                                        >961401-01-168896</span
+                                                    >
+                                                </p>
+                                                <p>이용순 (모)</p>
+                                            </div>
+                                            <div class="article2">
+                                                <button
+                                                    class="copy_btn"
+                                                    onclick="
+                                                        copyToClipboard(
+                                                            '96140101168896 국민은행',
+                                                        )
+                                                    "
+                                                >
+                                                    복사
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bride_account account_list">
+                                    <p
+                                        class="account_tit"
+                                        onclick="toggleAccount(this)"
+                                    >
+                                        <span>신부측 계좌번호</span>
+                                        <span class="accordion-arrow">▶</span>
+                                    </p>
+                                    <div
+                                        class="cover_wrap"
+                                        style="display: none"
+                                    >
+                                        <div class="account_cover">
+                                            <div class="article1">
+                                                <p>
+                                                    <span>카카오뱅크</span>
+                                                    <span class="acc_num"
+                                                        >3333-09-9964835</span
+                                                    >
+                                                </p>
+                                                <p>장선홍</p>
+                                            </div>
+                                            <div class="article2">
+                                                <button
+                                                    class="copy_btn"
+                                                    onclick="
+                                                        copyToClipboard(
+                                                            '3333099964835 카카오뱅크',
+                                                        )
+                                                    "
+                                                >
+                                                    복사
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="account_cover">
+                                            <div class="article1">
+                                                <p>
+                                                    <span>신한은행</span>
+                                                    <span class="acc_num"
+                                                        >110-015-223430</span
+                                                    >
+                                                </p>
+                                                <p>장수호 (부)</p>
+                                            </div>
+                                            <div class="article2">
+                                                <button
+                                                    class="copy_btn"
+                                                    onclick="
+                                                        copyToClipboard(
+                                                            '110015223430 신한은행',
+                                                        )
+                                                    "
+                                                >
+                                                    복사
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="account_cover">
+                                            <div class="article1">
+                                                <p>
+                                                    <span>국민은행</span>
+                                                    <span class="acc_num"
+                                                        >457001-01-410560</span
+                                                    >
+                                                </p>
+                                                <p>김희정 (모)</p>
+                                            </div>
+                                            <div class="article2">
+                                                <button
+                                                    class="copy_btn"
+                                                    onclick="
+                                                        copyToClipboard(
+                                                            '45700101410560 국민은행',
+                                                        )
+                                                    "
+                                                >
+                                                    복사
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 12. 방명록 -->
+                <section id="guestbook-section" class="wrap_padding">
+                    <div id="guestbook-loader">
+                        <div class="spinner"></div>
+                        <p
+                            style="
+                                font-size: 12px;
+                                color: #999;
+                                margin-top: 10px;
+                            "
+                        >
+                            방명록을 불러오고 있어요...
+                        </p>
+                    </div>
+                    <div class="guestbook-inner">
+                        <p class="section-title">GUEST BOOK</p>
+                        <div class="book-box">
+                            <div class="swiper guest-swiper">
+                                <div
+                                    class="swiper-wrapper"
+                                    id="guestbook-list"
+                                ></div>
+                            </div>
+                        </div>
+                        <div class="book-btn-group">
+                            <a
+                                href="javascript:showAllGuestbook();"
+                                class="btn-open-all"
+                                ><i class="xi-bars"></i> 전체보기</a
+                            >
+                            <a href="javascript:void(0);" class="btn-open-write"
+                                ><i class="xi-pen"></i> 작성하기</a
+                            >
+                        </div>
+                    </div>
+                </section>
+
+                <div
+                    class="modal-overlay all-list-overlay"
+                    onclick="closeAllGuestbook()"
+                ></div>
+                <div
+                    class="modal-content all-list-pop"
+                    style="max-width: 450px"
+                >
+                    <div class="all-gb-header">
+                        방명록
+                        <button
+                            class="close-btn"
+                            style="top: 15px; font-size: 20px"
+                            onclick="closeAllGuestbook()"
+                        >
+                            ✕
+                        </button>
+                    </div>
+                    <div class="all-gb-body" id="all-guestbook-body"></div>
                 </div>
-            </section>
+
+                <div class="modal-overlay write-overlay"></div>
+                <div class="modal-content write-wrap">
+                    <button
+                        class="close-btn close-modal write-close"
+                        style="color: black; font-size: 20px"
+                    >
+                        ✕
+                    </button>
+                    <p class="write-tit">방명록 작성하기</p>
+                    <input
+                        type="text"
+                        id="write_guest_name"
+                        placeholder="성함을 입력해주세요."
+                    />
+                    <textarea
+                        id="write_guest_text"
+                        rows="4"
+                        placeholder="내용을 입력해주세요..."
+                        style="
+                            resize: none;
+                            font-family: &quot;Pretendard&quot;, sans-serif;
+                        "
+                    ></textarea>
+                    <span
+                        class="btn-guestbook-submit"
+                        onclick="writeGuestbook()"
+                        >작성하기</span
+                    >
+                </div>
+
+                <!-- 13. 카카오톡으로 공유하기, 청첩장 주소 복사하기 -->
+                <section id="footer-share-section">
+                    <div class="footer-bg-wrapper">
+                        <img
+                            src="files/images/pictures/footer.webp"
+                            alt="마지막 사진"
+                            class="footer-bg-img"
+                        />
+                        <div class="footer-overlay"></div>
+                    </div>
+                    <div class="footer-content">
+                        <div class="share-btn-group">
+                            <button
+                                class="btn-share btn-kakao"
+                                onclick="shareKakao()"
+                            >
+                                카카오톡 공유하기
+                            </button>
+                            <button
+                                class="btn-share btn-url"
+                                onclick="copyUrl()"
+                            >
+                                청첩장 주소 복사하기
+                            </button>
+                        </div>
+                        <div class="footer-credits">
+                            <p>♡ 감사합니다 ♡</p>
+                            <p>Designed by 연재 & 선홍</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
-    </div>
-</body>
-
+    </body>
 </html>
